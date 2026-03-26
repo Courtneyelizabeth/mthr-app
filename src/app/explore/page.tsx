@@ -13,7 +13,7 @@ export default async function ExplorePage() {
   const { data: submissions } = await supabase
     .from('submissions')
     .select(`
-      id, title, location_name, location_country, subjects, instagram_handle,
+      id, title, location_name, location_country,
       cover_image, category, status, created_at,
       profiles:photographer_id (id, full_name, username, avatar_url)
     `)
@@ -24,7 +24,7 @@ export default async function ExplorePage() {
   // Fetch featured photographers
   const { data: photographers } = await supabase
     .from('profiles')
-    .select('id, full_name, username, location, avatar_url, submission_count, is_featured, instagram')
+    .select('id, full_name, username, location, avatar_url, submission_count, is_featured')
     .eq('is_featured', true)
     .order('submission_count', { ascending: false })
     .limit(4)
@@ -40,11 +40,14 @@ export default async function ExplorePage() {
           <div className="absolute top-[18px] right-6 text-[10px] tracking-[0.08em] text-white/45">26</div>
           <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/45 flex flex-col items-center justify-center text-center px-10">
             <p className="text-[9px] tracking-[0.22em] uppercase text-white/65 font-medium mb-3">
-              Where real life is the story.
+              Documentary honest imagery
             </p>
             <h1 className="font-cormorant font-light text-[72px] leading-[0.95] tracking-[0.04em] text-white">
               MTHR<br /><em>Magazine</em>
             </h1>
+            <p className="text-[9px] tracking-[0.18em] uppercase text-white/60 mt-3">
+              Families · Love · Motherhood · Fatherhood
+            </p>
             <Link href="/submit" className="mt-5 inline-flex items-center gap-2 px-6 py-2.5 bg-transparent border border-white/60 text-white text-[9px] tracking-[0.16em] uppercase font-medium rounded-sm hover:bg-white/10 transition-colors">
               Submit your work →
             </Link>
@@ -82,25 +85,12 @@ export default async function ExplorePage() {
                     />
                   ) : null}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3.5">
-                    {sub.subjects && (
-                      <div className="font-bebas text-[14px] tracking-[0.06em] text-white leading-none">
-                        {sub.subjects.toUpperCase()}
-                      </div>
-                    )}
-                    <div className={`font-cormorant italic text-[11px] font-light text-white/75 ${sub.subjects ? 'mt-0.5' : ''}`}>
+                    <div className="font-bebas text-[14px] tracking-[0.06em] text-white">
+                      {sub.title.toUpperCase()}
+                    </div>
+                    <div className="font-cormorant italic text-[11px] font-light text-white/75 mt-0.5">
                       {sub.location_name}, {sub.location_country}
                     </div>
-                    {sub.instagram_handle && (
-                      <a
-                        href={`https://instagram.com/${sub.instagram_handle}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className="text-[9px] tracking-[0.1em] text-white/60 hover:text-white transition-colors mt-1"
-                      >
-                        @{sub.instagram_handle}
-                      </a>
-                    )}
                   </div>
                 </Link>
               ))}
@@ -143,28 +133,15 @@ export default async function ExplorePage() {
                       <Image src={p.avatar_url} alt={p.full_name ?? ''} width={52} height={52} className="object-cover w-full h-full" />
                     )}
                   </div>
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1">
                     <div className="font-bebas text-[16px] tracking-[0.05em] text-mthr-black">
                       {p.full_name?.toUpperCase()}
                     </div>
-                    <div className="flex items-center gap-3 mt-0.5">
-                      <span className="font-cormorant italic text-[12px] font-light text-mthr-mid">
-                        {p.location} · {p.submission_count} sessions
-                      </span>
-                      {p.instagram && (
-                        <a
-                          href={`https://instagram.com/${p.instagram}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={e => e.stopPropagation()}
-                          className="text-[9px] tracking-[0.1em] text-mthr-mid hover:text-mthr-black transition-colors flex-shrink-0"
-                        >
-                          @{p.instagram}
-                        </a>
-                      )}
+                    <div className="font-cormorant italic text-[12px] font-light text-mthr-mid mt-0.5">
+                      {p.location} · {p.submission_count} sessions
                     </div>
                   </div>
-                  <span className="text-[8px] tracking-[0.1em] uppercase text-mthr-dark bg-mthr-b1 px-2 py-1 rounded-sm font-medium flex-shrink-0">
+                  <span className="text-[8px] tracking-[0.1em] uppercase text-mthr-dark bg-mthr-b1 px-2 py-1 rounded-sm font-medium">
                     Featured
                   </span>
                   <span className="text-[12px] text-mthr-dim group-hover:text-mthr-black transition-colors">→</span>

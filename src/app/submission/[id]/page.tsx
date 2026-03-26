@@ -21,14 +21,14 @@ export default async function SubmissionPage({ params }: { params: { id: string 
 
   const { data: sub } = await supabase
     .from('submissions')
-    .select(`*, profiles:photographer_id (id, full_name, username, location, avatar_url, bio, instagram)`)
+    .select(`*, profiles:photographer_id (id, full_name, username, location, avatar_url, bio)`)
     .eq('id', params.id)
     .in('status', ['approved', 'featured'])
     .single()
 
   if (!sub) notFound()
 
-  const photographer = sub.profiles as { id: string; full_name: string | null; username: string | null; location: string | null; avatar_url: string | null; bio: string | null; instagram: string | null }
+  const photographer = sub.profiles as { id: string; full_name: string | null; username: string | null; location: string | null; avatar_url: string | null; bio: string | null }
 
   // Increment view count (fire and forget)
   supabase.from('submissions')
@@ -53,24 +53,12 @@ export default async function SubmissionPage({ params }: { params: { id: string 
                 Featured
               </span>
             )}
-            {sub.subjects && (
-              <h1 className="font-bebas text-[36px] md:text-[52px] tracking-[0.06em] text-white leading-none">
-                {sub.subjects.toUpperCase()}
-              </h1>
-            )}
+            <h1 className="font-bebas text-[36px] md:text-[52px] tracking-[0.06em] text-white leading-none">
+              {sub.title.toUpperCase()}
+            </h1>
             <p className="font-cormorant italic text-[16px] font-light text-white/75 mt-1">
               {sub.location_name}, {sub.location_country}
             </p>
-            {sub.instagram_handle && (
-              <a
-                href={`https://instagram.com/${sub.instagram_handle}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-[9px] tracking-[0.14em] text-white/60 hover:text-white transition-colors mt-2"
-              >
-                @{sub.instagram_handle}
-              </a>
-            )}
           </div>
         </div>
 
@@ -133,17 +121,6 @@ export default async function SubmissionPage({ params }: { params: { id: string 
                     <div className="font-cormorant italic text-[12px] font-light text-mthr-mid mt-0.5">
                       {photographer.location}
                     </div>
-                  )}
-                  {photographer.instagram && (
-                    <a
-                      href={`https://instagram.com/${photographer.instagram}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      className="text-[9px] tracking-[0.1em] text-mthr-mid hover:text-mthr-black transition-colors mt-0.5 inline-block"
-                    >
-                      @{photographer.instagram}
-                    </a>
                   )}
                 </div>
                 <span className="ml-auto text-[9px] tracking-[0.14em] uppercase text-mthr-mid group-hover:text-mthr-black transition-colors">

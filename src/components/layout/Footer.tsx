@@ -7,7 +7,7 @@ export default function Footer() {
         <div>
           <span className="font-bebas text-lg tracking-[0.1em] text-mthr-black">MTHR</span>
           <p className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid mt-1">
-            Documentary Honest Imagery
+            Where real life is the story.
           </p>
         </div>
         <div className="flex items-center gap-6">
@@ -22,7 +22,7 @@ export default function Footer() {
           ))}
         </div>
         <p className="text-[9px] tracking-[0.1em] text-mthr-dim">
-          © {new Date().getFullYear()} MTHR Magazine
+          © {new Date().getFullYear()} GTHR
         </p>
       </div>
     </footer>

@@ -32,11 +32,6 @@
   .photo-bw-1   { background: linear-gradient(155deg, #D8D4CE 0%, #B0AAA2 40%, #787068 70%, #3C3830 100%); }
   .photo-bw-2   { background: linear-gradient(150deg, #E0DCD6 0%, #B8B4AC 40%, #807870 70%, #403C38 100%); }
 
-  /* MTHR input style */
-  .mthr-input {
-    @apply w-full px-3 py-2.5 bg-mthr-white border border-mthr-b2 text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors font-dm;
-  }
-
   /* MTHR button styles */
   .btn-primary {
     @apply inline-flex items-center gap-2 px-5 py-2.5 bg-mthr-black text-mthr-white

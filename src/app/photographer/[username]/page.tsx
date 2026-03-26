@@ -80,7 +80,8 @@ export default async function PhotographerPage({ params }: { params: { username:
                     className="text-[9px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors">
                     @{profile.instagram}
                   </a>
-                )}              </div>
+                )}
+              </div>
             </div>
           </div>
         </section>
