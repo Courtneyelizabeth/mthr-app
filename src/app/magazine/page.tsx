@@ -30,7 +30,7 @@ export default async function MagazinePage() {
         <section className="relative h-[320px] overflow-hidden photo-warm-1">
           {/* White top bar — matching the site */}
           <div className="absolute top-0 left-0 right-0 bg-white/92 px-7 py-2.5 flex items-center justify-between z-10">
-            <span className="font-bebas text-[20px] tracking-[0.1em] text-mthr-black">MTHR Magazine</span>
+            <span className="font-bebas text-[20px] tracking-[0.1em] text-mthr-black">MTHR</span>
             <span className="text-[9px] tracking-[0.16em] uppercase text-mthr-mid font-medium">
               Issue {issue?.issue_number ?? '04'} · Spring 2026
             </span>
@@ -40,7 +40,7 @@ export default async function MagazinePage() {
               MTHR<br /><em>Magazine</em>
             </h1>
             <p className="text-[9px] tracking-[0.2em] uppercase text-white/60 mt-2.5">
-              Documentary honest imagery · Families / Love / Motherhood / Fatherhood
+              <div className="mag-deck">Family · Wedding · Love · Honest imagery</div>
             </p>
           </div>
         </section>
@@ -83,7 +83,7 @@ export default async function MagazinePage() {
             </Link>
           </div>
           <p className="text-[12px] text-mthr-mid leading-[1.8] max-w-xl">
-            Every issue of MTHR Magazine features photographers from around the world. Submit your documentary family work to be considered for print and digital features.
+            Every issue of MTHR Magazine features photographers from around the world. Submit your work to be considered for print and digital features.
           </p>
         </section>
 
@@ -97,8 +97,8 @@ const DEFAULT_SECTIONS: Section[] = [
   { num: '01', title: 'WELCOME', subtitle: 'A letter from the founder' },
   { num: '02', title: 'ABOUT', subtitle: 'What MTHR stands for' },
   { num: '03', title: 'APPROACH', subtitle: 'How we see the world' },
-  { num: '05', title: 'MY PROCESS', subtitle: 'Behind the documentary approach' },
-  { num: '07', title: 'PHILOSOPHY', subtitle: 'Documentary honest imagery' },
+  { num: '05', title: 'MY PROCESS', subtitle: 'Behind the approach' },
+  { num: '07', title: 'PHILOSOPHY', subtitle: 'Where real life is the story' },
   { num: '08', title: 'COLLECTIONS', subtitle: 'Curated series by location', badge: 'New' },
   { num: '13', title: 'PLACES', subtitle: "The world's best family locations", badge: 'Featured' },
   { num: '15', title: 'FEATURED', subtitle: 'Sarah Okafor · Lagos', badge: 'Issue 04' },

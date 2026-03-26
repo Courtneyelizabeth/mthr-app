@@ -22,7 +22,7 @@ export default function Footer() {
           ))}
         </div>
         <p className="text-[9px] tracking-[0.1em] text-mthr-dim">
-          © {new Date().getFullYear()} GTHR
+          © {new Date().getFullYear()} MTHR Magazine
         </p>
       </div>
     </footer>
