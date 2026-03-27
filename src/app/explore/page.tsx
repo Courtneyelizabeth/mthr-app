@@ -1,8 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import TopNav from '@/components/layout/TopNav'
 import Footer from '@/components/layout/Footer'
-import Link from 'next/link'
-import Image from 'next/image'
+import ExploreClient from './ExploreClient'
 
 export const revalidate = 60
 
@@ -12,184 +11,31 @@ export default async function ExplorePage() {
   const { data: submissions } = await supabase
     .from('submissions')
     .select(`
-      id, title, location_name, location_country, subjects, instagram_handle,
-      cover_image, images, category, status, created_at,
-      profiles:photographer_id (id, full_name, username, avatar_url)
+      id, title, location_name, location_country, location_state,
+      subjects, instagram_handle, cover_image, images,
+      category, status, created_at,
+      profiles:photographer_id (id, full_name, username, avatar_url, instagram)
     `)
     .in('status', ['approved', 'featured'])
+    .eq('submission_type', 'app')
     .order('created_at', { ascending: false })
-    .limit(20)
+    .limit(40)
 
   const { data: photographers } = await supabase
     .from('profiles')
-    .select('id, full_name, username, location, avatar_url, submission_count, is_featured, instagram')
+    .select('id, full_name, username, location, avatar_url, instagram, submission_count, is_featured')
     .eq('is_featured', true)
-    .order('submission_count', { ascending: false })
-    .limit(4)
+    .order('created_at', { ascending: false })
+    .limit(3)
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[#F5F2EE]">
       <TopNav />
       <main className="flex-1">
-
-        {/* HERO */}
-        <section className="relative h-[420px] overflow-hidden photo-warm-1">
-          <div className="absolute top-[18px] left-6 text-[10px] tracking-[0.08em] text-white/45">20</div>
-          <div className="absolute top-[18px] right-6 text-[10px] tracking-[0.08em] text-white/45">26</div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/45 flex flex-col items-center justify-center text-center px-10">
-            <p className="text-[9px] tracking-[0.22em] uppercase text-white/65 font-medium mb-3">
-              Where real life is the story.
-            </p>
-            <h1 className="font-cormorant font-light text-[72px] leading-[0.95] tracking-[0.04em] text-white">
-              MTHR
-            </h1>
-            <p className="font-cormorant italic font-light text-[22px] text-white/80 mt-2">
-              For photographers.
-            </p>
-            <Link href="/submit" className="mt-5 inline-flex items-center gap-2 px-6 py-2.5 bg-transparent border border-white/60 text-white text-[9px] tracking-[0.16em] uppercase font-medium rounded-sm hover:bg-white/10 transition-colors">
-              Submit your work →
-            </Link>
-          </div>
-        </section>
-
-        {/* PHOTO GRID */}
-        <section className="bg-mthr-white px-7 pt-9 pb-0">
-          <div className="flex items-baseline justify-between mb-5">
-            <h2 className="font-cormorant font-light text-[28px] tracking-[0.02em]">
-              Latest <em>work</em>
-            </h2>
-            <span className="text-[9px] tracking-[0.14em] uppercase text-mthr-mid">
-              {submissions?.length ?? 0} submissions
-            </span>
-          </div>
-
-          {submissions && submissions.length > 0 ? (
-            <div className="columns-2 md:columns-3 gap-[3px] space-y-[3px]">
-              {submissions.map((sub) => {
-                const img = sub.cover_image ?? (sub.images?.[0] ?? null)
-                if (!img) return null
-                return (
-                  <Link
-                    key={sub.id}
-                    href={`/submission/${sub.id}`}
-                    className="relative break-inside-avoid block overflow-hidden group cursor-pointer photo-warm-1"
-                  >
-                    <Image
-                      src={img}
-                      alt={sub.subjects ?? sub.title}
-                      width={600}
-                      height={900}
-                      className="w-full h-auto object-cover"
-                      style={{ display: 'block' }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3.5">
-                      {sub.subjects && (
-                        <div className="font-bebas text-[14px] tracking-[0.06em] text-white leading-none">
-                          {sub.subjects.toUpperCase()}
-                        </div>
-                      )}
-                      <div className={`font-cormorant italic text-[11px] font-light text-white/75 ${sub.subjects ? 'mt-0.5' : ''}`}>
-                        {sub.location_name}, {sub.location_country}
-                      </div>
-                      {sub.instagram_handle && (
-                        <span className="text-[9px] tracking-[0.1em] text-white/60 mt-1">
-                          @{sub.instagram_handle}
-                        </span>
-                      )}
-                      {sub.status === 'featured' && (
-                        <span className="text-[8px] tracking-[0.08em] uppercase bg-white/90 text-mthr-dark px-2 py-0.5 rounded-sm font-medium mt-1 self-start">
-                          Featured
-                        </span>
-                      )}
-                    </div>
-                  </Link>
-                )
-              })}
-            </div>
-          ) : (
-            <div className="columns-2 md:columns-3 gap-[3px] space-y-[3px]">
-              {[
-                { cls: 'photo-warm-1', h: 'h-64' },
-                { cls: 'photo-bw-1', h: 'h-48' },
-                { cls: 'photo-warm-2', h: 'h-72' },
-                { cls: 'photo-warm-3', h: 'h-48' },
-                { cls: 'photo-bw-2', h: 'h-64' },
-                { cls: 'photo-warm-1', h: 'h-56' },
-              ].map((p, i) => (
-                <div key={i} className={`relative break-inside-avoid ${p.cls} ${p.h}`}>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-[9px] tracking-[0.16em] uppercase text-white/50 font-medium">Coming soon</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-
-        {/* FEATURED PHOTOGRAPHERS */}
-        <section className="bg-mthr-white px-7 pt-9 pb-9">
-          <div className="flex items-baseline justify-between mb-5">
-            <h2 className="font-cormorant font-light text-[28px] tracking-[0.02em]">
-              <em>Featured</em> photographers
-            </h2>
-            <Link href="/magazine" className="text-[9px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors">
-              See magazine →
-            </Link>
-          </div>
-          <div className="border-t border-mthr-b1">
-            {photographers && photographers.length > 0 ? (
-              photographers.map((p, i) => (
-                <Link key={p.id} href={`/photographer/${p.username || p.id}`} className="index-row group">
-                  <span className="text-[9px] tracking-[0.06em] text-mthr-dim min-w-[22px]">
-                    {String(i + 1).padStart(2, '0')}.
-                  </span>
-                  <div className="w-[52px] h-[52px] rounded-sm overflow-hidden flex-shrink-0 photo-warm-1">
-                    {p.avatar_url && (
-                      <Image src={p.avatar_url} alt={p.full_name ?? ''} width={52} height={52} className="object-cover w-full h-full" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-bebas text-[16px] tracking-[0.05em] text-mthr-black">
-                      {p.full_name?.toUpperCase()}
-                    </div>
-                    <div className="flex items-center gap-3 mt-0.5">
-                      <span className="font-cormorant italic text-[12px] font-light text-mthr-mid">
-                        {p.location} · {p.submission_count} sessions
-                      </span>
-                      {p.instagram && (
-                        <span className="text-[9px] tracking-[0.1em] text-mthr-mid flex-shrink-0">
-                          @{p.instagram}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <span className="text-[8px] tracking-[0.1em] uppercase text-mthr-dark bg-mthr-b1 px-2 py-1 rounded-sm font-medium flex-shrink-0">
-                    Featured
-                  </span>
-                  <span className="text-[12px] text-mthr-dim group-hover:text-mthr-black transition-colors">→</span>
-                </Link>
-              ))
-            ) : (
-              [
-                { num: '01', name: 'SARAH OKAFOR', detail: 'Lagos, Nigeria · Family' },
-                { num: '02', name: 'MARC DELACROIX', detail: 'Paris, France · Motherhood & newborn' },
-                { num: '03', name: 'YUKI TANAKA', detail: 'Tokyo, Japan · Editorial' },
-              ].map((row) => (
-                <div key={row.num} className="index-row">
-                  <span className="text-[9px] tracking-[0.06em] text-mthr-dim min-w-[22px]">{row.num}.</span>
-                  <div className="w-[52px] h-[52px] rounded-sm overflow-hidden flex-shrink-0 photo-warm-2" />
-                  <div className="flex-1">
-                    <div className="font-bebas text-[16px] tracking-[0.05em] text-mthr-black">{row.name}</div>
-                    <div className="font-cormorant italic text-[12px] font-light text-mthr-mid mt-0.5">{row.detail}</div>
-                  </div>
-                  <span className="text-[8px] tracking-[0.1em] uppercase text-mthr-dark bg-mthr-b1 px-2 py-1 rounded-sm font-medium">Featured</span>
-                  <span className="text-[12px] text-mthr-dim">→</span>
-                </div>
-              ))
-            )}
-          </div>
-        </section>
-
+        <ExploreClient
+          submissions={submissions ?? []}
+          photographers={photographers ?? []}
+        />
       </main>
       <Footer />
     </div>

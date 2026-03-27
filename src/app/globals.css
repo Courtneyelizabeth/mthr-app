@@ -3,60 +3,43 @@
 @tailwind utilities;
 
 :root {
-  --font-bebas: 'Bebas Neue', sans-serif;
   --font-cormorant: 'Cormorant Garamond', serif;
   --font-dm: 'DM Sans', sans-serif;
 }
 
 @layer base {
   * { box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
-
-  /* Thin scrollbar */
   ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: #F2F0ED; }
-  ::-webkit-scrollbar-thumb { background: #C0BCB6; border-radius: 2px; }
-  ::-webkit-scrollbar-thumb:hover { background: #888480; }
+  ::-webkit-scrollbar-track { background: #F5F2EE; }
+  ::-webkit-scrollbar-thumb { background: #C8C4BE; border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: #8A8680; }
 }
 
 @layer components {
-  .font-bebas  { font-family: var(--font-bebas); }
   .font-cormorant { font-family: var(--font-cormorant); }
-  .font-dm     { font-family: var(--font-dm); }
+  .font-dm { font-family: var(--font-dm); }
 
-  /* Photo placeholder gradients for development */
+  /* Photo placeholder gradients */
   .photo-warm-1 { background: linear-gradient(158deg, #D4C4A8 0%, #B89878 35%, #8A6848 70%, #5A3C28 100%); }
   .photo-warm-2 { background: linear-gradient(150deg, #C8B898 0%, #A88868 35%, #786040 70%, #483820 100%); }
   .photo-warm-3 { background: linear-gradient(160deg, #D8C8A8 0%, #BCA080 35%, #8C6848 70%, #5C3C20 100%); }
   .photo-bw-1   { background: linear-gradient(155deg, #D8D4CE 0%, #B0AAA2 40%, #787068 70%, #3C3830 100%); }
   .photo-bw-2   { background: linear-gradient(150deg, #E0DCD6 0%, #B8B4AC 40%, #807870 70%, #403C38 100%); }
 
-  /* MTHR input style */
+  /* Input style */
   .mthr-input {
-    @apply w-full px-3 py-2.5 bg-mthr-white border border-mthr-b2 text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors font-dm;
+    @apply w-full px-3 py-2.5 bg-white border border-[#D0CCC6] text-[13px] text-[#1A1814] rounded-sm outline-none focus:border-[#1A1814] transition-colors font-dm;
   }
 
-  /* MTHR button styles */
-  .btn-primary {
-    @apply inline-flex items-center gap-2 px-5 py-2.5 bg-mthr-black text-mthr-white
-           text-[9px] tracking-[0.16em] uppercase font-medium rounded-sm
-           hover:bg-mthr-dark transition-colors cursor-pointer border border-mthr-black;
-  }
-  .btn-ghost {
-    @apply inline-flex items-center gap-2 px-5 py-2.5 bg-transparent text-mthr-black
-           text-[9px] tracking-[0.16em] uppercase font-medium rounded-sm
-           hover:bg-mthr-off transition-colors cursor-pointer border border-mthr-b2;
-  }
-
-  /* Section label */
-  .label-sm {
-    @apply text-[9px] tracking-[0.2em] uppercase font-medium text-mthr-mid;
-  }
-
-  /* Numbered index row */
+  /* Index row */
   .index-row {
-    @apply flex items-center gap-4 px-7 py-3.5 border-b border-mthr-b1
-           hover:bg-mthr-off transition-colors cursor-pointer;
+    @apply flex items-center gap-4 px-7 py-3.5 border-b border-[#E8E4DE]
+           hover:bg-[#EDE9E3] transition-colors cursor-pointer;
+  }
+
+  /* Section divider */
+  .section-divider {
+    @apply border-t border-[#E8E4DE] my-0;
   }
 }

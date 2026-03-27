@@ -1,16 +1,9 @@
 import type { Metadata } from 'next'
-import { Bebas_Neue, Cormorant_Garamond, DM_Sans } from 'next/font/google'
+import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
 import './globals.css'
 
-const bebas = Bebas_Neue({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-bebas',
-  display: 'swap',
-})
-
 const cormorant = Cormorant_Garamond({
-  weight: ['300', '400'],
+  weight: ['300', '400', '600'],
   style: ['normal', 'italic'],
   subsets: ['latin'],
   variable: '--font-cormorant',
@@ -25,19 +18,19 @@ const dm = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'MTHR Magazine — Documentary Honest Imagery',
-  description: 'A community for family photographers. Share your work, discover beautiful places, and get featured in MTHR Magazine.',
+  title: 'MTHR Magazine — Where real life is the story.',
+  description: 'A community for photographers. Share your work, discover beautiful places, and get featured in MTHR Magazine.',
   openGraph: {
     title: 'MTHR Magazine',
-    description: 'Documentary honest imagery — families, love, motherhood, fatherhood.',
+    description: 'Where real life is the story.',
     type: 'website',
   },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bebas.variable} ${cormorant.variable} ${dm.variable}`}>
-      <body className="bg-mthr-white font-dm text-mthr-black antialiased">
+    <html lang="en" className={`${cormorant.variable} ${dm.variable}`}>
+      <body className="bg-[#F5F2EE] font-dm text-mthr-black antialiased">
         {children}
       </body>
     </html>
