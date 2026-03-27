@@ -1,17 +1,13 @@
 import { createClient } from '@/lib/supabase/server'
-import { redirect } from 'next/navigation'
 import TopNav from '@/components/layout/TopNav'
 import Footer from '@/components/layout/Footer'
 import CommunityClient from './CommunityClient'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
 
 export default async function CommunityPage() {
   const supabase = createClient()
-
-  // Login required
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/login?redirectTo=/community')
 
   const { data: posts } = await supabase
     .from('community_posts')
@@ -29,7 +25,7 @@ export default async function CommunityPage() {
     <div className="flex flex-col min-h-screen bg-[#F5F2EE]">
       <TopNav />
       <main className="flex-1">
-        <CommunityClient posts={posts ?? []} project365={project365 ?? []} userId={user.id} />
+        <CommunityClient posts={posts ?? []} project365={project365 ?? []} userId={user?.id ?? null} />
       </main>
       <Footer />
     </div>
