@@ -155,6 +155,23 @@ export default function SubmitPage() {
       })
 
       if (insertError) throw new Error(insertError.message)
+
+      // Send email notifications
+      try {
+        const { data: { user: currentUser } } = await supabase.auth.getUser()
+        await fetch('/api/notify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'submission_received',
+            photographer_name: currentUser?.user_metadata?.full_name ?? 'Photographer',
+            photographer_email: currentUser?.email ?? '',
+            submission_title: form.title,
+            location: isIntl ? (form.country || 'International') : `${form.city}, ${form.state_code}`,
+          }),
+        })
+      } catch {}
+
       router.push(tab === 'app' ? '/explore?submitted=true' : '/submit?mag=success')
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
