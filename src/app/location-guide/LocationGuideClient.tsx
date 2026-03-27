@@ -22,19 +22,21 @@ type Submission = {
 
 export default function LocationGuideClient({ submissions }: { submissions: Submission[] }) {
   const [activeState, setActiveState] = useState('All')
+  const safeSubmissions = submissions ?? []
 
   const stateTabs = useMemo(() => {
-    const codes = [...new Set(submissions.map(s => s.location_state_code ?? 'Intl'))].sort()
+    if (!safeSubmissions.length) return ['All']
+    const codes = [...new Set(safeSubmissions.map(s => s.location_state_code ?? 'Intl'))].sort()
     return ['All', ...codes]
-  }, [submissions])
+  }, [safeSubmissions])
 
   const filtered = useMemo(() => {
-    if (activeState === 'All') return submissions
-    return submissions.filter(s => (s.location_state_code ?? 'Intl') === activeState)
-  }, [submissions, activeState])
+    if (activeState === 'All') return safeSubmissions
+    return safeSubmissions.filter(s => (s.location_state_code ?? 'Intl') === activeState)
+  }, [safeSubmissions, activeState])
 
-  // Group by location name
   const locationGroups = useMemo(() => {
+    if (!filtered.length) return []
     const groups: Record<string, Submission[]> = {}
     for (const sub of filtered) {
       if (!groups[sub.location_name]) groups[sub.location_name] = []
@@ -65,13 +67,13 @@ export default function LocationGuideClient({ submissions }: { submissions: Subm
               className={`px-3 py-1.5 text-[9.5px] tracking-[0.12em] uppercase font-medium rounded-full transition-colors border ${
                 activeState === state
                   ? 'bg-mthr-black text-white border-mthr-black'
-                  : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'
+                  : 'bg-transparent text-mthr-mid border-[#D0CCC6] hover:border-mthr-mid hover:text-mthr-black'
               }`}
             >
               {state}
               {state !== 'All' && (
                 <span className="ml-1.5 opacity-60">
-                  {submissions.filter(s => (s.location_state_code ?? 'Intl') === state).length}
+                  {safeSubmissions.filter(s => (s.location_state_code ?? 'Intl') === state).length}
                 </span>
               )}
             </button>
@@ -79,7 +81,7 @@ export default function LocationGuideClient({ submissions }: { submissions: Subm
         </div>
       )}
 
-      {/* Locations grid */}
+      {/* Locations */}
       <div className="px-8 py-8">
         {locationGroups.length > 0 ? (
           <div className="space-y-10">
@@ -100,21 +102,12 @@ export default function LocationGuideClient({ submissions }: { submissions: Subm
                   {subs.slice(0, 8).map(sub => {
                     const img = sub.cover_image ?? sub.images?.[0] ?? null
                     return (
-                      <Link
-                        key={sub.id}
-                        href={`/submission/${sub.id}`}
-                        className="relative aspect-square overflow-hidden group rounded-sm photo-warm-1"
-                      >
-                        {img && (
-                          <Image src={img} alt={sub.subjects ?? sub.title} fill className="object-cover" />
-                        )}
+                      <Link key={sub.id} href={`/submission/${sub.id}`}
+                        className="relative aspect-square overflow-hidden group rounded-sm photo-warm-1">
+                        {img && <Image src={img} alt={sub.subjects ?? sub.title} fill className="object-cover" />}
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-sm flex flex-col justify-end p-2.5">
-                          {sub.subjects && (
-                            <div className="font-cormorant italic text-[12px] font-light text-white">{sub.subjects}</div>
-                          )}
-                          {sub.instagram_handle && (
-                            <div className="text-[9px] text-white/60">@{sub.instagram_handle}</div>
-                          )}
+                          {sub.subjects && <div className="font-cormorant italic text-[12px] font-light text-white">{sub.subjects}</div>}
+                          {sub.instagram_handle && <div className="text-[9px] text-white/60">@{sub.instagram_handle}</div>}
                         </div>
                       </Link>
                     )
@@ -126,7 +119,7 @@ export default function LocationGuideClient({ submissions }: { submissions: Subm
         ) : (
           <div className="py-20 text-center">
             <p className="font-cormorant italic text-[20px] font-light text-mthr-mid">
-              no locations in {activeState} yet.
+              {activeState === 'All' ? 'no locations yet.' : `no sessions in ${activeState} yet.`}
             </p>
             <Link href="/submit" className="inline-block mt-4 text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors">
               be the first to submit →
