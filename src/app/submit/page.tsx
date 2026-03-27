@@ -163,19 +163,21 @@ export default function SubmitPage() {
 
       // Send email notifications
       try {
-        const { data: { user: currentUser } } = await supabase.auth.getUser()
-        await fetch('/api/notify', {
+        const notifyRes = await fetch('/api/notify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             type: 'submission_received',
-            photographer_name: currentUser?.user_metadata?.full_name ?? 'Photographer',
-            photographer_email: currentUser?.email ?? '',
+            photographer_name: user?.user_metadata?.full_name ?? 'Photographer',
+            photographer_email: user?.email ?? '',
             submission_title: form.title,
             location: isIntl ? (form.country || 'International') : `${form.city}, ${form.state_code}`,
           }),
         })
-      } catch {}
+        console.log('Email notify status:', notifyRes.status)
+      } catch (emailErr) {
+        console.error('Email notify error:', emailErr)
+      }
 
       router.push('/submit/thank-you')
     } catch (err: unknown) {
