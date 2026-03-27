@@ -170,9 +170,15 @@ export default function ExploreClient({
                         {sub.location_name}
                       </div>
                       {sub.instagram_handle && (
-                        <span className="text-[9px] tracking-[0.08em] text-white/55 mt-0.5">
+                        <a
+                          href={`https://instagram.com/${sub.instagram_handle}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          className="text-[9px] tracking-[0.08em] text-white/55 hover:text-white transition-colors mt-0.5"
+                        >
                           @{sub.instagram_handle}
-                        </span>
+                        </a>
                       )}
                     </div>
                   </Link>
