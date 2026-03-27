@@ -7,10 +7,11 @@ import { createClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
 
 const NAV_LINKS = [
-  { href: '/explore',  label: 'Explore' },
-  { href: '/places',   label: 'Places' },
-  { href: '/magazine', label: 'Magazine' },
-  { href: '/submit',   label: 'Submit work' },
+  { href: '/explore',        label: 'Explore' },
+  { href: '/submit',         label: 'Submit' },
+  { href: '/magazine',       label: 'Magazine' },
+  { href: '/community',      label: 'Community' },
+  { href: '/location-guide', label: 'Locations' },
 ]
 
 export default function TopNav() {
@@ -32,24 +33,26 @@ export default function TopNav() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 flex items-center justify-between h-[52px] px-7 bg-mthr-white border-b border-mthr-b1">
-      {/* Logo */}
-      <Link href="/explore" className="font-bebas text-[22px] tracking-[0.1em] text-mthr-black hover:opacity-70 transition-opacity">
+    <nav className="sticky top-0 z-50 flex items-center justify-between h-[56px] px-8 bg-[#F5F2EE] border-b border-[#E8E4DE]">
+      {/* Logo — thin serif caps matching reference */}
+      <Link
+        href="/explore"
+        className="font-cormorant font-light text-[22px] tracking-[0.25em] uppercase text-mthr-black hover:opacity-60 transition-opacity"
+        style={{ letterSpacing: '0.25em' }}
+      >
         MTHR
       </Link>
 
-      {/* Center nav links */}
-      <div className="flex items-center gap-6">
+      {/* Center nav */}
+      <div className="flex items-center gap-7">
         {NAV_LINKS.map(({ href, label }) => {
           const active = pathname === href || pathname.startsWith(href + '/')
           return (
             <Link
               key={href}
               href={href}
-              className={`text-[9.5px] tracking-[0.14em] uppercase font-medium pb-0.5 border-b transition-colors ${
-                active
-                  ? 'text-mthr-black border-mthr-black'
-                  : 'text-mthr-mid border-transparent hover:text-mthr-black hover:border-mthr-b2'
+              className={`text-[10px] tracking-[0.16em] uppercase font-medium transition-colors ${
+                active ? 'text-mthr-black' : 'text-mthr-mid hover:text-mthr-black'
               }`}
             >
               {label}
@@ -58,24 +61,30 @@ export default function TopNav() {
         })}
       </div>
 
-      {/* Auth buttons */}
+      {/* Auth */}
       <div className="flex items-center gap-3">
         {user ? (
           <>
-            <Link href="/photographer" className="btn-ghost py-1.5 px-3">
-              Profile
+            <Link href="/inspo" className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors">
+              Saved
             </Link>
-            <button onClick={handleSignOut} className="btn-ghost py-1.5 px-3">
+            <button
+              onClick={handleSignOut}
+              className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors"
+            >
               Sign out
             </button>
           </>
         ) : (
           <>
-            <Link href="/login" className="btn-ghost py-1.5 px-3">
+            <Link href="/login" className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors">
               Sign in
             </Link>
-            <Link href="/signup" className="btn-primary py-1.5 px-3">
-              Join MTHR
+            <Link
+              href="/signup"
+              className="text-[10px] tracking-[0.14em] uppercase font-medium px-4 py-2 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm"
+            >
+              Join
             </Link>
           </>
         )}
