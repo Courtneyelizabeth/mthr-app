@@ -17,7 +17,6 @@ export default async function ExplorePage() {
       profiles:photographer_id (id, full_name, username, avatar_url)
     `)
     .in('status', ['approved', 'featured'])
-    .eq('submission_type', 'app')
     .order('created_at', { ascending: false })
     .limit(20)
 
@@ -53,7 +52,7 @@ export default async function ExplorePage() {
           </div>
         </section>
 
-        {/* PHOTO GRID — one cover image per submission, natural orientation */}
+        {/* PHOTO GRID */}
         <section className="bg-mthr-white px-7 pt-9 pb-0">
           <div className="flex items-baseline justify-between mb-5">
             <h2 className="font-cormorant font-light text-[28px] tracking-[0.02em]">
@@ -93,15 +92,9 @@ export default async function ExplorePage() {
                         {sub.location_name}, {sub.location_country}
                       </div>
                       {sub.instagram_handle && (
-                        <a
-                          href={`https://instagram.com/${sub.instagram_handle}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={e => e.stopPropagation()}
-                          className="text-[9px] tracking-[0.1em] text-white/60 hover:text-white transition-colors mt-1"
-                        >
+                        <span className="text-[9px] tracking-[0.1em] text-white/60 mt-1">
                           @{sub.instagram_handle}
-                        </a>
+                        </span>
                       )}
                       {sub.status === 'featured' && (
                         <span className="text-[8px] tracking-[0.08em] uppercase bg-white/90 text-mthr-dark px-2 py-0.5 rounded-sm font-medium mt-1 self-start">
@@ -116,14 +109,14 @@ export default async function ExplorePage() {
           ) : (
             <div className="columns-2 md:columns-3 gap-[3px] space-y-[3px]">
               {[
-                { cls: 'photo-warm-1', aspect: 'aspect-[3/4]' },
-                { cls: 'photo-bw-1', aspect: 'aspect-square' },
-                { cls: 'photo-warm-2', aspect: 'aspect-[3/4]' },
-                { cls: 'photo-warm-3', aspect: 'aspect-[4/3]' },
-                { cls: 'photo-bw-2', aspect: 'aspect-[3/4]' },
-                { cls: 'photo-warm-1', aspect: 'aspect-square' },
+                { cls: 'photo-warm-1', h: 'h-64' },
+                { cls: 'photo-bw-1', h: 'h-48' },
+                { cls: 'photo-warm-2', h: 'h-72' },
+                { cls: 'photo-warm-3', h: 'h-48' },
+                { cls: 'photo-bw-2', h: 'h-64' },
+                { cls: 'photo-warm-1', h: 'h-56' },
               ].map((p, i) => (
-                <div key={i} className={`relative break-inside-avoid ${p.cls} ${p.aspect}`}>
+                <div key={i} className={`relative break-inside-avoid ${p.cls} ${p.h}`}>
                   <div className="absolute inset-0 flex items-center justify-center">
                     <p className="text-[9px] tracking-[0.16em] uppercase text-white/50 font-medium">Coming soon</p>
                   </div>
@@ -164,11 +157,9 @@ export default async function ExplorePage() {
                         {p.location} · {p.submission_count} sessions
                       </span>
                       {p.instagram && (
-                        <a href={`https://instagram.com/${p.instagram}`} target="_blank" rel="noopener noreferrer"
-                          onClick={e => e.stopPropagation()}
-                          className="text-[9px] tracking-[0.1em] text-mthr-mid hover:text-mthr-black transition-colors flex-shrink-0">
+                        <span className="text-[9px] tracking-[0.1em] text-mthr-mid flex-shrink-0">
                           @{p.instagram}
-                        </a>
+                        </span>
                       )}
                     </div>
                   </div>
