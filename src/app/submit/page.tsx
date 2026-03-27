@@ -169,7 +169,7 @@ export default function SubmitPage() {
           body: JSON.stringify({
             type: 'submission_received',
             photographer_name: user?.user_metadata?.full_name ?? 'Photographer',
-            photographer_email: user?.email ?? '',
+            photographer_email: user?.email || user?.user_metadata?.email || '',
             submission_title: form.title,
             location: isIntl ? (form.country || 'International') : `${form.city}, ${form.state_code}`,
           }),
