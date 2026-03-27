@@ -20,7 +20,7 @@ type Submission = {
   profiles: { full_name: string | null; username: string | null; instagram: string | null } | null
 }
 
-export default function LocationGuideClient({ submissions }: { submissions: Submission[] }) {
+export default function LocationGuideClient({ submissions = [] }: { submissions: Submission[] }) {
   const [activeState, setActiveState] = useState('All')
   const safeSubmissions = submissions ?? []
 
