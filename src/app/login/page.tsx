@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
   const params = useSearchParams()
   const redirectTo = params.get('redirectTo') ?? '/explore'
@@ -32,8 +32,8 @@ export default function LoginPage() {
         <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-center p-12">
           <Link href="/explore" className="font-bebas text-[32px] tracking-[0.1em] text-white">MTHR</Link>
           <p className="font-cormorant italic font-light text-[18px] text-white/75 mt-3">
-            Documentary honest imagery
-          </p>
+              Where real life is the story.
+            </p>
         </div>
       </div>
 
@@ -101,5 +101,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-mthr-white" />}>
+      <LoginForm />
+    </Suspense>
   )
 }
