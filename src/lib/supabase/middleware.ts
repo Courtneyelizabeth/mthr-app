@@ -11,27 +11,32 @@ export async function updateSession(request: NextRequest) {
       cookies: {
         getAll() { return request.cookies.getAll() },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value)
-          )
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
           supabaseResponse = NextResponse.next({ request })
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          )
+          cookiesToSet.forEach(({ name, value, options }) => supabaseResponse.cookies.set(name, value, options))
         },
       },
     }
   )
 
-  // Refresh session — keep at top of middleware, no logic before this
-  const { data: { user } } = await supabase.auth.getUser()
+  try {
+    const { data: { user } } = await supabase.auth.getUser()
+    const pathname = request.nextUrl.pathname
 
-  // Protect submit route — redirect to login if not authenticated
-  if (!user && request.nextUrl.pathname.startsWith('/submit')) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    url.searchParams.set('redirectTo', '/submit')
-    return NextResponse.redirect(url)
+    // Public routes — no login needed
+    const publicPrefixes = ['/', '/explore', '/login', '/signup', '/api', '/_next', '/favicon']
+    const isPublic = publicPrefixes.some(prefix =>
+      pathname === prefix || pathname.startsWith(prefix + '/') || pathname.startsWith(prefix + '?')
+    )
+
+    if (!user && !isPublic) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/login'
+      url.searchParams.set('redirectTo', pathname)
+      return NextResponse.redirect(url)
+    }
+  } catch {
+    // If auth check fails, allow the request through
   }
 
   return supabaseResponse
