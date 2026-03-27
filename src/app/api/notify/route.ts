@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hello@mthrmag.com'
-const FROM_EMAIL = 'MTHR Magazine <hello@mthrmag.com>'
+const FROM_EMAIL = 'MTHR Magazine <onboarding@resend.dev>'
 
 async function sendEmail({ to, subject, html }: { to: string; subject: string; html: string }) {
   const res = await fetch('https://api.resend.com/emails', {
