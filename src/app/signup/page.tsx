@@ -45,8 +45,10 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen bg-[#F5F2EE] flex">
-      <div className="hidden md:flex w-1/2 photo-bw-1 relative items-end p-12">
-        <div>
+      <div className="hidden md:flex w-1/2 relative items-end p-12 overflow-hidden">
+        <div className="absolute inset-0 photo-bw-1" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+        <div className="relative z-10">
           <Link href="/explore" className="font-cormorant font-light text-[28px] tracking-[0.25em] uppercase text-white block mb-2">MTHR</Link>
           <p className="font-cormorant italic font-light text-[18px] text-white/75">join the community.</p>
         </div>

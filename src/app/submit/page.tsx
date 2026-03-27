@@ -15,13 +15,18 @@ function isMagOpen() {
   return now >= MAG_OPEN && now <= MAG_CLOSE
 }
 
-const CATEGORIES: { value: SubmissionCategory; label: string }[] = [
+const CATEGORIES: { value: string; label: string }[] = [
   { value: 'family_documentary', label: 'Family' },
   { value: 'motherhood',         label: 'Motherhood' },
   { value: 'fatherhood',         label: 'Fatherhood' },
   { value: 'newborn',            label: 'Newborn' },
   { value: 'love_couples',       label: 'Couples' },
   { value: 'editorial',          label: 'Maternity' },
+  { value: 'kids',               label: 'Kids' },
+  { value: 'brand_shoot',        label: 'Brand shoot' },
+  { value: 'wedding',            label: 'Wedding' },
+  { value: 'elopement',          label: 'Elopement' },
+  { value: 'boudoir',            label: 'Boudoir' },
 ]
 
 const US_STATES = [
@@ -65,7 +70,7 @@ export default function SubmitPage() {
     state_code: '',
     country: '',
     venue: '',
-    category: 'family_documentary' as SubmissionCategory,
+    category: 'family_documentary' as string,
     description: '',
     subjects: '',
     instagram: '',
@@ -172,7 +177,7 @@ export default function SubmitPage() {
         })
       } catch {}
 
-      router.push(tab === 'app' ? '/explore?submitted=true' : '/submit?mag=success')
+      router.push('/submit/thank-you')
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
     } finally {
@@ -284,8 +289,8 @@ export default function SubmitPage() {
                   </div>
                 )}
 
-                <Field label="Who is in the image">
-                  <input type="text" placeholder="e.g. The Johnson Family, Sarah & James"
+                <Field label="Collab or brand credits (optional)">
+                  <input type="text" placeholder="e.g. Styled by The Bloom Studio, MUA: Sarah Jones"
                     value={form.subjects} onChange={e => setForm(f => ({ ...f, subjects: e.target.value }))}
                     className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
                 </Field>

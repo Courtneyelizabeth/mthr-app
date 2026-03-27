@@ -27,8 +27,11 @@ function LoginForm() {
 
   return (
     <div className="min-h-screen bg-[#F5F2EE] flex">
-      <div className="hidden md:flex w-1/2 photo-warm-1 relative items-end p-12">
-        <div>
+      <div className="hidden md:flex w-1/2 relative items-end p-12 overflow-hidden">
+        {/* Warm editorial photo placeholder — replace src with real image */}
+        <div className="absolute inset-0 photo-warm-1" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+        <div className="relative z-10">
           <Link href="/explore" className="font-cormorant font-light text-[28px] tracking-[0.25em] uppercase text-white block mb-2">
             MTHR
           </Link>
