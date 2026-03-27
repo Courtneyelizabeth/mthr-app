@@ -19,20 +19,24 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  const { data: { user } } = await supabase.auth.getUser()
-  const pathname = request.nextUrl.pathname
+  try {
+    const { data: { user } } = await supabase.auth.getUser()
+    const pathname = request.nextUrl.pathname
 
-  // Only these routes are public — everything else requires login
-  const publicRoutes = ['/', '/explore', '/login', '/signup', '/api']
-  const isPublic = publicRoutes.some(route =>
-    pathname === route || pathname.startsWith(route + '/')
-  )
+    // Public routes — no login needed
+    const publicPrefixes = ['/', '/explore', '/login', '/signup', '/api', '/_next', '/favicon']
+    const isPublic = publicPrefixes.some(prefix =>
+      pathname === prefix || pathname.startsWith(prefix + '/') || pathname.startsWith(prefix + '?')
+    )
 
-  if (!user && !isPublic) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    url.searchParams.set('redirectTo', pathname)
-    return NextResponse.redirect(url)
+    if (!user && !isPublic) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/login'
+      url.searchParams.set('redirectTo', pathname)
+      return NextResponse.redirect(url)
+    }
+  } catch {
+    // If auth check fails, allow the request through
   }
 
   return supabaseResponse
