@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import TopNav from '@/components/layout/TopNav'
 import Footer from '@/components/layout/Footer'
 import { createClient } from '@/lib/supabase/client'
-import type { SubmissionCategory } from '@/types/database'
 
 // ── Magazine submission window ──────────────────────────────
 const MAG_OPEN  = new Date('2026-04-01T00:00:00')
