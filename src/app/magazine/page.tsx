@@ -11,8 +11,9 @@ export default function MagazinePage() {
         {/* ── LETTER FROM THE FOUNDER ── */}
         <section className="grid grid-cols-1 md:grid-cols-2 min-h-[90vh] border-b border-[#E8E4DE]">
           {/* Left — photo placeholder */}
-          <div className="relative bg-[#E8E4DC] min-h-[50vh] md:min-h-full flex flex-col justify-end p-8">
-            <p className="text-[9px] tracking-[0.18em] uppercase text-[#A0A09A]">Founder photo</p>
+          <div className="relative min-h-[50vh] md:min-h-full overflow-hidden">
+            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/katiemitzphoto-123.jpg" alt="Courtney Maxwell" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
 
           {/* Right — letter */}
@@ -63,7 +64,9 @@ export default function MagazinePage() {
           {/* Content */}
           <div className="grid grid-cols-1 md:grid-cols-2 min-h-[60vh]">
             {/* Left — photo placeholder */}
-            <div className="bg-[#E8E4DC] min-h-[40vh] md:min-h-full" />
+            <div className="relative min-h-[40vh] md:min-h-full overflow-hidden">
+            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/courtney_maxwell_photography58_websize-4.jpg" alt="How we see the world" className="absolute inset-0 w-full h-full object-cover" />
+          </div>
 
             {/* Right — text */}
             <div className="px-10 md:px-16 py-14 flex flex-col justify-center">
