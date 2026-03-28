@@ -16,22 +16,10 @@ function isMagOpen() {
 }
 
 const CATEGORIES: { value: string; label: string }[] = [
-  { value: 'motherhood',   label: 'Motherhood' },
-  { value: 'editorial',    label: 'Maternity' },
-  { value: 'kids',         label: 'Kids' },
-  { value: 'other',        label: 'Other' },
-] = [
-  { value: 'family_documentary', label: 'Family' },
-  { value: 'motherhood',         label: 'Motherhood' },
-  { value: 'fatherhood',         label: 'Fatherhood' },
-  { value: 'newborn',            label: 'Newborn' },
-  { value: 'love_couples',       label: 'Couples' },
-  { value: 'editorial',          label: 'Maternity' },
-  { value: 'kids',               label: 'Kids' },
-  { value: 'brand_shoot',        label: 'Brand shoot' },
-  { value: 'wedding',            label: 'Wedding' },
-  { value: 'elopement',          label: 'Elopement' },
-  { value: 'boudoir',            label: 'Boudoir' },
+  { value: 'motherhood', label: 'Motherhood' },
+  { value: 'editorial',  label: 'Maternity' },
+  { value: 'kids',       label: 'Kids' },
+  { value: 'other',      label: 'Other' },
 ]
 
 const US_STATES = [
