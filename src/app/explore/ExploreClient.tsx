@@ -41,18 +41,11 @@ type Photographer = {
 }
 
 const CATEGORIES = [
-  { value: 'all',               label: 'All' },
-  { value: 'family_documentary', label: 'Family' },
-  { value: 'motherhood',         label: 'Motherhood' },
-  { value: 'love_couples',       label: 'Couples' },
-  { value: 'newborn',            label: 'Newborn' },
-  { value: 'editorial',          label: 'Maternity' },
-  { value: 'fatherhood',         label: 'Fatherhood' },
-  { value: 'kids',               label: 'Kids' },
-  { value: 'wedding',            label: 'Wedding' },
-  { value: 'elopement',          label: 'Elopement' },
-  { value: 'brand_shoot',        label: 'Brand' },
-  { value: 'boudoir',            label: 'Boudoir' },
+  { value: 'all',        label: 'All' },
+  { value: 'motherhood', label: 'Motherhood' },
+  { value: 'editorial',  label: 'Maternity' },
+  { value: 'kids',       label: 'Kids' },
+  { value: 'other',      label: 'Other' },
 ]
 
 export default function ExploreClient({
