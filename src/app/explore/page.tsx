@@ -42,7 +42,7 @@ export default async function ExplorePage() {
           </p>
 
           {/* Main headline */}
-          <h1 className="font-cormorant italic font-light text-[64px] md:text-[80px] leading-[0.95] text-mthr-black mb-6">
+          <h1 className="font-cormorant italic font-light text-[42px] sm:text-[56px] md:text-[80px] leading-[0.95] text-mthr-black mb-6">
             where real life<br />is the story.
           </h1>
 

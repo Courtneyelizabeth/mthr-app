@@ -90,7 +90,7 @@ export default function SubmitPage() {
   const isIntl = form.state_code === 'International'
 
   const handleAppFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) setAppFiles(Array.from(e.target.files).slice(0, 10))
+    if (e.target.files) setAppFiles(Array.from(e.target.files).slice(0, 1))
   }
 
   const handleMagFiles = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -381,14 +381,14 @@ export default function SubmitPage() {
                 <h2 className="font-cormorant font-light text-[32px] leading-none text-mthr-black mb-2">
                   your <em>images.</em>
                 </h2>
-                <p className="text-[11px] text-mthr-mid mb-6">upload up to 10 images from the session.</p>
+                <p className="text-[11px] text-mthr-mid mb-6">upload your 1 hero image from the session.</p>
 
                 <div onClick={() => appFileRef.current?.click()} onDragOver={e => e.preventDefault()}
-                  onDrop={e => { e.preventDefault(); if (e.dataTransfer.files) setAppFiles(Array.from(e.dataTransfer.files).slice(0, 10)) }}
+                  onDrop={e => { e.preventDefault(); if (e.dataTransfer.files) setAppFiles(Array.from(e.dataTransfer.files).slice(0, 1)) }}
                   className="border border-dashed border-[#D0CCC6] rounded-sm p-8 text-center cursor-pointer hover:bg-white hover:border-mthr-mid transition-all mb-8">
                   <div className="text-[24px] text-mthr-dim mb-2">+</div>
                   <div className="text-[10px] tracking-[0.1em] uppercase text-mthr-mid font-medium">
-                    {appFiles.length > 0 ? `${appFiles.length} image${appFiles.length > 1 ? 's' : ''} selected (${appFiles.length}/10)` : 'drag & drop or click to upload'}
+                    {appFiles.length > 0 ? '1 image selected' : 'drag & drop or click to upload'}
                   </div>
                   <div className="font-cormorant italic text-[12px] text-mthr-dim mt-1">jpg or png · high resolution preferred</div>
                   <input ref={appFileRef} type="file" accept="image/jpeg,image/png" multiple className="hidden" onChange={handleAppFiles} />
@@ -397,7 +397,7 @@ export default function SubmitPage() {
                 <h3 className="font-cormorant font-light text-[20px] text-mthr-black mb-4">guidelines.</h3>
                 <div className="divide-y divide-[#E8E4DE]">
                   {[
-                    { n: '01', h: 'up to 10 images', t: 'select your strongest images from the session.' },
+                    { n: '01', h: '1 hero image', t: 'choose your single strongest image from this session.' },
                     { n: '02', h: 'honest imagery', t: 'natural light, real moments, genuine emotion. let the story speak.' },
                     { n: '03', h: 'family permission', t: 'you must have written permission before sharing publicly.' },
                     { n: '04', h: 'tag your location', t: 'city and state required so your work appears in the location guide.' },
