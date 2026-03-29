@@ -382,7 +382,7 @@ export default function SubmitPage() {
                 <h2 className="font-cormorant font-light text-[32px] leading-none text-mthr-black mb-2">
                   your <em>images.</em>
                 </h2>
-                <p className="text-[11px] text-mthr-mid mb-6">upload your 1 hero image from the session.</p>
+                <p className="text-[11px] text-mthr-mid mb-6">submit as many sessions as you like. one image per submission.</p>
 
                 <div onClick={() => appFileRef.current?.click()} onDragOver={e => e.preventDefault()}
                   onDrop={e => { e.preventDefault(); if (e.dataTransfer.files) setAppFiles(Array.from(e.dataTransfer.files).slice(0, 1)) }}
