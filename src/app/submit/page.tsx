@@ -139,6 +139,7 @@ export default function SubmitPage() {
       const { error: insertError } = await supabase.from('submissions').insert({
         photographer_id: user.id,
         photographer_email: user.email ?? '',
+        photographer_email: user.email ?? '',
         title: form.title,
         description: fullDescription,
         location_name: locationName,
