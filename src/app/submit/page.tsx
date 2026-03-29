@@ -197,7 +197,7 @@ export default function SubmitPage() {
             <p className="text-[12px] text-white/80">a free account is required to submit. your work will be saved to your profile.</p>
             <div className="flex gap-3 flex-shrink-0">
               <a href="/login" className="text-[10px] tracking-[0.14em] uppercase text-white/70 hover:text-white transition-colors">sign in</a>
-              <a href="/signup" className="text-[10px] tracking-[0.14em] uppercase font-medium text-white border-b border-white/50 hover:border-white transition-colors">join free →</a>
+              <a href="/signup" className="text-[10px] tracking-[0.14em] uppercase font-medium text-white border-b border-white/50 hover:border-white transition-colors">join free &rarr;</a>
             </div>
           </div>
 
