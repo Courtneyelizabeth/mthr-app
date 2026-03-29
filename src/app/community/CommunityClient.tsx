@@ -38,7 +38,7 @@ export default function CommunityClient({
 }: {
   posts: Post[]
   project365: Project365Entry[]
-  userId: string
+  userId: string | null
 }) {
   const supabase = createClient()
   const [activeTab, setActiveTab] = useState('all')
@@ -74,6 +74,7 @@ export default function CommunityClient({
     : []
 
   const handleSubmitPost = async () => {
+    if (!userId) { window.location.href = "/login?redirectTo=/community"; return }
     setSubmitting(true)
     let imageUrl = null
 
@@ -107,6 +108,7 @@ export default function CommunityClient({
   }
 
   const handleSubmit365 = async () => {
+    if (!userId) { window.location.href = "/login?redirectTo=/community"; return }
     if (!form365.image) return
     setSubmitting(true)
 
@@ -172,6 +174,25 @@ export default function CommunityClient({
       {success && (
         <div className="mx-8 mt-6 px-4 py-3 bg-white border border-[#E8E4DE] rounded-sm">
           <p className="text-[12px] text-mthr-black">your submission has been received and will appear once approved. thank you!</p>
+        </div>
+      )}
+
+      {/* Community dark banner */}
+      {activeTab !== '365 project' && (
+        <div className="mx-8 mt-6 bg-mthr-black text-white rounded-sm p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <p className="text-[9px] tracking-[0.2em] uppercase text-white/50 mb-2">Share with the community</p>
+            <h2 className="font-cormorant italic font-light text-[26px] md:text-[32px] leading-tight text-white mb-2">
+              have a workshop or content day<br className="hidden md:block" /> you want to share? add it here.
+            </h2>
+            <p className="text-[12px] text-white/60 leading-[1.7]">open to all photographers. full credit always. connect with others who are doing the work.</p>
+          </div>
+          <button
+            onClick={() => setShowForm(true)}
+            className="flex-shrink-0 text-[10px] tracking-[0.16em] uppercase font-medium px-6 py-3 border border-white/50 text-white hover:bg-white hover:text-mthr-black transition-colors rounded-sm"
+          >
+            + add yours
+          </button>
         </div>
       )}
 

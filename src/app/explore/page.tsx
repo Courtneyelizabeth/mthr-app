@@ -33,22 +33,25 @@ export default async function ExplorePage() {
       <TopNav />
       <main className="flex-1">
 
-        {/* ── HERO SECTION — centered tagline + nav buttons ── */}
+        {/* ── HERO SECTION ── */}
         <section className="text-center px-8 pt-16 pb-12 border-b border-[#E8E4DE]">
 
-          {/* Eyebrow */}
-          <p className="text-[10px] tracking-[0.22em] uppercase text-mthr-mid font-medium mb-6">
-            Family photography — elevated
-          </p>
-
-          {/* Main headline */}
-          <h1 className="font-cormorant italic font-light text-[42px] sm:text-[56px] md:text-[80px] leading-[0.95] text-mthr-black mb-6">
-            where real life<br />is the story.
+          {/* Main headline — big statement */}
+          <h1 className="font-cormorant font-light text-[13px] md:text-[15px] tracking-[0.22em] uppercase text-mthr-black mb-4">
+            family photography. elevated.
           </h1>
 
-          {/* Tagline */}
-          <p className="text-[13px] text-mthr-mid mb-10">
-            where real life is the story
+          {/* Poetic anchor */}
+          <p className="font-cormorant italic font-light text-[42px] sm:text-[56px] md:text-[72px] leading-[0.95] text-mthr-black mb-5">
+            where real life<br />is the story.
+          </p>
+
+          {/* Warm welcome */}
+          <p className="text-[13px] text-mthr-mid mb-3">
+            a home for the photographers who believe real moments matter most.
+          </p>
+          <p className="text-[12px] text-mthr-dim mb-10 tracking-[0.04em]">
+            community, curation, and a magazine — all in one place.
           </p>
 
           {/* Feature buttons */}
@@ -69,21 +72,7 @@ export default async function ExplorePage() {
             ))}
           </div>
 
-          {/* CTA buttons */}
-          <div className="flex items-center justify-center gap-3">
-            <Link
-              href="/submit"
-              className="px-6 py-2.5 text-[10px] tracking-[0.16em] uppercase font-medium border border-mthr-black text-mthr-black rounded-full hover:bg-mthr-black hover:text-white transition-colors"
-            >
-              Submit your work
-            </Link>
-            <button
-              onClick={undefined}
-              className="px-6 py-2.5 text-[10px] tracking-[0.16em] uppercase font-medium border border-mthr-b2 text-mthr-mid rounded-full hover:border-mthr-black hover:text-mthr-black transition-colors"
-            >
-              Explore the app
-            </button>
-          </div>
+          {/* Magazine
 
           {/* Magazine submission banner */}
           <div className="mt-10 mx-auto max-w-2xl bg-mthr-black text-white px-8 py-4 rounded-sm flex items-center justify-center gap-6">

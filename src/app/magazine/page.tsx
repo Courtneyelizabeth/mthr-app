@@ -8,6 +8,20 @@ export default function MagazinePage() {
       <TopNav />
       <main className="flex-1">
 
+        {/* ── MAGAZINE SUBMISSIONS BANNER — TOP ── */}
+        <section className="bg-mthr-black text-white px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div>
+            <p className="text-[9px] tracking-[0.2em] uppercase text-white/50 mb-1">Magazine submissions open</p>
+            <p className="font-cormorant italic font-light text-[24px]">April 1 — May 1, 2026</p>
+          </div>
+          <Link
+            href="/submit"
+            className="text-[10px] tracking-[0.16em] uppercase font-medium px-6 py-2.5 border border-white/50 text-white hover:bg-white hover:text-mthr-black transition-colors rounded-sm flex-shrink-0"
+          >
+            Submit your work →
+          </Link>
+        </section>
+
         {/* ── LETTER FROM THE FOUNDER ── */}
         <section className="grid grid-cols-1 md:grid-cols-2 min-h-[90vh] border-b border-[#E8E4DE]">
           {/* Left — photo placeholder */}
@@ -138,21 +152,7 @@ export default function MagazinePage() {
           </div>
         </section>
 
-        {/* ── MAGAZINE SUBMISSIONS BANNER ── */}
-        <section className="border-b border-[#E8E4DE]">
-          <div className="bg-mthr-black text-white px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div>
-              <p className="text-[9px] tracking-[0.2em] uppercase text-white/50 mb-1">Magazine submissions open</p>
-              <p className="font-cormorant italic font-light text-[28px]">April 1 — May 1, 2026</p>
-            </div>
-            <Link
-              href="/submit"
-              className="text-[10px] tracking-[0.16em] uppercase font-medium px-6 py-3 border border-white/50 text-white hover:bg-white hover:text-mthr-black transition-colors rounded-sm flex-shrink-0"
-            >
-              Submit your work →
-            </Link>
-          </div>
-        </section>
+
 
         {/* ── CTA ROW ── */}
         <section className="bg-mthr-black">
