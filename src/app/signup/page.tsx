@@ -57,7 +57,7 @@ export default function SignupPage() {
       <div className="w-full md:w-1/2 flex items-center justify-center px-8 py-12">
         <div className="w-full max-w-sm">
           <h1 className="font-cormorant font-light text-[36px] leading-none text-mthr-black mb-1">join <em>MTHR.</em></h1>
-          <p className="text-[11px] text-mthr-mid mt-1.5 mb-8">join a community of documentary family photographers. your work belongs here.</p>
+          <p className="text-[11px] text-mthr-mid mt-1.5 mb-8">join a community of family photographers. your work belongs here.</p>
 
           <div className="space-y-4">
             {[
