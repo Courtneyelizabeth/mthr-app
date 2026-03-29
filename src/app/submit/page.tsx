@@ -398,7 +398,7 @@ export default function SubmitPage() {
                 <h3 className="font-cormorant font-light text-[20px] text-mthr-black mb-4">guidelines.</h3>
                 <div className="divide-y divide-[#E8E4DE]">
                   {[
-                    { n: '01', h: 'your favorite image.', t: 'one image per session. come back and submit as many sessions as you like.' },
+                    { n: '01', h: 'your favorite image.', t: 'choose the frame that stopped you. the one you keep coming back to.' },
                     { n: '02', h: 'your image, your rights.', t: 'submission confirms you hold full copyright for every image you share.' },
                     { n: '03', h: 'give credit where it is due.', t: 'if this was made with others — a stylist, second shooter, or workshop host — please credit them.' },
                     
@@ -444,7 +444,7 @@ export default function SubmitPage() {
                 <h3 className="font-cormorant font-light text-[20px] text-mthr-black mb-4">print requirements.</h3>
                 <div className="divide-y divide-[#E8E4DE]">
                   {[
-                    { n: '01', h: 'jpg format only', t: 'all images must be saved as JPG. no TIFF, PNG or RAW.' },
+                    { n: '01', h: 'your favorite image.', t: 'choose the frame that stopped you. the one you keep coming back to.' },
                     { n: '02', h: 'sRGB color profile', t: 'export with sRGB. do not submit Adobe RGB or CMYK.' },
                     { n: '03', h: 'portrait — 2550 × 3300px', t: '8.5 × 11 inches at 300dpi. single-page portrait spreads.' },
                     { n: '04', h: 'landscape — 5100 × 3300px', t: '17 × 11 inches at 300dpi. full double-page spreads.' },
