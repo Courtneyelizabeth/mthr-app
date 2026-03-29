@@ -44,7 +44,7 @@ export default function AdminPage() {
     setLoading(true)
     const { data } = await supabase
       .from('submissions')
-      .select(`id, title, location_name, location_country, category, status, submission_type, subjects, instagram_handle, description, cover_image, images, created_at, profiles:photographer_id (full_name, username, email)`)
+      .select(`id, title, location_name, location_country, category, status, submission_type, subjects, instagram_handle, description, cover_image, images, created_at, profiles:photographer_id (full_name, username)`)
       .eq('status', filter)
       .eq('submission_type', 'app')
       .order('created_at', { ascending: false })
