@@ -4,7 +4,7 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hecklercourtney@gmail.com'
 
 // Use Resend's shared domain which works without full verification
-const FROM_EMAIL = 'MTHR Magazine <onboarding@resend.dev>'
+const FROM_EMAIL = 'MTHR Magazine <hello@mthrmag.com>'
 
 export async function POST(request: Request) {
   if (!RESEND_API_KEY) {
