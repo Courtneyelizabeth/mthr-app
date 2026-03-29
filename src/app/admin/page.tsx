@@ -60,7 +60,7 @@ export default function AdminPage() {
     await supabase.from('submissions').update({ status }).eq('id', id)
 
     // Send featured email
-    if (status === 'featured') {
+    if (status === 'featured' || status === 'approved') {
       const sub = submissions.find(s => s.id === id)
       if (sub) {
         try {
