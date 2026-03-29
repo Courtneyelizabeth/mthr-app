@@ -86,5 +86,41 @@ export async function POST(request: Request) {
     results.push({ to: 'photographer', status: photoRes.status, data: photoData })
   }
 
+  // Send featured email
+  if (type === 'featured' && photographer_email) {
+    const featuredRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: FROM_EMAIL,
+        to: [photographer_email],
+        subject: `you've been featured on MTHR`,
+        html: `
+          <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; padding: 40px 20px; color: #1A1814;">
+            <div style="font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 32px; font-family: sans-serif;">MTHR</div>
+            <h1 style="font-weight: 300; font-size: 32px; margin: 0 0 6px;">congratulations, <em>${photographer_name}.</em></h1>
+            <p style="color: #8A8680; font-size: 15px; margin: 0 0 28px; font-style: italic;">your work has been featured on MTHR.</p>
+            <hr style="border: none; border-top: 1px solid #E8E4DE; margin: 0 0 28px;" />
+            <p style="font-size: 14px; color: #2A2620; line-height: 1.8; margin: 0 0 24px;">
+              your image is now live on the MTHR explore feed — seen by photographers and families who believe real moments matter most.
+            </p>
+            <p style="font-size: 14px; color: #2A2620; line-height: 1.8; margin: 0 0 28px;">
+              share it, celebrate it. this work deserves to be seen.
+            </p>
+            <a href="https://mthrmag.com/explore" style="display: inline-block; padding: 13px 28px; background: #1A1814; color: white; text-decoration: none; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; font-family: sans-serif;">view your feature &rarr;</a>
+            <hr style="border: none; border-top: 1px solid #E8E4DE; margin: 32px 0 20px;" />
+            <p style="font-size: 11px; color: #C0BCB6; letter-spacing: 0.1em; text-transform: uppercase; font-family: sans-serif; margin: 0;">where real life is the story. &middot; mthrmag.com</p>
+          </div>
+        `,
+      }),
+    })
+    const featuredData = await featuredRes.json()
+    console.log('Featured email:', featuredRes.status, JSON.stringify(featuredData))
+    results.push({ to: 'featured', status: featuredRes.status })
+  }
+
   return NextResponse.json({ success: true, results })
 }

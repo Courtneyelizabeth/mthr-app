@@ -12,7 +12,7 @@ type Submission = {
   category: string; status: string; submission_type: string; subjects: string | null
   instagram_handle: string | null; description: string | null
   cover_image: string | null; images: string[]; created_at: string
-  profiles: { full_name: string | null; username: string | null } | null
+  profiles: { full_name: string | null; username: string | null; email: string | null } | null
 }
 
 export default function AdminPage() {
@@ -44,7 +44,7 @@ export default function AdminPage() {
     setLoading(true)
     const { data } = await supabase
       .from('submissions')
-      .select(`id, title, location_name, location_country, category, status, submission_type, subjects, instagram_handle, description, cover_image, images, created_at, profiles:photographer_id (full_name, username)`)
+      .select(`id, title, location_name, location_country, category, status, submission_type, subjects, instagram_handle, description, cover_image, images, created_at, profiles:photographer_id (full_name, username, email)`)
       .eq('status', filter)
       .eq('submission_type', 'app')
       .order('created_at', { ascending: false })
@@ -57,6 +57,30 @@ export default function AdminPage() {
   const updateStatus = async (id: string, status: string) => {
     setUpdating(id)
     await supabase.from('submissions').update({ status }).eq('id', id)
+
+    // Send featured email
+    if (status === 'featured') {
+      const sub = submissions.find(s => s.id === id)
+      if (sub) {
+        try {
+          await fetch('/api/notify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              type: 'featured',
+              photographer_name: sub.profiles?.full_name ?? sub.instagram_handle ?? 'Photographer',
+              photographer_email: (sub.profiles as any)?.email ?? '',
+              submission_title: sub.title ?? 'your image',
+              instagram_handle: sub.instagram_handle ?? '',
+              location: sub.location_name ?? '',
+            }),
+          })
+        } catch (e) {
+          console.error('Featured email error:', e)
+        }
+      }
+    }
+
     setSubmissions(prev => prev.filter(s => s.id !== id))
     setUpdating(null)
   }
