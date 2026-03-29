@@ -11,8 +11,9 @@ type Submission = {
   id: string; title: string; location_name: string; location_country: string
   category: string; status: string; submission_type: string; subjects: string | null
   instagram_handle: string | null; description: string | null
-  cover_image: string | null; images: string[]; created_at: string
-  profiles: { full_name: string | null; username: string | null; email: string | null } | null
+  cover_image: string | null; images: string[]; created_at: string; photographer_id: string
+  photographer_id: string | null
+  profiles: { full_name: string | null; username: string | null } | null
 }
 
 export default function AdminPage() {
@@ -44,7 +45,7 @@ export default function AdminPage() {
     setLoading(true)
     const { data } = await supabase
       .from('submissions')
-      .select(`id, title, location_name, location_country, category, status, submission_type, subjects, instagram_handle, description, cover_image, images, created_at, profiles:photographer_id (full_name, username)`)
+      .select(`id, title, location_name, location_country, category, status, submission_type, subjects, instagram_handle, description, cover_image, images, created_at, photographer_id, profiles:photographer_id (full_name, username)`)
       .eq('status', filter)
       .eq('submission_type', 'app')
       .order('created_at', { ascending: false })
@@ -63,13 +64,21 @@ export default function AdminPage() {
       const sub = submissions.find(s => s.id === id)
       if (sub) {
         try {
+          // Get photographer email via service role
+          const emailRes = await fetch('/api/get-user-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ photographer_id: sub.photographer_id }),
+          })
+          const { email: photographerEmail } = await emailRes.json()
+
           await fetch('/api/notify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               type: 'featured',
               photographer_name: sub.profiles?.full_name ?? sub.instagram_handle ?? 'Photographer',
-              photographer_email: (sub.profiles as any)?.email ?? '',
+              photographer_email: photographerEmail ?? '',
               submission_title: sub.title ?? 'your image',
               instagram_handle: sub.instagram_handle ?? '',
               location: sub.location_name ?? '',
