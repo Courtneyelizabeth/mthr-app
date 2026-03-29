@@ -105,7 +105,7 @@ export default function SubmitPage() {
     setSizeErrors(errors)
   }
 
-  const canSubmitApp = form.instagram && form.city && form.state_code && appFiles.length > 0
+  const canSubmitApp = form.city const canSubmitApp = form.instagram && form.city && form.state_code && appFiles.length > 0const canSubmitApp = form.instagram && form.city && form.state_code && appFiles.length > 0 form.state_code const canSubmitApp = form.instagram && form.city && form.state_code && appFiles.length > 0const canSubmitApp = form.instagram && form.city && form.state_code && appFiles.length > 0 appFiles.length > 0
   const canSubmitMag = form.title && form.city && form.state_code && magFiles.length >= 10 && magForm.copyright_declared
 
   const handleSubmit = async () => {
