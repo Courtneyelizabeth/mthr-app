@@ -15,11 +15,10 @@ function isMagOpen() {
 }
 
 const CATEGORIES: { value: string; label: string }[] = [
-  { value: "motherhood",         label: "Motherhood" },
-  { value: "editorial",          label: "Maternity" },
-  { value: "kids",               label: "Kids" },
-  { value: "family_documentary", label: "Family" },
-  { value: "other",              label: "Other" },
+  { value: 'motherhood', label: 'Motherhood' },
+  { value: 'editorial',  label: 'Maternity' },
+  { value: 'kids',       label: 'Kids' },
+  { value: 'other',      label: 'Other' },
 ]
 
 const US_STATES = [
@@ -63,7 +62,7 @@ export default function SubmitPage() {
     state_code: '',
     country: '',
     venue: '',
-    category: 'family_documentary' as string,
+    category: 'motherhood',
     description: '',
     subjects: '',
     instagram: '',
@@ -105,7 +104,7 @@ export default function SubmitPage() {
     setSizeErrors(errors)
   }
 
-  const canSubmitApp = form.instagram && form.city && form.state_code && appFiles.length > 0
+  const canSubmitApp = form.title && form.city && form.state_code && appFiles.length > 0
   const canSubmitMag = form.title && form.city && form.state_code && magFiles.length >= 10 && magForm.copyright_declared
 
   const handleSubmit = async () => {
@@ -193,13 +192,6 @@ export default function SubmitPage() {
           <p className="text-[12px] text-mthr-mid mt-2">
             we're looking for photographers who see the world differently. your work, your story, your community. full credit always.
           </p>
-          <div className="mt-4 px-4 py-3 bg-mthr-black text-white rounded-sm flex items-center justify-between gap-4">
-            <p className="text-[12px] text-white/80">a free account is required to submit. your work will be saved to your profile.</p>
-            <div className="flex gap-3 flex-shrink-0">
-              <a href="/login" className="text-[10px] tracking-[0.14em] uppercase text-white/70 hover:text-white transition-colors">sign in</a>
-              <a href="/signup" className="text-[10px] tracking-[0.14em] uppercase font-medium text-white border-b border-white/50 hover:border-white transition-colors">join free &rarr;</a>
-            </div>
-          </div>
 
           {/* Tab switcher */}
           <div className="flex gap-0 mt-6 border-b border-[#E8E4DE]">
@@ -246,23 +238,11 @@ export default function SubmitPage() {
 
             {(tab === 'app' || (tab === 'magazine' && magOpen)) && (
               <div className="space-y-4">
-
-                <Field label="Your Instagram handle">
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[13px] text-mthr-mid">@</span>
-                    <input type="text" placeholder="yourhandle" value={form.instagram}
-                      onChange={e => setForm(f => ({ ...f, instagram: e.target.value.replace('@', '') }))}
-                      className="w-full pl-7 pr-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
-                  </div>
+                <Field label="Title *">
+                  <input type="text" placeholder={tab === 'app' ? 'e.g. The Andersons · Tuscany' : 'e.g. Luz · A Family in Oaxaca'}
+                    value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
+                    className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
                 </Field>
-
-                {tab === 'magazine' && (
-                  <Field label="Title *">
-                    <input type="text" placeholder="e.g. Luz · A Family in Oaxaca"
-                      value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-                      className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
-                  </Field>
-                )}
 
                 <div className="grid grid-cols-2 gap-3">
                   <Field label="City *">
@@ -307,6 +287,15 @@ export default function SubmitPage() {
                   <input type="text" placeholder="e.g. Styled by The Bloom Studio, MUA: Sarah Jones"
                     value={form.subjects} onChange={e => setForm(f => ({ ...f, subjects: e.target.value }))}
                     className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
+                </Field>
+
+                <Field label="Your Instagram handle">
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[13px] text-mthr-mid">@</span>
+                    <input type="text" placeholder="yourhandle" value={form.instagram}
+                      onChange={e => setForm(f => ({ ...f, instagram: e.target.value.replace('@', '') }))}
+                      className="w-full pl-7 pr-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
+                  </div>
                 </Field>
 
                 <Field label="Category">
@@ -400,9 +389,10 @@ export default function SubmitPage() {
                 <h3 className="font-cormorant font-light text-[20px] text-mthr-black mb-4">guidelines.</h3>
                 <div className="divide-y divide-[#E8E4DE]">
                   {[
-                    { n: '01', h: 'one image. your best.', t: 'the one you keep coming back to. the one that stops you.' },
-                    { n: '02', h: 'your image, your rights.', t: 'submission confirms you hold full copyright for every image you share.' },
-                    { n: '03', h: 'give credit where it's due.', t: 'if this image was made with others — a stylist, second shooter, subject, workshop or content day host — please credit them.' },
+                    { n: '01', h: '1 hero image', t: 'choose your single strongest image from this session.' },
+                    { n: '02', h: 'honest imagery', t: 'natural light, real moments, genuine emotion. let the story speak.' },
+                    { n: '03', h: 'family permission', t: 'you must have written permission before sharing publicly.' },
+                    { n: '04', h: 'tag your location', t: 'city and state required so your work appears in the location guide.' },
                   ].map(g => (
                     <div key={g.n} className="py-3.5">
                       <div className="text-[9px] tracking-[0.1em] text-mthr-dim mb-0.5">{g.n}.</div>
