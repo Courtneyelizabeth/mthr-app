@@ -194,7 +194,7 @@ export default function SubmitPage() {
             we're looking for photographers who see the world differently. your work, your story, your community. full credit always.
           </p>
           <div className="mt-4 px-4 py-3 bg-mthr-black text-white rounded-sm flex items-center justify-between gap-4">
-            <p className="text-[12px] text-white/80">a free account is required to submit your work.</p>
+            <p className="text-[12px] text-white/80">your account is your portfolio. every image you submit lives there.</p>
             <div className="flex gap-3 flex-shrink-0">
               <a href="/login" className="text-[10px] tracking-[0.14em] uppercase text-white/70 hover:text-white transition-colors">sign in</a>
               <a href="/signup" className="text-[10px] tracking-[0.14em] uppercase font-medium text-white border-b border-white/50 hover:border-white transition-colors">join free</a>
