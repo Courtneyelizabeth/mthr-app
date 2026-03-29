@@ -135,7 +135,7 @@ export async function POST(request: Request) {
   }
 
   // Send featured email (old block — now replaced above)
-  if (false && type === 'featured' && photographer_email) {
+  if (type === 'featured' && photographer_email) {
     const featuredRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
