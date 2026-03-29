@@ -46,7 +46,7 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-[#F5F2EE] flex">
       <div className="hidden md:flex w-1/2 relative items-end p-12 overflow-hidden">
-        <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/katiemitzphoto-123.jpg" alt="MTHR" className="absolute inset-0 w-full h-full object-cover" />
+        <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/courtney_maxwell_photography302_websize_websize.jpg" alt="MTHR" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
         <div className="relative z-10">
           <Link href="/explore" className="font-cormorant font-light text-[28px] tracking-[0.25em] uppercase text-white block mb-2">MTHR</Link>
