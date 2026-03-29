@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import TopNav from '@/components/layout/TopNav'
 import Footer from '@/components/layout/Footer'
 import { createClient } from '@/lib/supabase/client'
-import type { SubmissionCategory } from '@/types/database'
 
 // ── Magazine submission window ──────────────────────────────
 const MAG_OPEN  = new Date('2026-04-01T00:00:00')
@@ -328,7 +327,7 @@ export default function SubmitPage() {
                 </Field>
 
                 <Field label="Category">
-                  <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value as SubmissionCategory }))}
+                  <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
                     className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors">
                     {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
                   </select>
