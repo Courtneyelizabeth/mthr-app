@@ -398,7 +398,7 @@ export default function SubmitPage() {
                 <h3 className="font-cormorant font-light text-[20px] text-mthr-black mb-4">guidelines.</h3>
                 <div className="divide-y divide-[#E8E4DE]">
                   {[
-                    { n: '01', h: '1 hero image', t: 'choose your single strongest image from this session.' },
+                    { n: '01', h: 'your favorite image.', t: 'one image per session. come back and submit as many sessions as you like.' },
                     { n: '02', h: 'your image, your rights.', t: 'submission confirms you hold full copyright for every image you share.' },
                     { n: '03', h: 'give credit where it is due.', t: 'if this was made with others — a stylist, second shooter, or workshop host — please credit them.' },
                     
