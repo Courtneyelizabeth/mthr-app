@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
   }
 
-  const { type, photographer_name, photographer_email, submission_title, location } = body
+  const { type, photographer_name, photographer_email, submission_title, location, gallery_link } = body
   console.log('Notify:', { type, photographer_name, photographer_email, submission_title })
 
   const results = []

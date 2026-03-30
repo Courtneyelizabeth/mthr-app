@@ -106,7 +106,7 @@ export default function SubmitPage() {
   }
 
   const canSubmitApp = form.city && form.state_code && appFiles.length > 0
-  const canSubmitMag = form.title && form.city && form.state_code && magFiles.length >= 10 && magForm.copyright_declared
+  const canSubmitMag = form.title && form.city && form.state_code && magForm.gallery_link && magForm.copyright_declared
 
   const handleSubmit = async () => {
     setError(null)
@@ -115,17 +115,20 @@ export default function SubmitPage() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) { router.push('/login?redirectTo=/submit'); return }
 
-      const filesToUpload = tab === 'app' ? appFiles : magFiles
-      if (filesToUpload.length === 0) { setError('Please select at least one image.'); setUploading(false); return }
-
-      const imageUrls: string[] = []
-      for (const file of filesToUpload) {
-        const ext = file.name.split('.').pop()
-        const path = `${user.id}/${tab}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-        const { error: uploadError } = await supabase.storage.from('submissions').upload(path, file, { upsert: false })
-        if (uploadError) throw new Error(`Upload failed: ${uploadError.message}`)
-        const { data: { publicUrl } } = supabase.storage.from('submissions').getPublicUrl(path)
-        imageUrls.push(publicUrl)
+      let imageUrls: string[] = []
+      if (tab === 'app') {
+        if (appFiles.length === 0) { setError('Please select an image.'); setUploading(false); return }
+        for (const file of appFiles) {
+          const ext = file.name.split('.').pop()
+          const path = `${user.id}/app/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+          const { error: uploadError } = await supabase.storage.from('submissions').upload(path, file, { upsert: false })
+          if (uploadError) throw new Error(`Upload failed: ${uploadError.message}`)
+          const { data: { publicUrl } } = supabase.storage.from('submissions').getPublicUrl(path)
+          imageUrls.push(publicUrl)
+        }
+      } else {
+        if (!magForm.gallery_link) { setError('Please add your gallery link.'); setUploading(false); return }
+        imageUrls = [magForm.gallery_link]
       }
 
       const locationName = isIntl
@@ -167,6 +170,7 @@ export default function SubmitPage() {
             photographer_email: user?.email || user?.user_metadata?.email || '',
             submission_title: form.title,
             location: isIntl ? (form.country || 'International') : `${form.city}, ${form.state_code}`,
+            gallery_link: tab === 'magazine' ? magForm.gallery_link : '',
           }),
         })
         console.log('Email notify status:', notifyRes.status)
@@ -327,7 +331,15 @@ export default function SubmitPage() {
                   <div className="border-t border-[#E8E4DE] pt-5 space-y-4">
                     <p className="text-[9px] tracking-[0.16em] uppercase text-mthr-mid font-medium">Magazine details</p>
 
-                    <Field label="Submission statement (optional)">
+                    <Field label="Gallery link *">
+                    <input type="url" placeholder="pixieset.com/yourgallery or dropbox.com/..."
+                      value={magForm.gallery_link}
+                      onChange={e => setMagForm(f => ({ ...f, gallery_link: e.target.value }))}
+                      className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
+                    <p className="text-[11px] text-mthr-mid mt-1">share a link to your full gallery — pixieset, dropbox, google drive, or similar.</p>
+                  </Field>
+
+                  <Field label="Submission statement (optional)">
                       <textarea placeholder="share the story or intention behind this work..."
                         value={magForm.submission_statement} rows={4}
                         onChange={e => setMagForm(f => ({ ...f, submission_statement: e.target.value }))}
@@ -424,7 +436,7 @@ export default function SubmitPage() {
                   className="border border-dashed border-[#D0CCC6] rounded-sm p-8 text-center cursor-pointer hover:bg-white hover:border-mthr-mid transition-all mb-4">
                   <div className="text-[24px] text-mthr-dim mb-2">+</div>
                   <div className="text-[10px] tracking-[0.1em] uppercase text-mthr-mid font-medium">
-                    {magFiles.length > 0 ? `${magFiles.length} image${magFiles.length > 1 ? 's' : ''} ready (${magFiles.length}/20)` : 'upload 10–20 print-ready jpg images'}
+                    add your gallery link
                   </div>
                   <div className="font-cormorant italic text-[12px] text-mthr-dim mt-1">jpg · sRGB · exact print dimensions required</div>
                   <input ref={magFileRef} type="file" accept="image/jpeg" multiple className="hidden" onChange={handleMagFiles} />
