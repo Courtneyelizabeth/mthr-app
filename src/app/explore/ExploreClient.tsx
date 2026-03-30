@@ -43,6 +43,7 @@ type Photographer = {
 const CATEGORIES = [
   { value: 'all',        label: 'All' },
   { value: 'motherhood', label: 'Motherhood' },
+  { value: 'family_documentary', label: 'Family' },
   { value: 'editorial',  label: 'Maternity' },
   { value: 'kids',       label: 'Kids' },
   { value: 'other',      label: 'Other' },
