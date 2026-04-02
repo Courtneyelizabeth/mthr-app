@@ -11,7 +11,7 @@ type Submission = {
   id: string; title: string; location_name: string; location_country: string
   category: string; status: string; submission_type: string; subjects: string | null
   instagram_handle: string | null; description: string | null
-  cover_image: string | null; images: string[]; created_at: string; photographer_id: string; photographer_email: string | null
+  cover_image: string | null; images: string[]; gallery_link: string | null; created_at: string; photographer_id: string; photographer_email: string | null
   photographer_id: string | null
   profiles: { full_name: string | null; username: string | null } | null
 }
@@ -46,7 +46,7 @@ export default function AdminPage() {
     setLoading(true)
     const { data } = await supabase
       .from('submissions')
-      .select(`id, title, location_name, location_country, category, status, submission_type, subjects, instagram_handle, description, cover_image, images, created_at, photographer_id, photographer_email, profiles:photographer_id (full_name, username)`)
+      .select(`id, title, location_name, location_country, category, status, submission_type, subjects, instagram_handle, description, cover_image, images, gallery_link, created_at, photographer_id, photographer_email, profiles:photographer_id (full_name, username)`)
       .eq('status', filter)
       .eq('submission_type', viewType)
       .order('created_at', { ascending: false })
