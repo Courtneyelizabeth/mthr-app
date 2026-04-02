@@ -35,6 +35,9 @@ export default function SignupPage() {
           <p className="text-[12px] text-mthr-mid leading-[1.8]">
             we sent a confirmation link to <strong>{form.email}</strong>. click it to activate your account.
           </p>
+          <p className="text-[11px] text-mthr-mid leading-[1.8] mt-3 px-4 py-3 bg-white border border-[#E8E4DE] rounded-sm">
+            don't see it? check your <strong>junk or spam folder</strong>. to make sure you receive future emails from us, add <strong>hello@mthrmag.com</strong> to your contacts.
+          </p>
           <Link href="/login" className="inline-block mt-6 text-[9px] tracking-[0.16em] uppercase text-mthr-mid hover:text-mthr-black transition-colors">
             back to sign in →
           </Link>
