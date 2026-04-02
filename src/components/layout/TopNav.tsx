@@ -71,9 +71,9 @@ export default function TopNav() {
               <Link href="/inspo" className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors">
                 Saved
               </Link>
-              <button onClick={handleSignOut} className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors">
-                Sign out
-              </button>
+              <Link href="/account" className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors">
+                Account
+              </Link>
             </>
           ) : (
             <>
@@ -123,9 +123,9 @@ export default function TopNav() {
                 <Link href="/inspo" onClick={() => setMenuOpen(false)} className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid">
                   Saved
                 </Link>
-                <button onClick={handleSignOut} className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid">
-                  Sign out
-                </button>
+                <Link href="/account" onClick={() => setMenuOpen(false)} className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid">
+                  Account
+                </Link>
               </>
             ) : (
               <>

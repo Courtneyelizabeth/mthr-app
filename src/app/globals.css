@@ -28,6 +28,12 @@
   .photo-bw-2   { background: linear-gradient(150deg, #E0DCD6 0%, #B8B4AC 40%, #807870 70%, #403C38 100%); }
 
   /* Input style */
+  .mthr-field {
+    @apply w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none transition-colors;
+  }
+  .mthr-field:focus {
+    @apply border-mthr-black;
+  }
   .mthr-input {
     @apply w-full px-3 py-2.5 bg-white border border-[#D0CCC6] text-[13px] text-[#1A1814] rounded-sm outline-none focus:border-[#1A1814] transition-colors font-dm;
   }
