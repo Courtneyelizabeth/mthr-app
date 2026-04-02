@@ -366,7 +366,7 @@ export default function SubmitPage() {
                       value={magForm.gallery_link}
                       onChange={e => setMagForm(f => ({ ...f, gallery_link: e.target.value }))}
                       className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
-                    <p className="text-[11px] text-mthr-mid mt-1">share a link to your full gallery — pixieset, dropbox, google drive, or similar.</p>
+                    <p className="text-[11px] text-mthr-mid mt-1">share a link to your full gallery — pic-time, pixieset, dropbox, google drive, or similar. make sure your gallery is set to <strong>public</strong>, not private.</p>
                   </Field>
 
                   <Field label="Submission statement (optional)">
@@ -460,30 +460,17 @@ export default function SubmitPage() {
                 <h2 className="font-cormorant font-light text-[32px] leading-none text-mthr-black mb-2">
                   print-ready <em>images.</em>
                 </h2>
-                <p className="text-[11px] text-mthr-mid mb-6">upload 10–20 print-ready JPG images.</p>
+                <p className="text-[11px] text-mthr-mid mb-6">share your images via a gallery link. no file uploads required.</p>
 
-                <div onClick={() => magFileRef.current?.click()} onDragOver={e => e.preventDefault()}
-                  className="border border-dashed border-[#D0CCC6] rounded-sm p-8 text-center cursor-pointer hover:bg-white hover:border-mthr-mid transition-all mb-4">
-                  <div className="text-[24px] text-mthr-dim mb-2">+</div>
-                  <div className="text-[10px] tracking-[0.1em] uppercase text-mthr-mid font-medium">
-                    add your gallery link
-                  </div>
-                  <div className="font-cormorant italic text-[12px] text-mthr-dim mt-1">jpg · sRGB · exact print dimensions required</div>
-                  <input ref={magFileRef} type="file" accept="image/jpeg" multiple className="hidden" onChange={handleMagFiles} />
+                <div className="px-4 py-5 bg-white border border-[#E8E4DE] rounded-sm mb-8 space-y-2">
+                  <p className="text-[10px] tracking-[0.14em] uppercase font-medium text-mthr-black">accepted gallery types</p>
+                  {['Pic-Time', 'Pixieset', 'Dropbox folder', 'Google Drive folder', 'WeTransfer'].map(s => (
+                    <p key={s} className="text-[12px] text-mthr-mid">· {s}</p>
+                  ))}
+                  <p className="text-[10px] text-mthr-mid pt-2 border-t border-[#E8E4DE] leading-[1.7]">
+                    ⚠ make sure your gallery is set to <strong>public</strong> — we won't be able to view private galleries.
+                  </p>
                 </div>
-
-                {sizeErrors.length > 0 && (
-                  <div className="mb-4 px-3 py-3 bg-red-50 rounded-sm border border-red-100">
-                    <p className="text-[9px] tracking-[0.1em] uppercase text-red-600 font-medium mb-2">{sizeErrors.length} rejected:</p>
-                    {sizeErrors.map((e, i) => <p key={i} className="text-[11px] text-red-600">{e}</p>)}
-                  </div>
-                )}
-                {magFiles.length > 0 && (
-                  <div className="mb-6 px-3 py-3 bg-white rounded-sm border border-[#E8E4DE]">
-                    <p className="text-[9px] tracking-[0.1em] uppercase text-mthr-mid font-medium mb-2">Accepted ({magFiles.length}/20):</p>
-                    {magFiles.map((f, i) => <p key={i} className="text-[11px] text-mthr-black">{f.name}</p>)}
-                  </div>
-                )}
 
                 <h3 className="font-cormorant font-light text-[20px] text-mthr-black mb-4">print requirements.</h3>
                 <div className="divide-y divide-[#E8E4DE]">
