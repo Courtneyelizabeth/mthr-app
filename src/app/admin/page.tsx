@@ -39,6 +39,7 @@ export default function AdminPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([])
   const [loading, setLoading] = useState(false)
   const [filter, setFilter] = useState<'pending' | 'approved' | 'featured' | 'rejected'>('pending')
+  const [viewType, setViewType] = useState<'app' | 'magazine'>('app')
   const [updating, setUpdating] = useState<string | null>(null)
 
   const fetchSubmissions = async () => {
@@ -47,13 +48,13 @@ export default function AdminPage() {
       .from('submissions')
       .select(`id, title, location_name, location_country, category, status, submission_type, subjects, instagram_handle, description, cover_image, images, created_at, photographer_id, photographer_email, profiles:photographer_id (full_name, username)`)
       .eq('status', filter)
-      .eq('submission_type', 'app')
+      .eq('submission_type', viewType)
       .order('created_at', { ascending: false })
     setSubmissions(data ?? [])
     setLoading(false)
   }
 
-  useEffect(() => { if (authed) fetchSubmissions() }, [authed, filter])
+  useEffect(() => { if (authed) fetchSubmissions() }, [authed, filter, viewType])
 
   const updateStatus = async (id: string, status: string) => {
     setUpdating(id)
@@ -136,7 +137,7 @@ export default function AdminPage() {
           <p className="text-[12px] text-mthr-mid">loading...</p>
         ) : submissions.length === 0 ? (
           <div className="py-16 text-center">
-            <p className="font-cormorant italic text-[20px] font-light text-mthr-mid">no {filter} submissions.</p>
+            <p className="font-cormorant italic text-[20px] font-light text-mthr-mid">no {filter} {viewType} submissions.</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -174,6 +175,12 @@ export default function AdminPage() {
                   </div>
                   {sub.description && <p className="text-[11px] text-mthr-mid leading-[1.7] mb-4 line-clamp-2">{sub.description}</p>}
                   <div className="flex gap-2">
+                    {sub.submission_type === 'magazine' && (sub as any).gallery_link && (
+                      <a href={(sub as any).gallery_link} target="_blank" rel="noopener noreferrer"
+                        className="inline-block mt-2 text-[9px] tracking-[0.1em] uppercase text-mthr-mid hover:text-mthr-black transition-colors border-b border-[#D0CCC6]">
+                        view gallery →
+                      </a>
+                    )}
                     {filter === 'pending' && (
                       <>
                         <button onClick={() => updateStatus(sub.id, 'approved')} disabled={updating === sub.id}
