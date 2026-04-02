@@ -68,11 +68,22 @@ export default function SubmitPage() {
     subjects: '',
     instagram: '',
   })
+  const WEEKLY_QUESTIONS = [
+    "in a few words, how do you create the feeling in your images — what do you look for, and how do you find it?",
+    "how would you describe your process — what do you see or feel before you press the shutter?",
+    "what do you believe makes your images feel the way they do — and how do you get there?",
+    "describe your process in a few sentences — what do you look for and how do you capture it?",
+  ]
+  const weeklyQuestion = WEEKLY_QUESTIONS[new Date().getDay() % 4]
+
   const [magForm, setMagForm] = useState({
     submission_statement: '',
     team_credits: '',
+    gallery_link: '',
     copyright_declared: false,
   })
+  const [processAnswer, setProcessAnswer] = useState('')
+  const [appGalleryLink, setAppGalleryLink] = useState('')
   const [appFiles, setAppFiles] = useState<File[]>([])
   const [magFiles, setMagFiles] = useState<File[]>([])
   const [sizeErrors, setSizeErrors] = useState<string[]>([])
@@ -155,6 +166,8 @@ export default function SubmitPage() {
         cover_image: imageUrls[0] ?? null,
         subjects: form.subjects || null,
         instagram_handle: form.instagram || null,
+        process_answer: tab === 'app' ? (processAnswer || null) : null,
+        gallery_link: tab === 'app' ? (appGalleryLink || null) : (magForm.gallery_link || null),
       })
 
       if (insertError) throw new Error(insertError.message)
@@ -326,6 +339,23 @@ export default function SubmitPage() {
                     className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors resize-none leading-relaxed" />
                 </Field>
 
+                {tab === 'app' && (
+                  <div className="border-t border-[#E8E4DE] pt-5 space-y-4">
+                    <Field label={<span>{weeklyQuestion} <span className="text-mthr-dim normal-case">(optional)</span></span>}>
+                      <textarea placeholder="share as much or as little as you like..." value={processAnswer} rows={3}
+                        onChange={e => setProcessAnswer(e.target.value)}
+                        className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors resize-none leading-relaxed" />
+                    </Field>
+                    <Field label="Share more images (optional)">
+                      <input type="url" placeholder="pixieset, dropbox, google drive..."
+                        value={appGalleryLink}
+                        onChange={e => setAppGalleryLink(e.target.value)}
+                        className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
+                      <p className="text-[10px] text-mthr-mid mt-1 leading-[1.6]">a gallery link may be considered for instagram feature.</p>
+                    </Field>
+                  </div>
+                )}
+
                 {/* Magazine extra fields */}
                 {tab === 'magazine' && magOpen && (
                   <div className="border-t border-[#E8E4DE] pt-5 space-y-4">
@@ -412,10 +442,10 @@ export default function SubmitPage() {
                 <h3 className="font-cormorant font-light text-[20px] text-mthr-black mb-4">guidelines.</h3>
                 <div className="divide-y divide-[#E8E4DE]">
                   {[
-                    { n: '01', h: 'your favorite image.', t: 'choose the frame that stopped you. the one you keep coming back to.' },
-                    { n: '02', h: 'your image, your rights.', t: 'submission confirms you hold full copyright for every image you share.' },
-                    { n: '03', h: 'give credit where it is due.', t: 'if this was made with others — a stylist, second shooter, or workshop host — please credit them.' },
-                    
+                    { n: '01', h: 'your best frame.', t: 'one image. the one you keep coming back to. jpg · high resolution preferred.' },
+                    { n: '02', h: 'your work, your rights.', t: 'submission confirms you hold full copyright for every image you share.' },
+                    { n: '03', h: 'more to share?', t: 'drop a gallery link above — we may feature your work on our instagram. jpg · sRGB · 10–20 images.' },
+                    { n: '04', h: 'no limit.', t: 'submit as many sessions as you like. one image per submission.' },
                   ].map(g => (
                     <div key={g.n} className="py-3.5">
                       <div className="text-[9px] tracking-[0.1em] text-mthr-dim mb-0.5">{g.n}.</div>

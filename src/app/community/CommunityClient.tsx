@@ -312,6 +312,35 @@ export default function CommunityClient({
         </div>
       )}
 
+      {/* EDUCATION BLOCK */}
+      {activeTab !== '365 project' && (
+        <div className="mx-8 mb-8 border border-[#E8E4DE] rounded-sm overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="px-8 py-10 bg-white">
+              <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium mb-3">coming soon</p>
+              <h2 className="font-cormorant font-light text-[32px] leading-tight text-mthr-black mb-3">
+                education &amp; <em>behind the scenes.</em>
+              </h2>
+              <p className="text-[12px] text-mthr-mid leading-[1.8]">
+                process videos and real insight into the work. coming soon to MTHR.
+              </p>
+            </div>
+            <div className="bg-[#F5F2EE] flex items-center justify-center px-8 py-10">
+              <div className="w-full aspect-video bg-[#E8E4DE] rounded-sm flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-12 h-12 rounded-full border border-[#D0CCC6] flex items-center justify-center mx-auto mb-3">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6 4l6 4-6 4V4z" fill="#A8A29E"/>
+                    </svg>
+                  </div>
+                  <p className="text-[9px] tracking-[0.16em] uppercase text-mthr-dim font-medium">video coming soon</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* SUBMIT POST FORM MODAL */}
       {showForm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">

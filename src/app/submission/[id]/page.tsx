@@ -55,9 +55,11 @@ export default async function SubmissionPage({ params }: { params: { id: string 
               </span>
             )}
             {sub.subjects && (
-              <h1 className="font-cormorant italic font-light text-[42px] md:text-[56px] text-white leading-none">
-                {sub.subjects}
-              </h1>
+              <p className="text-[11px] tracking-[0.08em] text-white/70 mt-1">
+                {sub.subjects.startsWith('@') ? (
+                  <a href={`https://instagram.com/${sub.subjects.replace('@','')}`} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{sub.subjects}</a>
+                ) : sub.subjects}
+              </p>
             )}
             <p className="font-cormorant text-[16px] font-light text-white/75 mt-1">
               {sub.location_name}, {sub.location_country}
