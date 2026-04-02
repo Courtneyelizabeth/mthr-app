@@ -87,16 +87,16 @@ export default async function ExplorePage() {
           {/* Feature pillars */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-3xl mx-auto text-center">
             {[
-              { icon: '◎', title: 'Submit & be featured', desc: 'share your work on the app and instagram' },
-              { icon: '□', title: 'Print magazine', desc: 'get published in a tangible, curated edition' },
-              { icon: '◇', title: 'Location guide', desc: 'discover and share the best shoot locations' },
-              { icon: '○', title: 'Community', desc: 'workshops, content days, photographer connection' },
+              { icon: '◎', title: 'Submit & be featured', desc: 'share your work on the app and instagram', href: '/submit' },
+              { icon: '□', title: 'Print magazine', desc: 'get published in a tangible, curated edition', href: '/submit' },
+              { icon: '◇', title: 'Location guide', desc: 'discover and share the best shoot locations', href: '/location-guide' },
+              { icon: '○', title: 'Community', desc: 'workshops, content days, photographer connection', href: '/community' },
             ].map((p) => (
-              <div key={p.title} className="flex flex-col items-center gap-2">
+              <a key={p.title} href={p.href} className="flex flex-col items-center gap-2 group hover:opacity-70 transition-opacity">
                 <span className="text-[18px] text-mthr-mid">{p.icon}</span>
                 <p className="font-cormorant text-[15px] font-light text-mthr-black">{p.title}</p>
                 <p className="text-[10px] text-mthr-mid leading-[1.6]">{p.desc}</p>
-              </div>
+              </a>
             ))}
           </div>
         </section>
