@@ -57,6 +57,11 @@ export default function SubmitPage() {
   const magFileRef = useRef<HTMLInputElement>(null)
 
   const [tab, setTab] = useState<'app' | 'magazine'>('app')
+  const [user, setUser] = useState<any>(undefined) // undefined = loading, null = logged out
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null))
+  }, [])
   const [form, setForm] = useState({
     title: '',
     state_code: '',
@@ -244,6 +249,37 @@ export default function SubmitPage() {
           </div>
         </div>
 
+        {/* Auth gate */}
+        {user === null && (
+          <div className="flex items-center justify-center px-8 py-20">
+            <div className="text-center max-w-sm">
+              <div className="w-16 h-[1px] bg-[#D0CCC6] mx-auto mb-8" />
+              <h2 className="font-cormorant font-light text-[36px] leading-none text-mthr-black mb-3">
+                sign in to <em>submit.</em>
+              </h2>
+              <p className="text-[12px] text-mthr-mid leading-[1.8] mb-8">
+                you need a free MTHR account to submit your work. it takes 30 seconds.
+              </p>
+              <div className="flex items-center justify-center gap-3">
+                <a href="/signup" className="px-6 py-2.5 text-[10px] tracking-[0.16em] uppercase font-medium bg-mthr-black text-white rounded-full hover:bg-mthr-dark transition-colors">
+                  join free →
+                </a>
+                <a href="/login?redirectTo=/submit" className="px-6 py-2.5 text-[10px] tracking-[0.16em] uppercase font-medium border border-mthr-b2 text-mthr-mid rounded-full hover:border-mthr-black hover:text-mthr-black transition-colors">
+                  sign in
+                </a>
+              </div>
+              <div className="w-16 h-[1px] bg-[#D0CCC6] mx-auto mt-8" />
+            </div>
+          </div>
+        )}
+
+        {user === undefined && (
+          <div className="flex items-center justify-center px-8 py-20">
+            <p className="text-[12px] text-mthr-mid">loading...</p>
+          </div>
+        )}
+
+        {user !== null && user !== undefined && (
         <div className="grid grid-cols-1 md:grid-cols-2">
 
           {/* LEFT — FORM */}
@@ -495,6 +531,7 @@ export default function SubmitPage() {
             )}
           </div>
         </div>
+        )}
       </main>
       <Footer />
     </div>
