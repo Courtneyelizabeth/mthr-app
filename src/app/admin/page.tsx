@@ -121,6 +121,16 @@ export default function AdminPage() {
         </Link>
       </div>
 
+      <div className="bg-white border-b border-[#E8E4DE] px-8 pt-3 flex gap-2">
+        {(['app', 'magazine'] as const).map(t => (
+          <button key={t} onClick={() => setViewType(t)}
+            className={`px-4 py-1.5 mb-2 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full border transition-colors ${
+              viewType === t ? 'bg-mthr-black text-white border-mthr-black' : 'border-[#D0CCC6] text-mthr-mid hover:border-mthr-black hover:text-mthr-black'
+            }`}>
+            {t === 'app' ? 'App' : 'Magazine'}
+          </button>
+        ))}
+      </div>
       <div className="bg-white border-b border-[#E8E4DE] px-8 flex gap-1">
         {(['pending', 'approved', 'featured', 'rejected'] as const).map(s => (
           <button key={s} onClick={() => setFilter(s)}
