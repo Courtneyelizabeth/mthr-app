@@ -59,7 +59,6 @@ export default function SubmitPage() {
   const [tab, setTab] = useState<'app' | 'magazine'>('app')
   const [form, setForm] = useState({
     title: '',
-    city: '',
     state_code: '',
     country: '',
     venue: '',
@@ -116,8 +115,8 @@ export default function SubmitPage() {
     setSizeErrors(errors)
   }
 
-  const canSubmitApp = form.city && form.state_code && appFiles.length > 0
-  const canSubmitMag = form.title && form.city && form.state_code && magForm.gallery_link && magForm.copyright_declared
+  const canSubmitApp = appFiles.length > 0
+  const canSubmitMag = form.title && magForm.gallery_link && magForm.copyright_declared
 
   const handleSubmit = async () => {
     setError(null)
@@ -143,8 +142,8 @@ export default function SubmitPage() {
       }
 
       const locationName = isIntl
-        ? `${form.city}${form.venue ? ` · ${form.venue}` : ''}`
-        : `${form.city}, ${form.state_code}${form.venue ? ` · ${form.venue}` : ''}`
+        ? `${form.country || 'International'}${form.venue ? ` · ${form.venue}` : ''}`
+        : `${form.state_code || 'USA'}${form.venue ? ` · ${form.venue}` : ''}`
 
       const fullDescription = tab === 'magazine'
         ? [form.description, magForm.submission_statement ? `Statement: ${magForm.submission_statement}` : '', magForm.team_credits ? `Credits: ${magForm.team_credits}` : ''].filter(Boolean).join('\n\n')
@@ -158,8 +157,8 @@ export default function SubmitPage() {
         description: fullDescription,
         location_name: locationName,
         location_country: isIntl ? (form.country || 'International') : 'USA',
-        location_state: form.city,
-        location_state_code: form.state_code,
+        location_state: form.state_code || null,
+        location_state_code: form.state_code || null,
         category: form.category,
         submission_type: tab,
         images: imageUrls,
@@ -182,7 +181,7 @@ export default function SubmitPage() {
             photographer_name: user?.user_metadata?.full_name ?? 'Photographer',
             photographer_email: user?.email || user?.user_metadata?.email || '',
             submission_title: form.title,
-            location: isIntl ? (form.country || 'International') : `${form.city}, ${form.state_code}`,
+            location: isIntl ? (form.country || 'International') : (form.state_code || 'USA'),
             gallery_link: tab === 'magazine' ? magForm.gallery_link : '',
           }),
         })
@@ -281,20 +280,13 @@ export default function SubmitPage() {
                   </Field>
                 )}
 
-                <div className="grid grid-cols-2 gap-3">
-                  <Field label="City *">
-                    <input type="text" placeholder="Denver" value={form.city}
-                      onChange={e => setForm(f => ({ ...f, city: e.target.value }))}
-                      className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
-                  </Field>
-                  <Field label="State *">
-                    <select value={form.state_code} onChange={e => setForm(f => ({ ...f, state_code: e.target.value }))}
-                      className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors">
-                      <option value="">Select...</option>
-                      {US_STATES.map(s => <option key={s} value={s}>{s}</option>)}
-                    </select>
-                  </Field>
-                </div>
+                <Field label="State (optional)">
+                  <select value={form.state_code} onChange={e => setForm(f => ({ ...f, state_code: e.target.value }))}
+                    className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors">
+                    <option value="">Select...</option>
+                    {US_STATES.map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                </Field>
 
                 {isIntl && (
                   <Field label="Country">
@@ -311,11 +303,11 @@ export default function SubmitPage() {
                 </Field>
 
                 {/* Location preview */}
-                {form.city && form.state_code && (
+                {form.state_code && (
                   <div className="px-3 py-2 bg-[#F5F2EE] rounded-sm border border-[#E8E4DE]">
                     <span className="text-[9px] tracking-[0.12em] uppercase text-mthr-mid font-medium">appears as: </span>
                     <span className="text-[13px] text-mthr-black">
-                      {isIntl ? form.city : `${form.city}, ${form.state_code}`}{form.venue ? ` · ${form.venue}` : ''}
+                      {isIntl ? (form.country || 'International') : form.state_code}{form.venue ? ` · ${form.venue}` : ''}
                     </span>
                   </div>
                 )}
