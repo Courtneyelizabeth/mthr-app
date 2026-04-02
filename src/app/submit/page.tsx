@@ -222,17 +222,11 @@ export default function SubmitPage() {
 
           {/* Tab switcher */}
           <div className="flex gap-0 mt-6 border-b border-[#E8E4DE]">
-            <button onClick={() => setTab('app')}
-              className={`px-5 py-3 text-[10px] tracking-[0.14em] uppercase font-medium border-b-2 transition-colors -mb-px ${
-                tab === 'app' ? 'border-mthr-black text-mthr-black' : 'border-transparent text-mthr-mid hover:text-mthr-black'
-              }`}>
-              App feature
-            </button>
             <button
               onClick={() => { if (magOpen) setTab('magazine') }}
               className={`px-5 py-3 text-[10px] tracking-[0.14em] uppercase font-medium border-b-2 transition-colors -mb-px relative ${
                 tab === 'magazine' ? 'border-mthr-black text-mthr-black'
-                : magOpen ? 'border-transparent text-mthr-mid hover:text-mthr-black'
+                : magOpen ? 'border-transparent text-mthr-dark hover:text-mthr-black'
                 : 'border-transparent text-mthr-dim cursor-not-allowed'
               }`}>
               Print magazine
@@ -241,6 +235,12 @@ export default function SubmitPage() {
               ) : (
                 <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-b1 text-mthr-mid px-1.5 py-0.5 rounded-full">Opens Apr 1</span>
               )}
+            </button>
+            <button onClick={() => setTab('app')}
+              className={`px-5 py-3 text-[10px] tracking-[0.14em] uppercase font-medium border-b-2 transition-colors -mb-px ${
+                tab === 'app' ? 'border-mthr-black text-mthr-black' : 'border-transparent text-mthr-dark hover:text-mthr-black'
+              }`}>
+              Instagram & App
             </button>
           </div>
         </div>
@@ -413,7 +413,7 @@ export default function SubmitPage() {
                 <button onClick={handleSubmit}
                   disabled={uploading || (tab === 'app' ? !canSubmitApp : !canSubmitMag)}
                   className="w-full py-3.5 bg-mthr-black text-white text-[10px] tracking-[0.18em] uppercase font-medium rounded-sm hover:bg-mthr-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-                  {uploading ? 'submitting…' : tab === 'app' ? 'submit your work →' : 'submit for magazine consideration →'}
+                  {uploading ? 'submitting…' : tab === 'app' ? 'submit for instagram & app →' : 'submit for magazine consideration →'}
                 </button>
               </div>
             )}

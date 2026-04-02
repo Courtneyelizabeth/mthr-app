@@ -16,7 +16,7 @@ export default function ThankYouPage() {
             your images have been submitted.
           </p>
           <p className="text-[13px] text-mthr-mid leading-[1.8] mb-10 max-w-md mx-auto">
-            we review every submission carefully and personally. if your work is selected you'll hear from us within 7 days. we're so glad you're here.
+            we review every submission carefully and personally. if your work is selected for the app or instagram, you'll hear from us within 7 days. magazine submissions are reviewed within 22 days. we're so glad you're here.
           </p>
           <div className="w-16 h-[1px] bg-[#D0CCC6] mx-auto mb-10" />
           <div className="flex items-center justify-center gap-4">
