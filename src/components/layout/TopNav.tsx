@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
@@ -41,9 +42,9 @@ export default function TopNav() {
         {/* Logo */}
         <Link
           href="/explore"
-          className="font-bebas text-[28px] md:text-[30px] tracking-[-0.05em] uppercase text-mthr-black hover:opacity-60 transition-opacity flex-shrink-0"
+          className="hover:opacity-60 transition-opacity flex-shrink-0"
         >
-          MTHR
+          <img src="/mthr-logo.svg" alt="MTHR" className="h-7 w-auto" style={{filter: 'brightness(0)'}} />
         </Link>
 
         {/* Desktop nav */}
