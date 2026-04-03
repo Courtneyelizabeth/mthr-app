@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="border-t border-mthr-b1 bg-mthr-white">
       <div className="flex items-center justify-between px-7 py-6">
         <div>
-          <span className="font-barlow font-bold text-[24px] tracking-[-0.08em] uppercase text-mthr-black">MTHR</span>
+          <span className="font-bebas text-[24px] tracking-[-0.05em] uppercase text-mthr-black">MTHR</span>
           <p className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid mt-1">
             Where real life is the story.
           </p>
