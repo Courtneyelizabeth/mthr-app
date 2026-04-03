@@ -71,7 +71,12 @@ function LoginForm() {
             {loading ? 'signing in…' : 'sign in →'}
           </button>
 
-          <p className="mt-6 text-center text-[11px] text-mthr-mid">
+          <p className="mt-4 text-center text-[11px] text-mthr-mid">
+            <Link href="/forgot-password" className="text-mthr-mid hover:text-mthr-black transition-colors underline underline-offset-2">
+              forgot your password?
+            </Link>
+          </p>
+          <p className="mt-3 text-center text-[11px] text-mthr-mid">
             no account yet?{' '}
             <Link href="/signup" className="text-mthr-black underline underline-offset-2 hover:opacity-70 transition-opacity">
               join MTHR
