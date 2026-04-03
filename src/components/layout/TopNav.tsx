@@ -41,7 +41,7 @@ export default function TopNav() {
         {/* Logo */}
         <Link
           href="/explore"
-          className="font-cormorant font-light text-[20px] md:text-[22px] tracking-[0.25em] uppercase text-mthr-black hover:opacity-60 transition-opacity flex-shrink-0"
+          className="font-barlow font-bold text-[28px] md:text-[30px] tracking-[-0.08em] uppercase text-mthr-black hover:opacity-60 transition-opacity flex-shrink-0"
         >
           MTHR
         </Link>

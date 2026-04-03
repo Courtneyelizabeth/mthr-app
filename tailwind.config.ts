@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
+        barlow: ['var(--font-barlow)', 'sans-serif'],
         cormorant: ['var(--font-cormorant)', 'serif'],
         dm: ['var(--font-dm)', 'sans-serif'],
       },
