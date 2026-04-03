@@ -154,9 +154,22 @@ export default function AdminPage() {
             {submissions.map(sub => (
               <div key={sub.id} className="bg-white border border-[#E8E4DE] rounded-sm overflow-hidden flex">
                 <div className="w-[260px] flex-shrink-0">
-                  {sub.images?.length > 0 ? (
-                    <div className={`grid gap-[2px] h-[180px] ${sub.images.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
-                      {sub.images.slice(0, 4).map((img, i) => (
+                  {sub.submission_type === 'magazine' ? (
+                    <div className="h-[180px] bg-[#F5F2EE] flex flex-col items-center justify-center gap-2">
+                      <p className="text-[9px] tracking-[0.12em] uppercase text-mthr-mid font-medium">Gallery submission</p>
+                      {(sub as any).gallery_link && (
+                        <a href={(sub as any).gallery_link} target="_blank" rel="noopener noreferrer"
+                          className="text-[9px] tracking-[0.1em] uppercase text-mthr-black border-b border-mthr-black hover:opacity-60 transition-opacity">
+                          view gallery →
+                        </a>
+                      )}
+                    </div>
+                  ) : sub.cover_image ? (
+                    <div className={`grid gap-[2px] h-[180px] ${sub.images?.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+                      <div className="relative overflow-hidden photo-warm-1">
+                        <Image src={sub.cover_image} alt={sub.title} fill className="object-cover" />
+                      </div>
+                      {sub.images?.slice(1, 4).map((img, i) => (
                         <div key={i} className="relative overflow-hidden photo-warm-1">
                           <Image src={img} alt={sub.title} fill className="object-cover" />
                         </div>
@@ -185,12 +198,7 @@ export default function AdminPage() {
                   </div>
                   {sub.description && <p className="text-[11px] text-mthr-mid leading-[1.7] mb-4 line-clamp-2">{sub.description}</p>}
                   <div className="flex gap-2">
-                    {sub.submission_type === 'magazine' && (sub as any).gallery_link && (
-                      <a href={(sub as any).gallery_link} target="_blank" rel="noopener noreferrer"
-                        className="inline-block mt-2 text-[9px] tracking-[0.1em] uppercase text-mthr-mid hover:text-mthr-black transition-colors border-b border-[#D0CCC6]">
-                        view gallery →
-                      </a>
-                    )}
+
                     {filter === 'pending' && (
                       <>
                         <button onClick={() => updateStatus(sub.id, 'approved')} disabled={updating === sub.id}
