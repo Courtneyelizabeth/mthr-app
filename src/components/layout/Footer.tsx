@@ -11,10 +11,16 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex items-center gap-6">
-          {['Explore', 'Places', 'Magazine', 'Submit work'].map((label) => (
+          {[
+            { label: 'Explore', href: '/explore' },
+            { label: 'Magazine', href: '/magazine' },
+            { label: 'Community', href: '/community' },
+            { label: 'Locations', href: '/location-guide' },
+            { label: 'Submit', href: '/submit' },
+          ].map(({ label, href }) => (
             <Link
               key={label}
-              href={`/${label.toLowerCase().replace(' ', '-')}`}
+              href={href}
               className="text-[9px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors"
             >
               {label}

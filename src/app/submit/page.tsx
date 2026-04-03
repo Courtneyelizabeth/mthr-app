@@ -98,7 +98,7 @@ export default function SubmitPage() {
   const isIntl = form.state_code === 'International'
 
   const handleAppFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) setAppFiles(Array.from(e.target.files).slice(0, 1))
+    if (e.target.files) setAppFiles(Array.from(e.target.files).slice(0, 5))
   }
 
   const handleMagFiles = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -245,6 +245,7 @@ export default function SubmitPage() {
                 tab === 'app' ? 'border-mthr-black text-mthr-black' : 'border-transparent text-mthr-dark hover:text-mthr-black'
               }`}>
               Instagram & App
+              <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-black text-white px-1.5 py-0.5 rounded-full">Open</span>
             </button>
           </div>
         </div>
@@ -374,13 +375,6 @@ export default function SubmitPage() {
                         onChange={e => setProcessAnswer(e.target.value)}
                         className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors resize-none leading-relaxed" />
                     </Field>
-                    <Field label="Share more images (optional)">
-                      <input type="url" placeholder="pixieset, dropbox, google drive..."
-                        value={appGalleryLink}
-                        onChange={e => setAppGalleryLink(e.target.value)}
-                        className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
-                      <p className="text-[10px] text-mthr-mid mt-1 leading-[1.6]">a gallery link may be considered for instagram feature.</p>
-                    </Field>
                   </div>
                 )}
 
@@ -454,26 +448,26 @@ export default function SubmitPage() {
                 <h2 className="font-cormorant font-light text-[32px] leading-none text-mthr-black mb-2">
                   your <em>images.</em>
                 </h2>
-                <p className="text-[11px] text-mthr-mid mb-6">submit as many sessions as you like. one image per submission.</p>
+                <p className="text-[11px] text-mthr-mid mb-2">submit as many images as you like. up to 5 per submission.</p>
+                <p className="text-[11px] text-mthr-mid mb-6 font-medium">the first image is what will be featured on the MTHR feed — choose a strong one.</p>
 
                 <div onClick={() => appFileRef.current?.click()} onDragOver={e => e.preventDefault()}
-                  onDrop={e => { e.preventDefault(); if (e.dataTransfer.files) setAppFiles(Array.from(e.dataTransfer.files).slice(0, 1)) }}
+                  onDrop={e => { e.preventDefault(); if (e.dataTransfer.files) setAppFiles(Array.from(e.dataTransfer.files).slice(0, 5)) }}
                   className="border border-dashed border-[#D0CCC6] rounded-sm p-8 text-center cursor-pointer hover:bg-white hover:border-mthr-mid transition-all mb-8">
                   <div className="text-[24px] text-mthr-dim mb-2">+</div>
                   <div className="text-[10px] tracking-[0.1em] uppercase text-mthr-mid font-medium">
-                    {appFiles.length > 0 ? '1 image selected' : 'drag & drop or click to upload'}
+                    {appFiles.length > 0 ? `${appFiles.length} image${appFiles.length > 1 ? 's' : ''} selected (${appFiles.length}/5)` : 'drag & drop or click to upload'}
                   </div>
-                  <div className="font-cormorant italic text-[12px] text-mthr-dim mt-1">jpg or png · high resolution preferred</div>
+                  <div className="font-cormorant italic text-[12px] text-mthr-dim mt-1">jpg or png · up to 5 images · high resolution preferred</div>
                   <input ref={appFileRef} type="file" accept="image/jpeg,image/png" multiple className="hidden" onChange={handleAppFiles} />
                 </div>
 
                 <h3 className="font-cormorant font-light text-[20px] text-mthr-black mb-4">guidelines.</h3>
                 <div className="divide-y divide-[#E8E4DE]">
                   {[
-                    { n: '01', h: 'your best frame.', t: 'one image. the one you keep coming back to. jpg · high resolution preferred.' },
+                    { n: '01', h: 'your best work.', t: 'up to 5 images per submission. your first image is what appears on the MTHR feed — make it count.' },
                     { n: '02', h: 'your work, your rights.', t: 'submission confirms you hold full copyright for every image you share.' },
-                    { n: '03', h: 'more to share?', t: 'drop a gallery link above — we may feature your work on our instagram. jpg · sRGB · 10–20 images.' },
-                    { n: '04', h: 'no limit.', t: 'submit as many sessions as you like. one image per submission.' },
+                    { n: '03', h: 'no limit.', t: 'submit as many images as you like. up to 5 per submission.' },
                   ].map(g => (
                     <div key={g.n} className="py-3.5">
                       <div className="text-[9px] tracking-[0.1em] text-mthr-dim mb-0.5">{g.n}.</div>
@@ -490,9 +484,9 @@ export default function SubmitPage() {
                 </h2>
                 <p className="text-[11px] text-mthr-mid mb-6">share your images via a gallery link. no file uploads required.</p>
 
-                <div className="px-4 py-5 bg-white border border-[#E8E4DE] rounded-sm mb-8 space-y-2">
+                <div className="px-4 py-5 border border-[#D0CCC6] rounded-sm mb-8 space-y-2">
                   <p className="text-[10px] tracking-[0.14em] uppercase font-medium text-mthr-black">accepted gallery types</p>
-                  {['Pic-Time', 'Pixieset', 'Dropbox folder', 'Google Drive folder', 'WeTransfer'].map(s => (
+                  {['Pic-Time *or similar', 'Pixieset *or similar', 'WeTransfer'].map(s => (
                     <p key={s} className="text-[12px] text-mthr-mid">· {s}</p>
                   ))}
                   <p className="text-[10px] text-mthr-mid pt-2 border-t border-[#E8E4DE] leading-[1.7]">
@@ -503,17 +497,32 @@ export default function SubmitPage() {
                 <h3 className="font-cormorant font-light text-[20px] text-mthr-black mb-4">print requirements.</h3>
                 <div className="divide-y divide-[#E8E4DE]">
                   {[
-                    { n: '01', h: 'your favorite image.', t: 'choose the frame that stopped you. the one you keep coming back to.' },
+                    { n: '01', h: 'your favorite work.', t: 'the image(s) that stopped you. the one(s) you come back to.' },
                     { n: '02', h: 'sRGB color profile', t: 'export with sRGB. do not submit Adobe RGB or CMYK.' },
                     { n: '03', h: 'portrait — 2550 × 3300px', t: '8.5 × 11 inches at 300dpi. single-page portrait spreads.' },
                     { n: '04', h: 'landscape — 5100 × 3300px', t: '17 × 11 inches at 300dpi. full double-page spreads.' },
                     { n: '05', h: 'copyright owner only', t: 'you must be the original photographer and copyright holder.' },
-                    { n: '06', h: '10–20 images', t: 'minimum 10, maximum 20 images per submission.' },
+                    { n: '06', h: '1–20 images', t: 'minimum 1, maximum 20 images per submission.' },
                   ].map(g => (
                     <div key={g.n} className="py-3.5">
                       <div className="text-[9px] tracking-[0.1em] text-mthr-dim mb-0.5">{g.n}.</div>
                       <div className="text-[11px] font-medium text-mthr-black uppercase tracking-[0.06em] mb-0.5">{g.h}</div>
                       <div className="text-[11px] text-mthr-mid leading-[1.6]">{g.t}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 border-t border-[#E8E4DE] pt-6 space-y-5">
+                  <h3 className="font-cormorant font-light text-[20px] text-mthr-black">questions.</h3>
+                  {[
+                    { q: 'how many images can i submit?', a: 'each submission can include between 1 and 20 images. there is no limit to how many times you can submit — so if you have more work to share, simply submit again.' },
+                    { q: 'do my images need to be from one session?', a: 'not at all. your submission can be a collection of favorites from across multiple sessions, a full series from one session, or a mix of both. there are no rules here — just bring your best work.' },
+                    { q: 'what are we looking for?', a: 'images that feel real, intentional and true to the MTHR world. motherhood, maternity, kids and family — captured with care.' },
+                    { q: 'full credit always.', a: 'your name and handle will always be credited with your work. always.' },
+                    { q: 'what happens after i submit?', a: 'magazine submissions are considered for the MTHR print magazine only. selected photographers will be notified and their work featured in a tangible, printed edition that does justice to the craft.' },
+                  ].map(({ q, a }) => (
+                    <div key={q} className="border-b border-[#E8E4DE] pb-4">
+                      <p className="text-[11px] font-medium text-mthr-black uppercase tracking-[0.06em] mb-1">{q}</p>
+                      <p className="text-[11px] text-mthr-mid leading-[1.7]">{a}</p>
                     </div>
                   ))}
                 </div>
