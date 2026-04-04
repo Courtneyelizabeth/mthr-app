@@ -157,12 +157,11 @@ export default function SubmitPage() {
         : `${form.state_code || 'USA'}${form.venue ? ` · ${form.venue}` : ''}`
 
       const fullDescription = tab === 'magazine'
-        ? [form.description, magForm.submission_statement ? `Statement: ${magForm.submission_statement}` : '', magForm.team_credits ? `Credits: ${magForm.team_credits}` : ''].filter(Boolean).join('\n\n')
+        ? [form.description, magForm.submission_statement ? 'Statement: ' + magForm.submission_statement : '', magForm.team_credits ? 'Credits: ' + magForm.team_credits : ''].filter(Boolean).join('\n\n')
         : form.description
 
-      const { error: insertError } = await supabase.from('submissions').insert({
+      const { error: insertError } = await (supabase.from('submissions') as any).insert({
         photographer_id: user.id,
-        photographer_email: user.email ?? '',
         photographer_email: user.email ?? '',
         title: form.title,
         description: fullDescription,
@@ -415,12 +414,9 @@ export default function SubmitPage() {
                     const articleDesc = [
                       articleForm.about ? `About: ${articleForm.about}` : '',
                       articleForm.status ? `Status: ${articleForm.status}` : '',
-                      `
-
-${articleForm.text}`,
-                    ].filter(Boolean).join('
-')
-                    const { error: insertError } = await supabase.from('submissions').insert({
+                      '\n\n' + articleForm.text,
+                    ].filter(Boolean).join('\n')
+                    const { error: insertError } = await (supabase.from('submissions') as any).insert({
                       photographer_id: user.id,
                       photographer_email: user.email ?? '',
                       title: articleForm.title,
@@ -753,7 +749,7 @@ ${articleForm.text}`,
   )
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({ label, children }: { label: string | React.ReactNode; children: React.ReactNode }) {
   return (
     <div>
       <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">{label}</label>
