@@ -733,7 +733,7 @@ export default function SubmitPage() {
                 <h3 className="font-cormorant font-light text-[20px] text-mthr-black mb-4">a few things to know.</h3>
                 <div className="divide-y divide-[#E8E4DE]">
                   {[
-                    { n: '01', h: 'write like MTHR.', t: 'articles should feel warm, intentional, honest and written from real experience. we're not looking for perfection. we're looking for truth.' },
+                    { n: '01', h: 'write like MTHR.', t: "articles should feel warm, intentional, honest and written from real experience. we're not looking for perfection. we're looking for truth." },
                     { n: '02', h: 'full credit always.', t: 'your name, handle and location will appear with your published piece.' },
                     { n: '03', h: 'where it goes.', t: 'selected articles will be featured on the MTHR platform and considered for the print magazine.' },
                     { n: '04', h: 'submissions open.', t: 'submissions are open alongside photography submissions through may 1st.' },
