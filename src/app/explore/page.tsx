@@ -18,6 +18,7 @@ export default async function ExplorePage() {
       profiles:photographer_id (id, full_name, username, avatar_url, instagram)
     `)
     .in('status', ['approved', 'featured'])
+    .eq('submission_type', 'app')
     .order('created_at', { ascending: false })
     .limit(40)
 
