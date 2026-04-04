@@ -39,7 +39,7 @@ export default function AdminPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([])
   const [loading, setLoading] = useState(false)
   const [filter, setFilter] = useState<'pending' | 'approved' | 'featured' | 'rejected'>('pending')
-  const [viewType, setViewType] = useState<'app' | 'magazine'>('app')
+  const [viewType, setViewType] = useState<'app' | 'magazine' | 'article'>('app')
   const [updating, setUpdating] = useState<string | null>(null)
 
   const fetchSubmissions = async () => {
@@ -122,12 +122,12 @@ export default function AdminPage() {
       </div>
 
       <div className="bg-white border-b border-[#E8E4DE] px-8 pt-3 flex gap-2">
-        {(['app', 'magazine'] as const).map(t => (
+        {(['app', 'magazine', 'article'] as const).map(t => (
           <button key={t} onClick={() => setViewType(t)}
             className={`px-4 py-1.5 mb-2 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full border transition-colors ${
               viewType === t ? 'bg-mthr-black text-white border-mthr-black' : 'border-[#D0CCC6] text-mthr-mid hover:border-mthr-black hover:text-mthr-black'
             }`}>
-            {t === 'app' ? 'App' : 'Magazine'}
+            {t === 'app' ? 'App' : t === 'magazine' ? 'Magazine' : 'Article'}
           </button>
         ))}
       </div>
@@ -154,7 +154,18 @@ export default function AdminPage() {
             {submissions.map(sub => (
               <div key={sub.id} className="bg-white border border-[#E8E4DE] rounded-sm overflow-hidden flex">
                 <div className="w-[260px] flex-shrink-0">
-                  {sub.submission_type === 'magazine' ? (
+                  {sub.submission_type === 'article' ? (
+                    <div className="h-[180px] bg-[#F0EDE8] flex flex-col items-center justify-center gap-2 px-4">
+                      <p className="text-[9px] tracking-[0.12em] uppercase text-mthr-mid font-medium">Article</p>
+                      <p className="text-[11px] text-mthr-mid text-center leading-[1.5] line-clamp-4">{sub.description?.slice(0, 120)}...</p>
+                      {(sub as any).gallery_link && (
+                        <a href={(sub as any).gallery_link} target="_blank" rel="noopener noreferrer"
+                          className="text-[9px] tracking-[0.1em] uppercase text-mthr-black border-b border-mthr-black hover:opacity-60 transition-opacity">
+                          view portfolio →
+                        </a>
+                      )}
+                    </div>
+                  ) : sub.submission_type === 'magazine' ? (
                     <div className="h-[180px] bg-[#F5F2EE] flex flex-col items-center justify-center gap-2">
                       <p className="text-[9px] tracking-[0.12em] uppercase text-mthr-mid font-medium">Gallery submission</p>
                       {(sub as any).gallery_link && (

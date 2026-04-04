@@ -89,7 +89,7 @@ export default function SubmitPage() {
     copyright_declared: false,
   })
   const [articleForm, setArticleForm] = useState({
-    print_name: '', instagram: '', title: '', category: '', length: '', about: '', status: '', text: '', copyright_declared: false,
+    print_name: '', instagram: '', title: '', category: '', length: '', about: '', status: '', text: '', gallery_link: '', copyright_declared: false,
   })
   const ARTICLE_CATEGORIES = ['Photography craft','Motherhood & family','Business & community','Personal essay','Magazine & print','Other']
   const [processAnswer, setProcessAnswer] = useState('')
@@ -383,6 +383,13 @@ export default function SubmitPage() {
                     className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors resize-none leading-relaxed" />
                 </div>
 
+                <div>
+                  <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Gallery or portfolio link (optional)</label>
+                  <input type="url" placeholder="your portfolio or a gallery of supporting images" value={articleForm.gallery_link}
+                    onChange={e => setArticleForm(f => ({ ...f, gallery_link: e.target.value }))}
+                    className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
+                </div>
+
                 <label className="flex items-start gap-3 cursor-pointer p-4 border border-[#D0CCC6] rounded-sm bg-[#F5F2EE]">
                   <div className="relative mt-0.5 flex-shrink-0">
                     <input type="checkbox" checked={articleForm.copyright_declared}
@@ -430,7 +437,7 @@ export default function SubmitPage() {
                       subjects: `Category: ${articleForm.category} | Length: ${articleForm.length}`,
                       instagram_handle: articleForm.instagram || null,
                       process_answer: `Name in print: ${articleForm.print_name}`,
-                      gallery_link: null,
+                      gallery_link: articleForm.gallery_link || null,
                     })
                     if (insertError) throw new Error(insertError.message)
                     try {
