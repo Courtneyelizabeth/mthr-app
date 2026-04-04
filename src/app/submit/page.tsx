@@ -312,6 +312,156 @@ export default function SubmitPage() {
               </div>
             )}
 
+            {(tab as any) === 'article' && (
+              <div className="space-y-4">
+                <p className="text-[9px] tracking-[0.16em] uppercase text-mthr-mid font-medium">Article submission</p>
+
+                <div>
+                  <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Your name as you'd like to appear in print *</label>
+                  <input type="text" placeholder="e.g. Courtney Maxwell" value={articleForm.print_name}
+                    onChange={e => setArticleForm(f => ({ ...f, print_name: e.target.value }))}
+                    className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
+                </div>
+
+                <div>
+                  <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Your Instagram handle</label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[13px] text-mthr-mid">@</span>
+                    <input type="text" placeholder="yourhandle" value={articleForm.instagram}
+                      onChange={e => setArticleForm(f => ({ ...f, instagram: e.target.value.replace('@','') }))}
+                      className="w-full pl-7 pr-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Article title *</label>
+                  <input type="text" placeholder="working title is fine" value={articleForm.title}
+                    onChange={e => setArticleForm(f => ({ ...f, title: e.target.value }))}
+                    className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
+                </div>
+
+                <div>
+                  <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Category *</label>
+                  <select value={articleForm.category} onChange={e => setArticleForm(f => ({ ...f, category: e.target.value }))}
+                    className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors">
+                    <option value="">Select a category...</option>
+                    {ARTICLE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Length *</label>
+                  <select value={articleForm.length} onChange={e => setArticleForm(f => ({ ...f, length: e.target.value }))}
+                    className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors">
+                    <option value="">Select...</option>
+                    <option value="short_read">Short read — 300 to 500 words</option>
+                    <option value="feature">Feature — 500 to 1000 words</option>
+                    <option value="long_form">Long form — 1000 words and over</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">What's your article about? *</label>
+                  <textarea placeholder="a few sentences is fine — we just want to feel the idea before we read it." value={articleForm.about} rows={3}
+                    onChange={e => setArticleForm(f => ({ ...f, about: e.target.value }))}
+                    className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors resize-none leading-relaxed" />
+                </div>
+
+                <div>
+                  <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Ready to submit or pitching? *</label>
+                  <select value={articleForm.status} onChange={e => setArticleForm(f => ({ ...f, status: e.target.value }))}
+                    className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors">
+                    <option value="">Select...</option>
+                    <option value="ready">Ready to submit</option>
+                    <option value="pitch">Pitching the idea first</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Your article or pitch *</label>
+                  <textarea placeholder="paste your article text or pitch directly here." value={articleForm.text} rows={8}
+                    onChange={e => setArticleForm(f => ({ ...f, text: e.target.value }))}
+                    className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors resize-none leading-relaxed" />
+                </div>
+
+                <label className="flex items-start gap-3 cursor-pointer p-4 border border-[#D0CCC6] rounded-sm bg-[#F5F2EE]">
+                  <div className="relative mt-0.5 flex-shrink-0">
+                    <input type="checkbox" checked={articleForm.copyright_declared}
+                      onChange={e => setArticleForm(f => ({ ...f, copyright_declared: e.target.checked }))}
+                      className="sr-only" />
+                    <div className={`w-4 h-4 rounded-sm border transition-colors flex items-center justify-center ${articleForm.copyright_declared ? 'bg-mthr-black border-mthr-black' : 'bg-white border-[#D0CCC6]'}`}>
+                      {articleForm.copyright_declared && (
+                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                          <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-medium text-mthr-black leading-[1.5]">I confirm this is my original work and I hold all rights to it *</p>
+                    <p className="text-[10px] text-mthr-mid leading-[1.6] mt-1">by submitting you give MTHR permission to publish your work on the platform and consider it for the print magazine. full credit will always be given.</p>
+                  </div>
+                </label>
+
+                {error && <p className="text-[11px] text-red-600 bg-red-50 px-3 py-2 rounded-sm">{error}</p>}
+                <button onClick={async () => {
+                  if (!articleForm.title || !articleForm.category || !articleForm.length || !articleForm.text || !articleForm.copyright_declared) {
+                    setError('please fill in all required fields.'); return
+                  }
+                  setError(null); setUploading(true)
+                  try {
+                    const { data: { user } } = await supabase.auth.getUser()
+                    if (!user) { router.push('/login?redirectTo=/submit'); return }
+                    const articleDesc = [
+                      articleForm.about ? `About: ${articleForm.about}` : '',
+                      articleForm.status ? `Status: ${articleForm.status}` : '',
+                      `
+
+${articleForm.text}`,
+                    ].filter(Boolean).join('
+')
+                    const { error: insertError } = await supabase.from('submissions').insert({
+                      photographer_id: user.id,
+                      photographer_email: user.email ?? '',
+                      title: articleForm.title,
+                      description: articleDesc,
+                      location_name: '',
+                      location_country: '',
+                      category: articleForm.category,
+                      submission_type: 'article',
+                      images: [],
+                      cover_image: null,
+                      subjects: `Length: ${articleForm.length}`,
+                      instagram_handle: articleForm.instagram || null,
+                      process_answer: `Name in print: ${articleForm.print_name}`,
+                      gallery_link: null,
+                    })
+                    if (insertError) throw new Error(insertError.message)
+                    try {
+                      await fetch('/api/notify', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          type: 'submission_received',
+                          photographer_name: user?.user_metadata?.full_name ?? 'Writer',
+                          photographer_email: user?.email || '',
+                          submission_title: `[Article] ${articleForm.title}`,
+                          location: '—',
+                          gallery_link: '',
+                        }),
+                      })
+                    } catch (e) { console.error('Email error:', e) }
+                    router.push('/submit/thank-you')
+                  } catch (err: unknown) {
+                    setError(err instanceof Error ? err.message : 'Something went wrong')
+                  } finally { setUploading(false) }
+                }} disabled={uploading}
+                  className="w-full py-3.5 bg-mthr-black text-white text-[10px] tracking-[0.18em] uppercase font-medium rounded-sm hover:bg-mthr-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                  {uploading ? 'submitting…' : 'submit your article →'}
+                </button>
+              </div>
+            )}
+
             {(tab === 'app' || (tab === 'magazine' && magOpen)) && (
               <div className="space-y-4">
                 <Field label="Your Instagram handle">
@@ -344,6 +494,7 @@ export default function SubmitPage() {
                       className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
                   </Field>
                 )}
+                {(tab as any) === 'article' && null}
 
                 <Field label="State (optional)">
                   <select value={form.state_code} onChange={e => setForm(f => ({ ...f, state_code: e.target.value }))}
@@ -392,14 +543,6 @@ export default function SubmitPage() {
                   <Field label="how it happened (optional)">
                     <textarea placeholder="tell us something specific about how this image was made. did you prepare differently? use a questionnaire? had you photographed them before? what created the conditions for this moment"
                       value={form.description} rows={4}
-                      onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                      className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors resize-none leading-relaxed" />
-                  </Field>
-                )}
-                {tab === 'magazine' && (
-                  <Field label="About this work">
-                    <textarea placeholder="tell us about this work..."
-                      value={form.description} rows={3}
                       onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
                       className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors resize-none leading-relaxed" />
                   </Field>
@@ -464,153 +607,6 @@ export default function SubmitPage() {
                         </p>
                       </div>
                     </label>
-                  </div>
-                )}
-
-                {(tab as any) === 'article' && (
-                  <div className="space-y-4 border-t border-[#E8E4DE] pt-5">
-                    <p className="text-[9px] tracking-[0.16em] uppercase text-mthr-mid font-medium">Article submission</p>
-
-                    <div>
-                      <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Your name as you'd like to appear in print *</label>
-                      <input type="text" placeholder="e.g. Courtney Maxwell" value={articleForm.print_name}
-                        onChange={e => setArticleForm(f => ({ ...f, print_name: e.target.value }))}
-                        className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
-                    </div>
-
-                    <div>
-                      <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Your Instagram handle</label>
-                      <div className="relative">
-                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[13px] text-mthr-mid">@</span>
-                        <input type="text" placeholder="yourhandle" value={articleForm.instagram}
-                          onChange={e => setArticleForm(f => ({ ...f, instagram: e.target.value.replace('@','') }))}
-                          className="w-full pl-7 pr-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Article title *</label>
-                      <input type="text" placeholder="working title is fine" value={articleForm.title}
-                        onChange={e => setArticleForm(f => ({ ...f, title: e.target.value }))}
-                        className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
-                    </div>
-
-                    <div>
-                      <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Category *</label>
-                      <select value={articleForm.category} onChange={e => setArticleForm(f => ({ ...f, category: e.target.value }))}
-                        className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors">
-                        <option value="">Select a category...</option>
-                        {ARTICLE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Length *</label>
-                      <select value={articleForm.length} onChange={e => setArticleForm(f => ({ ...f, length: e.target.value }))}
-                        className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors">
-                        <option value="">Select...</option>
-                        <option value="short_read">Short read — 300 to 500 words</option>
-                        <option value="feature">Feature — 500 to 1000 words</option>
-                        <option value="long_form">Long form — 1000 words and over</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">What's your article about? *</label>
-                      <textarea placeholder="a few sentences is fine — we just want to feel the idea before we read it." value={articleForm.about} rows={3}
-                        onChange={e => setArticleForm(f => ({ ...f, about: e.target.value }))}
-                        className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors resize-none leading-relaxed" />
-                    </div>
-
-                    <div>
-                      <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Ready to submit or pitching? *</label>
-                      <select value={articleForm.status} onChange={e => setArticleForm(f => ({ ...f, status: e.target.value }))}
-                        className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors">
-                        <option value="">Select...</option>
-                        <option value="ready">Ready to submit</option>
-                        <option value="pitch">Pitching the idea first</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Your article or pitch *</label>
-                      <textarea placeholder="paste your article text or pitch directly here." value={articleForm.text} rows={8}
-                        onChange={e => setArticleForm(f => ({ ...f, text: e.target.value }))}
-                        className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors resize-none leading-relaxed" />
-                    </div>
-
-                    <label className="flex items-start gap-3 cursor-pointer p-4 border border-[#D0CCC6] rounded-sm bg-[#F5F2EE]">
-                      <div className="relative mt-0.5 flex-shrink-0">
-                        <input type="checkbox" checked={articleForm.copyright_declared}
-                          onChange={e => setArticleForm(f => ({ ...f, copyright_declared: e.target.checked }))}
-                          className="sr-only" />
-                        <div className={`w-4 h-4 rounded-sm border transition-colors flex items-center justify-center ${articleForm.copyright_declared ? 'bg-mthr-black border-mthr-black' : 'bg-white border-[#D0CCC6]'}`}>
-                          {articleForm.copyright_declared && (
-                            <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                              <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
-                          )}
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-[11px] font-medium text-mthr-black leading-[1.5]">I confirm this is my original work and I hold all rights to it *</p>
-                        <p className="text-[10px] text-mthr-mid leading-[1.6] mt-1">by submitting you give MTHR permission to publish your work on the platform and consider it for the print magazine. full credit will always be given.</p>
-                      </div>
-                    </label>
-
-                    {error && <p className="text-[11px] text-red-600 bg-red-50 px-3 py-2 rounded-sm">{error}</p>}
-                    <button onClick={async () => {
-                      if (!articleForm.title || !articleForm.category || !articleForm.length || !articleForm.text || !articleForm.copyright_declared) {
-                        setError('Please fill in all required fields.'); return
-                      }
-                      setError(null); setUploading(true)
-                      try {
-                        const { data: { user } } = await supabase.auth.getUser()
-                        if (!user) { router.push('/login?redirectTo=/submit'); return }
-                        const articleDesc = [
-                          articleForm.about ? `About: ${articleForm.about}` : '',
-                          articleForm.status ? `Status: ${articleForm.status}` : '',
-                          `\n\n${articleForm.text}`,
-                        ].filter(Boolean).join('\n')
-                        const { error: insertError } = await supabase.from('submissions').insert({
-                          photographer_id: user.id,
-                          photographer_email: user.email ?? '',
-                          title: articleForm.title,
-                          description: articleDesc,
-                          location_name: '',
-                          location_country: '',
-                          category: articleForm.category,
-                          submission_type: 'article',
-                          images: [],
-                          cover_image: null,
-                          subjects: `Length: ${articleForm.length}`,
-                          instagram_handle: articleForm.instagram || null,
-                          process_answer: `Name in print: ${articleForm.print_name}`,
-                          gallery_link: null,
-                        })
-                        if (insertError) throw new Error(insertError.message)
-                        try {
-                          await fetch('/api/notify', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                              type: 'submission_received',
-                              photographer_name: user?.user_metadata?.full_name ?? 'Writer',
-                              photographer_email: user?.email || '',
-                              submission_title: `[Article] ${articleForm.title}`,
-                              location: '—',
-                              gallery_link: '',
-                            }),
-                          })
-                        } catch (e) { console.error('Email error:', e) }
-                        router.push('/submit/thank-you')
-                      } catch (err: unknown) {
-                        setError(err instanceof Error ? err.message : 'Something went wrong')
-                      } finally { setUploading(false) }
-                    }} disabled={uploading}
-                      className="w-full py-3.5 bg-mthr-black text-white text-[10px] tracking-[0.18em] uppercase font-medium rounded-sm hover:bg-mthr-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-                      {uploading ? 'submitting…' : 'submit your article →'}
-                    </button>
                   </div>
                 )}
 
