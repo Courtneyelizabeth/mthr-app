@@ -60,8 +60,8 @@ export default function AdminPage() {
     setUpdating(id)
     await supabase.from('submissions').update({ status }).eq('id', id)
 
-    // Send featured email
-    if (status === 'featured') {
+    // Send status email for approved and featured
+    if (status === 'featured' || status === 'approved') {
       const sub = submissions.find(s => s.id === id)
       if (sub) {
         try {
@@ -69,16 +69,17 @@ export default function AdminPage() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              type: 'featured',
+              type: status,
+              submission_type: sub.submission_type ?? 'app',
               photographer_name: sub.profiles?.full_name ?? sub.instagram_handle ?? 'Photographer',
               photographer_email: sub.photographer_email ?? '',
-              submission_title: sub.title ?? 'your image',
+              submission_title: sub.title ?? 'your submission',
               instagram_handle: sub.instagram_handle ?? '',
               location: sub.location_name ?? '',
             }),
           })
         } catch (e) {
-          console.error('Featured email error:', e)
+          console.error('Status email error:', e)
         }
       }
     }
