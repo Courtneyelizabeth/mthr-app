@@ -644,7 +644,7 @@ walk us through your process. what were you watching for, and what created the c
                   className="border border-dashed border-[#D0CCC6] rounded-sm p-8 text-center cursor-pointer hover:bg-white hover:border-mthr-mid transition-all mb-8">
                   <div className="text-[24px] text-mthr-dim mb-2">+</div>
                   <div className="text-[10px] tracking-[0.1em] uppercase text-mthr-mid font-medium">
-                    {appFiles.length > 0 ? `${appFiles.length} image${appFiles.length > 1 ? 's' : ''} selected (${appFiles.length}/5)` : 'drag & drop or click to upload'}
+                    {appFiles.length > 0 ? `${appFiles.length} image${appFiles.length > 1 ? 's' : ''} selected (${appFiles.length}/10)` : 'drag & drop or click to upload'}
                   </div>
                   <div className="font-cormorant italic text-[12px] text-mthr-dim mt-1">jpg or png · up to 10 images · high resolution preferred</div>
                   <input ref={appFileRef} type="file" accept="image/jpeg,image/png" multiple className="hidden" onChange={handleAppFiles} />
