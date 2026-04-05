@@ -544,7 +544,9 @@ export default function SubmitPage() {
 
                 {tab === 'app' && (
                   <Field label="how it happened (optional)">
-                    <textarea placeholder="tell us something specific about how this image was made. did you prepare differently? use a questionnaire? had you photographed them before? what created the conditions for this moment"
+                    <textarea placeholder="what part of your client experience made this possible? how do you create the conditions for real moments to unfold?
+
+walk us through your process. what were you watching for, and what created the conditions for this moment? what do you wish you'd known earlier that changed how you work?"
                       value={form.description} rows={4}
                       onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
                       className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors resize-none leading-relaxed" />
@@ -634,7 +636,7 @@ export default function SubmitPage() {
                 <h2 className="font-cormorant font-light text-[32px] leading-none text-mthr-black mb-2">
                   your <em>images.</em>
                 </h2>
-                <p className="text-[11px] text-mthr-mid mb-2">submit as many images as you like. up to 5 per submission.</p>
+                <p className="text-[11px] text-mthr-mid mb-2">submit as many images as you like. up to 10 per submission.</p>
                 <p className="text-[11px] text-mthr-mid mb-6 font-medium">the first image is what will be featured on the MTHR feed — choose a strong one.</p>
 
                 <div onClick={() => appFileRef.current?.click()} onDragOver={e => e.preventDefault()}
@@ -644,16 +646,16 @@ export default function SubmitPage() {
                   <div className="text-[10px] tracking-[0.1em] uppercase text-mthr-mid font-medium">
                     {appFiles.length > 0 ? `${appFiles.length} image${appFiles.length > 1 ? 's' : ''} selected (${appFiles.length}/5)` : 'drag & drop or click to upload'}
                   </div>
-                  <div className="font-cormorant italic text-[12px] text-mthr-dim mt-1">jpg or png · up to 5 images · high resolution preferred</div>
+                  <div className="font-cormorant italic text-[12px] text-mthr-dim mt-1">jpg or png · up to 10 images · high resolution preferred</div>
                   <input ref={appFileRef} type="file" accept="image/jpeg,image/png" multiple className="hidden" onChange={handleAppFiles} />
                 </div>
 
                 <h3 className="font-cormorant font-light text-[20px] text-mthr-black mb-4">guidelines.</h3>
                 <div className="divide-y divide-[#E8E4DE]">
                   {[
-                    { n: '01', h: 'your best work.', t: 'up to 5 images per submission. your first image is what appears on the MTHR feed — make it count.' },
+                    { n: '01', h: 'your best work.', t: 'up to 10 images per submission. your first image is what appears on the MTHR feed — make it count.' },
                     { n: '02', h: 'your work, your rights.', t: 'submission confirms you hold full copyright for every image you share.' },
-                    { n: '03', h: 'no limit.', t: 'submit as many images as you like. up to 5 per submission.' },
+                    { n: '03', h: 'no limit.', t: 'submit as many images as you like. up to 10 per submission.' },
                   ].map(g => (
                     <div key={g.n} className="py-3.5">
                       <div className="text-[9px] tracking-[0.1em] text-mthr-dim mb-0.5">{g.n}.</div>
