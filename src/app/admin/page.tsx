@@ -177,23 +177,25 @@ export default function AdminPage() {
                       )}
                     </div>
                   ) : sub.cover_image ? (
-                    <div className={`grid gap-[2px] h-[160px] ${sub.images?.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
-                      <div className="relative overflow-hidden photo-warm-1">
-                        <Image src={sub.cover_image} alt={sub.title} fill className="object-cover" />
-                      </div>
-                      {sub.images?.slice(1, 4).map((img, i) => (
-                        <div key={i} className="relative overflow-hidden photo-warm-1">
-                          <Image src={img} alt={sub.title} fill className="object-cover" />
+                    <div>
+                      <div className={`grid gap-[2px] h-[160px] ${sub.images?.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+                        <div className="relative overflow-hidden photo-warm-1">
+                          <Image src={sub.cover_image} alt={sub.title} fill className="object-cover" />
                         </div>
-                      ))}
-                    </div>
-                    <div className="flex flex-wrap gap-1 p-2 bg-[#F5F2EE] border-t border-[#E8E4DE]">
-                      {sub.images?.map((img, i) => (
-                        <a key={i} href={img} target="_blank" rel="noopener noreferrer"
-                          className="text-[8px] tracking-[0.1em] uppercase text-mthr-mid hover:text-mthr-black border-b border-[#D0CCC6] hover:border-mthr-black transition-colors">
-                          ↓ {i === 0 ? 'cover' : `img ${i + 1}`}
-                        </a>
-                      ))}
+                        {sub.images?.slice(1, 4).map((img, i) => (
+                          <div key={i} className="relative overflow-hidden photo-warm-1">
+                            <Image src={img} alt={sub.title} fill className="object-cover" />
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex flex-wrap gap-2 p-2 bg-[#F5F2EE] border-t border-[#E8E4DE]">
+                        {sub.images?.map((img, i) => (
+                          <a key={i} href={img} target="_blank" rel="noopener noreferrer"
+                            className="text-[8px] tracking-[0.1em] uppercase text-mthr-mid hover:text-mthr-black border-b border-[#D0CCC6] hover:border-mthr-black transition-colors">
+                            ↓ {i === 0 ? 'cover' : `img ${i + 1}`}
+                          </a>
+                        ))}
+                      </div>
                     </div>
                   ) : (
                     <div className="h-[180px] photo-warm-1" />
