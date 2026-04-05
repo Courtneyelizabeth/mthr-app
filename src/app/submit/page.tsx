@@ -104,7 +104,7 @@ export default function SubmitPage() {
   const isIntl = form.state_code === 'International'
 
   const handleAppFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) setAppFiles(Array.from(e.target.files).slice(0, 5))
+    if (e.target.files) setAppFiles(Array.from(e.target.files).slice(0, 10))
   }
 
   const handleMagFiles = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -640,7 +640,7 @@ walk us through your process. what were you watching for, and what created the c
                 <p className="text-[11px] text-mthr-mid mb-6 font-medium">the first image is what will be featured on the MTHR feed — choose a strong one.</p>
 
                 <div onClick={() => appFileRef.current?.click()} onDragOver={e => e.preventDefault()}
-                  onDrop={e => { e.preventDefault(); if (e.dataTransfer.files) setAppFiles(Array.from(e.dataTransfer.files).slice(0, 5)) }}
+                  onDrop={e => { e.preventDefault(); if (e.dataTransfer.files) setAppFiles(Array.from(e.dataTransfer.files).slice(0, 10)) }}
                   className="border border-dashed border-[#D0CCC6] rounded-sm p-8 text-center cursor-pointer hover:bg-white hover:border-mthr-mid transition-all mb-8">
                   <div className="text-[24px] text-mthr-dim mb-2">+</div>
                   <div className="text-[10px] tracking-[0.1em] uppercase text-mthr-mid font-medium">
