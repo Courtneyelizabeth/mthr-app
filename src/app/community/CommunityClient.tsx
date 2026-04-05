@@ -127,6 +127,7 @@ export default function CommunityClient({
       day_number: dayNum,
       image_url: publicUrl,
       caption: form365.caption || null,
+      date_taken: form365.date_taken || new Date().toISOString().split('T')[0],
     })
 
     setShow365Form(false)
@@ -274,12 +275,20 @@ export default function CommunityClient({
                 one image. every day. a community committed to showing up for their craft.
               </p>
             </div>
-            <button
-              onClick={() => setShow365Form(true)}
-              className="text-[10px] tracking-[0.16em] uppercase font-medium px-4 py-2 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm"
-            >
-              + add today's image
-            </button>
+            {userId ? (
+              <button
+                onClick={() => setShow365Form(true)}
+                className="text-[10px] tracking-[0.16em] uppercase font-medium px-4 py-2 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm"
+              >
+                + add today's image
+              </button>
+            ) : (
+              <a href="/login"
+                className="text-[10px] tracking-[0.16em] uppercase font-medium px-4 py-2 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm"
+              >
+                sign in to join →
+              </a>
+            )}
           </div>
 
           {project365.length > 0 ? (
@@ -446,6 +455,12 @@ export default function CommunityClient({
                 <input ref={image365Ref} type="file" accept="image/jpeg,image/png" className="hidden"
                   onChange={e => setForm365(f => ({ ...f, image: e.target.files?.[0] ?? null }))} />
               </div>
+              <Field label="Date taken *">
+                <input type="date" value={form365.date_taken}
+                  onChange={e => setForm365(f => ({ ...f, date_taken: e.target.value }))}
+                  className="mthr-input" />
+                <p className="text-[10px] text-mthr-mid mt-1">catching up? use the date the photo was actually taken.</p>
+              </Field>
               <Field label="Caption (optional)">
                 <input type="text" placeholder="what do you see today?" value={form365.caption}
                   onChange={e => setForm365(f => ({ ...f, caption: e.target.value }))}

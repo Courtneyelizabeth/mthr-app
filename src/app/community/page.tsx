@@ -18,7 +18,7 @@ export default async function CommunityPage() {
   const { data: project365 } = await supabase
     .from('project_365')
     .select(`*, profiles:photographer_id (full_name, username, avatar_url)`)
-    .order('created_at', { ascending: false })
+    .order('date_taken', { ascending: false })
     .limit(60)
 
   return (
