@@ -650,6 +650,29 @@ walk us through your process. what were you watching for, and what created the c
                   <input ref={appFileRef} type="file" accept="image/jpeg,image/png" multiple className="hidden" onChange={handleAppFiles} />
                 </div>
 
+                {appFiles.length > 0 && (
+                  <div className="grid grid-cols-5 gap-1.5 mb-8">
+                    {appFiles.map((file, i) => (
+                      <div key={i} className="relative group aspect-square">
+                        <img
+                          src={URL.createObjectURL(file)}
+                          alt={`preview ${i + 1}`}
+                          className="w-full h-full object-cover rounded-sm"
+                        />
+                        {i === 0 && (
+                          <div className="absolute bottom-0 left-0 right-0 bg-mthr-black/70 py-0.5 text-center">
+                            <span className="text-[8px] tracking-[0.08em] uppercase text-white/80">cover</span>
+                          </div>
+                        )}
+                        <button
+                          onClick={() => setAppFiles(prev => prev.filter((_, idx) => idx !== i))}
+                          className="absolute top-1 right-1 w-5 h-5 bg-white/90 rounded-full text-[10px] text-mthr-black opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center leading-none hover:bg-white"
+                        >×</button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 <h3 className="font-cormorant font-light text-[20px] text-mthr-black mb-4">guidelines.</h3>
                 <div className="divide-y divide-[#E8E4DE]">
                   {[
