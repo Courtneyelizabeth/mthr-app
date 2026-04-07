@@ -41,6 +41,7 @@ export default function AdminPage() {
   const [filter, setFilter] = useState<'pending' | 'approved' | 'featured' | 'rejected'>('pending')
   const [viewType, setViewType] = useState<'app' | 'magazine' | 'article'>('app')
   const [updating, setUpdating] = useState<string | null>(null)
+  const [expandedDesc, setExpandedDesc] = useState<string | null>(null)
 
   const fetchSubmissions = async () => {
     setLoading(true)
@@ -218,7 +219,21 @@ export default function AdminPage() {
                     <span>{sub.images?.length ?? 0} images</span>
                     <span>{new Date(sub.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                   </div>
-                  {sub.description && <p className="text-[11px] text-mthr-mid leading-[1.7] mb-4 line-clamp-2">{sub.description}</p>}
+                  {sub.description && (
+                    <div className="mb-4">
+                      <p className={`text-[11px] text-mthr-mid leading-[1.7] ${expandedDesc === sub.id ? '' : 'line-clamp-2'}`}>
+                        {sub.description}
+                      </p>
+                      {sub.description.length > 120 && (
+                        <button
+                          onClick={() => setExpandedDesc(expandedDesc === sub.id ? null : sub.id)}
+                          className="text-[9px] tracking-[0.1em] uppercase text-mthr-mid hover:text-mthr-black transition-colors mt-1"
+                        >
+                          {expandedDesc === sub.id ? 'show less ↑' : 'read more ↓'}
+                        </button>
+                      )}
+                    </div>
+                  )}
                   <div className="flex gap-2">
 
                     {filter === 'pending' && (
