@@ -58,7 +58,7 @@ export default function AdminPage() {
 
   const updateStatus = async (id: string, status: string) => {
     setUpdating(id)
-    await supabase.from('submissions').update({ status }).eq('id', id)
+    await (supabase.from('submissions') as any).update({ status }).eq('id', id)
 
     // Send status email for approved and featured
     if (status === 'featured' || status === 'approved') {
