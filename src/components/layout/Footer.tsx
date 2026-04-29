@@ -31,6 +31,10 @@ export default function Footer() {
           © {new Date().getFullYear()} MTHR Magazine
         </p>
       </div>
-    </footer>
+      <div className="border-t border-[#E8E4DE] mt-8 pt-6 flex gap-6">
+    <a href="/privacy" className="text-[9px] tracking-[0.12em] uppercase text-mthr-dim hover:text-mthr-black transition-colors">privacy policy</a>
+    <a href="/terms" className="text-[9px] tracking-[0.12em] uppercase text-mthr-dim hover:text-mthr-black transition-colors">terms of use</a>
+  </div>
+</footer>
   )
 }

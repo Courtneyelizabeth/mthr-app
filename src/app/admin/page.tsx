@@ -11,7 +11,7 @@ type Submission = {
   id: string; title: string; location_name: string; location_country: string
   category: string; status: string; submission_type: string; subjects: string | null
   instagram_handle: string | null; description: string | null
-  cover_image: string | null; images: string[]; gallery_link: string | null; created_at: string; photographer_id: string; photographer_email: string | null
+  cover_image: string | null; images: string[]; gallery_link: string | null; created_at: string; photographer_id: string | null; photographer_email: string | null
   photographer_id: string | null
   profiles: { full_name: string | null; username: string | null } | null
 }
