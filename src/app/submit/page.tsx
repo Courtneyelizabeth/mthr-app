@@ -8,7 +8,7 @@ import { createClient } from '@/lib/supabase/client'
 
 // ── Magazine submission window ──────────────────────────────
 const MAG_OPEN  = new Date('2026-04-01T00:00:00')
-const MAG_CLOSE = new Date('2026-05-01T23:59:59')
+const MAG_CLOSE = new Date('2026-05-04T05:59:59')
 function isMagOpen() {
   const now = new Date()
   return now >= MAG_OPEN && now <= MAG_CLOSE
@@ -744,7 +744,7 @@ walk us through your process. what were you watching for, and what created the c
                   magazine submissions <em>open april 1.</em>
                 </h2>
                 <p className="text-[12px] text-mthr-mid leading-[1.8]">
-                  the magazine submission window opens april 1 — may 1, 2026.<br />
+                  the magazine submission window opens april 1 — may 3, 2026.<br />
                   in the meantime, submit your work to the app feature.
                 </p>
               </div>
@@ -760,7 +760,7 @@ walk us through your process. what were you watching for, and what created the c
                     { n: '01', h: 'write like MTHR.', t: "articles should feel warm, intentional, honest and written from real experience. we're not looking for perfection. we're looking for truth." },
                     { n: '02', h: 'full credit always.', t: 'your name, handle and location will appear with your published piece.' },
                     { n: '03', h: 'where it goes.', t: 'selected articles will be featured on the MTHR platform and considered for the print magazine.' },
-                    { n: '04', h: 'submissions open.', t: 'submissions are open alongside photography submissions through may 1st.' },
+                    { n: '04', h: 'submissions open.', t: 'submissions are open alongside photography submissions through may 3rd.' },
                   ].map(g => (
                     <div key={g.n} className="py-3.5">
                       <div className="text-[9px] tracking-[0.1em] text-mthr-dim mb-0.5">{g.n}.</div>
