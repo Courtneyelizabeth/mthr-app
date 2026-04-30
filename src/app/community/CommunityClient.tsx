@@ -334,17 +334,12 @@ export default function CommunityClient({
                 process videos and real insight into the work. coming soon to MTHR.
               </p>
             </div>
-            <div className="bg-[#F5F2EE] flex items-center justify-center px-8 py-10">
-              <div className="w-full aspect-video bg-[#E8E4DE] rounded-sm flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-12 h-12 rounded-full border border-[#D0CCC6] flex items-center justify-center mx-auto mb-3">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M6 4l6 4-6 4V4z" fill="#A8A29E"/>
-                    </svg>
-                  </div>
-                  <p className="text-[9px] tracking-[0.16em] uppercase text-mthr-dim font-medium">video coming soon</p>
-                </div>
-              </div>
+            <div className="relative min-h-[300px] overflow-hidden">
+              <img
+                src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/courtneymaxwell_photography_communityimage.jpg"
+                alt="MTHR community"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>
