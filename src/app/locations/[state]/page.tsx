@@ -8,7 +8,7 @@ export default async function LocationPage({ params }: { params: { state: string
   const state = decodeURIComponent(params.state)
   const supabase = createClient()
 
-  const { data: submissions } = await supabase
+  const { data: submissions } = await (supabase as any)
     .from('submissions')
     .select(`
       id, title, location_name, location_country, location_state,
@@ -22,10 +22,10 @@ export default async function LocationPage({ params }: { params: { state: string
     .order('created_at', { ascending: false })
 
   // Get unique venues within this state
-  const venues = [...new Set((submissions ?? [])
-    .map(s => s.location_name)
+  const venues = Array.from(new Set((submissions ?? [] as any[])
+    .map((s: any) => s.location_name)
     .filter(Boolean)
-  )].sort()
+  )).sort()
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F5F2EE]">

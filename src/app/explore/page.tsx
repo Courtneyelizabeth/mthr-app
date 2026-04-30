@@ -29,10 +29,10 @@ export default async function ExplorePage() {
     .eq('submission_type', 'app')
     .not('location_state', 'is', null)
 
-  const states = [...new Set((locationData ?? [])
-    .map(s => s.location_state)
+  const states = Array.from(new Set((locationData ?? [] as any[])
+    .map((s: any) => s.location_state)
     .filter(Boolean)
-  )].sort() as string[]
+  )).sort() as string[]
 
   const { data: photographers } = await supabase
     .from('profiles')

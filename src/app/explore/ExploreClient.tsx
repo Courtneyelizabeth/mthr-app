@@ -75,7 +75,7 @@ export default function ExploreClient({
           .select('submission_id')
           .eq('user_id', data.user.id)
           .then(({ data: favs }) => {
-            if (favs) setFavorites(new Set(favs.map(f => f.submission_id)))
+            if (favs) setFavorites(new Set((favs as any[]).map((f: any) => f.submission_id)))
           })
       }
     })
@@ -87,11 +87,11 @@ export default function ExploreClient({
     if (!userId) { window.location.href = '/login'; return }
 
     if (favorites.has(submissionId)) {
-      await supabase.from('favorites').delete()
+      await (supabase.from('favorites') as any).delete()
         .eq('user_id', userId).eq('submission_id', submissionId)
       setFavorites(prev => { const n = new Set(prev); n.delete(submissionId); return n })
     } else {
-      await supabase.from('favorites').insert({ user_id: userId, submission_id: submissionId })
+      await (supabase.from('favorites') as any).insert({ user_id: userId, submission_id: submissionId })
       setFavorites(prev => new Set([...prev, submissionId]))
     }
   }
