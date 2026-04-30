@@ -54,6 +54,11 @@ export default function TermsPage() {
             <p>we may update these terms from time to time. if we make material changes, we will notify you by email. continued use of MTHR after changes constitutes acceptance of the updated terms.</p>
           </section>
           <section>
+            <h2 className="font-medium text-mthr-black text-[11px] tracking-[0.12em] uppercase mb-3">copyright infringement (DMCA)</h2>
+            <p>if you believe that content on MTHR infringes your copyright, please contact us at <a href="mailto:hello@mthrmag.com" className="border-b border-mthr-mid hover:border-mthr-black transition-colors">hello@mthrmag.com</a> with the subject line "DMCA Takedown Request." please include a description of the copyrighted work, the URL where the infringing content appears, and your contact information. we take copyright seriously and will respond promptly.</p>
+          </section>
+
+          <section>
             <h2 className="font-medium text-mthr-black text-[11px] tracking-[0.12em] uppercase mb-3">contact</h2>
             <p>questions about these terms? reach us at <a href="mailto:hello@mthrmag.com" className="border-b border-mthr-mid hover:border-mthr-black transition-colors">hello@mthrmag.com</a></p>
           </section>
