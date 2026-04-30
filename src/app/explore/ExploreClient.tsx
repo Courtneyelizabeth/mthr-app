@@ -26,6 +26,7 @@ type Submission = {
   category: string
   status: string
   created_at: string
+  quarter_featured: boolean | null
   profiles: Profile | null
 }
 
@@ -52,12 +53,15 @@ const CATEGORIES = [
 export default function ExploreClient({
   submissions,
   photographers,
+  states,
 }: {
   submissions: Submission[]
   photographers: Photographer[]
+  states: string[]
 }) {
   const supabase = createClient()
   const [activeCategory, setActiveCategory] = useState('all')
+  const [activeState, setActiveState] = useState('all')
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [userId, setUserId] = useState<string | null>(null)
 
@@ -92,9 +96,11 @@ export default function ExploreClient({
     }
   }
 
-  const filtered = activeCategory === 'all'
-    ? submissions
-    : submissions.filter(s => s.category === activeCategory)
+  const quarterFeatured = submissions.filter(s => s.quarter_featured)
+
+  const filtered = submissions
+    .filter(s => activeCategory === 'all' || s.category === activeCategory)
+    .filter(s => activeState === 'all' || s.location_state === activeState)
 
   return (
     <div>
@@ -133,7 +139,68 @@ export default function ExploreClient({
             </button>
           ))}
         </div>
+
+        {/* State/location filter */}
+        {states.length > 0 && (
+          <div className="flex gap-1 mt-3 flex-wrap">
+            <button
+              onClick={() => setActiveState('all')}
+              className={`px-3 py-1 text-[9px] tracking-[0.12em] uppercase font-medium rounded-full transition-colors border ${
+                activeState === 'all'
+                  ? 'bg-mthr-black text-white border-mthr-black'
+                  : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'
+              }`}
+            >
+              all locations
+            </button>
+            {states.map(state => (
+              <button
+                key={state}
+                onClick={() => setActiveState(state)}
+                className={`px-3 py-1 text-[9px] tracking-[0.12em] uppercase font-medium rounded-full transition-colors border ${
+                  activeState === state
+                    ? 'bg-mthr-black text-white border-mthr-black'
+                    : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'
+                }`}
+              >
+                {state}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
+
+      {/* Quarter featured */}
+      {quarterFeatured.length > 0 && activeCategory === 'all' && activeState === 'all' && (
+        <div className="px-8 pt-6 pb-2">
+          <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium mb-4">featured this quarter</p>
+          <div className="columns-2 md:columns-4 gap-3 space-y-3">
+            {quarterFeatured.map((sub) => {
+              const img = sub.cover_image ?? sub.images?.[0] ?? null
+              if (!img) return null
+              return (
+                <div key={sub.id} className="relative break-inside-avoid group">
+                  <Link href={`/submission/${sub.id}`}>
+                    <Image src={img} alt={sub.subjects ?? sub.title} width={600} height={900}
+                      className="w-full h-auto object-cover rounded-sm" style={{ display: 'block' }} />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-sm flex flex-col justify-end p-3.5">
+                      {sub.subjects && <div className="font-cormorant italic text-[14px] font-light text-white leading-none">{sub.subjects}</div>}
+                      <div className="text-[10px] tracking-[0.08em] text-white/70 mt-0.5">{sub.location_name}</div>
+                      {sub.instagram_handle && (
+                        <a href={`https://instagram.com/${sub.instagram_handle}`} target="_blank" rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()} className="text-[9px] tracking-[0.08em] text-white/55 hover:text-white transition-colors mt-0.5">
+                          @{sub.instagram_handle}
+                        </a>
+                      )}
+                    </div>
+                  </Link>
+                </div>
+              )
+            })}
+          </div>
+          <div className="border-t border-[#E8E4DE] mt-6 mb-0" />
+        </div>
+      )}
 
       {/* Photo grid */}
       <div className="px-8 py-6">

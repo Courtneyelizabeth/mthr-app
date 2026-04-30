@@ -14,13 +14,25 @@ export default async function ExplorePage() {
     .select(`
       id, title, location_name, location_country, location_state,
       subjects, instagram_handle, cover_image, images,
-      category, status, created_at,
+      category, status, created_at, quarter_featured,
       profiles:photographer_id (id, full_name, username, avatar_url, instagram)
     `)
     .in('status', ['approved', 'featured'])
     .eq('submission_type', 'app')
     .order('created_at', { ascending: false })
-    .limit(40)
+
+  // Get unique states for location filter
+  const { data: locationData } = await supabase
+    .from('submissions')
+    .select('location_state, location_country, location_name')
+    .in('status', ['approved', 'featured'])
+    .eq('submission_type', 'app')
+    .not('location_state', 'is', null)
+
+  const states = [...new Set((locationData ?? [])
+    .map(s => s.location_state)
+    .filter(Boolean)
+  )].sort() as string[]
 
   const { data: photographers } = await supabase
     .from('profiles')
@@ -81,7 +93,7 @@ export default async function ExplorePage() {
               Magazine submissions open
             </span>
             <span className="font-cormorant italic text-[20px] font-light">
-              April 1 — May 1, 2026
+              April 1 — May 3, 2026
             </span>
           </div>
 
@@ -106,6 +118,7 @@ export default async function ExplorePage() {
         <ExploreClient
           submissions={submissions ?? []}
           photographers={photographers ?? []}
+          states={states ?? []}
         />
 
       </main>
