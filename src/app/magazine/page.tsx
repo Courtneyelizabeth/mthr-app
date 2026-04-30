@@ -26,7 +26,7 @@ export default function MagazinePage() {
         <section className="grid grid-cols-1 md:grid-cols-2 min-h-[90vh] border-b border-[#E8E4DE]">
           {/* Left — photo placeholder */}
           <div className="relative min-h-[50vh] md:min-h-full overflow-hidden">
-            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/katiemitzphoto-123.jpg" alt="Courtney Maxwell" className="absolute inset-0 w-full h-full object-cover" />
+            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/katiemitzphoto-170.jpg" alt="Courtney Maxwell" className="absolute inset-0 w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
 
