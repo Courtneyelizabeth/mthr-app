@@ -92,7 +92,7 @@ export default function ExploreClient({
       setFavorites(prev => { const n = new Set(prev); n.delete(submissionId); return n })
     } else {
       await (supabase.from('favorites') as any).insert({ user_id: userId, submission_id: submissionId })
-      setFavorites(prev => new Set([...prev, submissionId]))
+      setFavorites(prev => new Set(Array.from(prev).concat(submissionId)))
     }
   }
 

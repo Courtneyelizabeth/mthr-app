@@ -22,10 +22,7 @@ export default async function LocationPage({ params }: { params: { state: string
     .order('created_at', { ascending: false })
 
   // Get unique venues within this state
-  const venues = Array.from(new Set((submissions ?? [] as any[])
-    .map((s: any) => s.location_name)
-    .filter(Boolean)
-  )).sort()
+  const venues: string[] = Array.from(new Set(((submissions ?? []) as any[]).map((s: any) => s.location_name as string).filter(Boolean))).sort()
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F5F2EE]">
@@ -59,7 +56,7 @@ export default async function LocationPage({ params }: { params: { state: string
         <div className="px-8 py-6">
           {submissions && submissions.length > 0 ? (
             <div className="columns-2 md:columns-3 gap-3 space-y-3">
-              {submissions.map((sub) => {
+              {((submissions ?? []) as any[]).map((sub: any) => {
                 const img = sub.cover_image ?? sub.images?.[0] ?? null
                 if (!img) return null
                 return (
