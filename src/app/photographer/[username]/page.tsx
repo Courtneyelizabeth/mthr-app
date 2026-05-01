@@ -10,7 +10,7 @@ export const revalidate = 60
 
 export async function generateMetadata({ params }: { params: { username: string } }) {
   const supabase = createClient()
-  const { data: profile } = await supabase
+  const { data: profile } = await (supabase as any)
     .from('profiles')
     .select('full_name, bio, avatar_url')
     .or(`username.eq.${params.username},id.eq.${params.username}`)
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: { username: string 
 export default async function PhotographerPage({ params }: { params: { username: string } }) {
   const supabase = createClient()
 
-  const { data: profile } = await supabase
+  const { data: profile } = await (supabase as any)
     .from('profiles')
     .select('*')
     .or(`username.eq.${params.username},id.eq.${params.username}`)
@@ -38,7 +38,7 @@ export default async function PhotographerPage({ params }: { params: { username:
 
   if (!profile) notFound()
 
-  const { data: appSubmissions } = await supabase
+  const { data: appSubmissions } = await (supabase as any)
     .from('submissions')
     .select('id, title, cover_image, images, subjects, location_name, location_country, category, status, created_at')
     .eq('photographer_id', profile.id)
@@ -46,7 +46,7 @@ export default async function PhotographerPage({ params }: { params: { username:
     .eq('submission_type', 'app')
     .order('created_at', { ascending: false })
 
-  const { data: magSubmissions } = await supabase
+  const { data: magSubmissions } = await (supabase as any)
     .from('submissions')
     .select('id, title, cover_image, images, subjects, location_name, status, created_at, gallery_link')
     .eq('photographer_id', profile.id)

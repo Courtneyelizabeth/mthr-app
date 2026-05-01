@@ -15,8 +15,6 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   rejected: { label: 'Not selected', color: 'text-mthr-mid bg-[#F5F2EE] border-[#D0CCC6]' },
 }
 
-import Link from 'next/link'
-
 export default function AccountPage() {
   const router = useRouter()
   const supabase = createClient()
