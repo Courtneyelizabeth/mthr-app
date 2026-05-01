@@ -230,7 +230,7 @@ export default function SubmitPage() {
           </div>
 
           {/* Tab switcher */}
-          <div className="flex gap-0 mt-6 border-b border-[#E8E4DE]">
+          <div className="flex gap-0 mt-6 border-b border-[#E8E4DE] overflow-x-auto">
             <button
               onClick={() => { if (magOpen) setTab('magazine') }}
               className={`px-5 py-3 text-[10px] tracking-[0.14em] uppercase font-medium border-b-2 transition-colors -mb-px relative ${
