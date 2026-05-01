@@ -101,7 +101,7 @@ export default async function PhotographerPage({ params }: { params: { username:
             <div className="flex flex-wrap items-center gap-4 mt-5 pt-5 border-t border-[#E8E4DE]">
               <div className="flex items-baseline gap-1.5">
                 <span className="font-cormorant text-[22px] font-light text-mthr-black">{appSubmissions?.length ?? 0}</span>
-                <span className="text-[11px] text-mthr-mid">sessions</span>
+                <span className="text-[11px] text-mthr-mid">submissions</span>
               </div>
               {featuredCount > 0 && (
                 <>
