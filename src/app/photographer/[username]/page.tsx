@@ -99,6 +99,11 @@ export default async function PhotographerPage({ params }: { params: { username:
 
             {/* Stats row */}
             <div className="flex flex-wrap items-center gap-4 mt-5 pt-5 border-t border-[#E8E4DE]">
+              {(profile as any).for_hire && (
+                <span className="text-[8px] tracking-[0.12em] uppercase font-medium px-3 py-1 rounded-full border border-mthr-black text-mthr-black">
+                  available for hire
+                </span>
+              )}
               <div className="flex items-baseline gap-1.5">
                 <span className="font-cormorant text-[22px] font-light text-mthr-black">{appSubmissions?.length ?? 0}</span>
                 <span className="text-[11px] text-mthr-mid">submissions</span>

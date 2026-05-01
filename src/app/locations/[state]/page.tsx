@@ -37,7 +37,7 @@ export default async function LocationPage({ params }: { params: { state: string
           </h1>
           <p className="text-[12px] text-mthr-mid">{submissions?.length ?? 0} images</p>
 
-          {/* Venue filter pills */}
+          {/* Venue filter pills — member only */}
           {venues.length > 1 && (
             <div className="flex gap-2 flex-wrap mt-4">
               {venues.map(venue => (
