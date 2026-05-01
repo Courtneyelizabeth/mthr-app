@@ -15,6 +15,8 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   rejected: { label: 'Not selected', color: 'text-mthr-mid bg-[#F5F2EE] border-[#D0CCC6]' },
 }
 
+import Link from 'next/link'
+
 export default function AccountPage() {
   const router = useRouter()
   const supabase = createClient()
@@ -143,7 +145,13 @@ export default function AccountPage() {
               <input ref={avatarRef} type="file" accept="image/jpeg,image/png" className="hidden" onChange={handleAvatarUpload} />
             </div>
             <div>
-              <h1 className="font-cormorant font-light text-[32px] leading-none text-mthr-black">
+              <div className="mb-6">
+          <Link href={`/photographer/${profile?.username ?? profile?.id}`}
+            className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors border-b border-[#D0CCC6] hover:border-mthr-black pb-px">
+            view your public profile →
+          </Link>
+        </div>
+        <h1 className="font-cormorant font-light text-[32px] leading-none text-mthr-black">
                 {form.full_name || 'your account.'}
               </h1>
               <p className="text-[11px] text-mthr-mid mt-1">{user?.email}</p>
