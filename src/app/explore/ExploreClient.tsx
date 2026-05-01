@@ -180,7 +180,7 @@ export default function ExploreClient({
               if (!img) return null
               return (
                 <div key={sub.id} className="relative break-inside-avoid group">
-                  <Link href={sub.profiles?.username ? `/photographer/${sub.profiles.username}` : `/photographer/${sub.profiles?.id ?? ''}`}>
+                  <Link href={sub.profiles?.id ? `/photographer/${sub.profiles.id}` : '#'}>
                     <Image src={img} alt={sub.subjects ?? sub.title} width={600} height={900}
                       className="w-full h-auto object-cover rounded-sm" style={{ display: 'block' }} />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-sm flex flex-col justify-end p-3.5">
@@ -212,7 +212,7 @@ export default function ExploreClient({
               const isFav = favorites.has(sub.id)
               return (
                 <div key={sub.id} className="relative break-inside-avoid group">
-                  <Link href={sub.profiles?.username ? `/photographer/${sub.profiles.username}` : `/photographer/${sub.profiles?.id ?? ''}`}>
+                  <Link href={sub.profiles?.id ? `/photographer/${sub.profiles.id}` : '#'}>
                     <Image
                       src={img}
                       alt={sub.subjects ?? sub.title}

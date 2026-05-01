@@ -144,7 +144,7 @@ export default function AccountPage() {
             </div>
             <div>
               <div className="mb-6">
-          <Link href={`/photographer/${profile?.username ?? profile?.id}`}
+          <Link href={`/photographer/${profile?.id}`}
             className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors border-b border-[#D0CCC6] hover:border-mthr-black pb-px">
             view your public profile →
           </Link>
