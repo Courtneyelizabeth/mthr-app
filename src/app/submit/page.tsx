@@ -252,14 +252,20 @@ export default function SubmitPage() {
               Instagram & App
               <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-black text-white px-1.5 py-0.5 rounded-full">Open</span>
             </button>
-            <button onClick={() => setTab('article' as any)}
-              className={`px-5 py-3 text-[10px] tracking-[0.14em] uppercase font-medium border-b-2 transition-colors -mb-px ${
-                (tab as any) === 'article' ? 'border-mthr-black text-mthr-black' : 'border-transparent text-mthr-dark hover:text-mthr-black'
-              }`}>
-              Submit an article
-              <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-black text-white px-1.5 py-0.5 rounded-full">Open</span>
-            </button>
+
           </div>
+        </div>
+
+        {/* Article CTA */}
+        <div className="mx-6 mt-4 p-4 border border-[#E8E4DE] rounded-sm bg-white flex items-center justify-between gap-4">
+          <div>
+            <p className="text-[9px] tracking-[0.16em] uppercase text-mthr-mid font-medium mb-0.5">submit an article</p>
+            <p className="text-[11px] text-mthr-mid">write for MTHR — photography craft, motherhood, personal essay.</p>
+          </div>
+          <button onClick={() => setTab('article' as any)}
+            className="flex-shrink-0 text-[9px] tracking-[0.14em] uppercase font-medium px-4 py-2 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm">
+            write →
+          </button>
         </div>
 
         {/* Auth gate */}
