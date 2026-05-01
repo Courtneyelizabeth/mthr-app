@@ -44,7 +44,7 @@ export default function AccountPage() {
       if (!user) { router.push('/login?redirectTo=/account'); return }
       setUser(user)
 
-      const { data: prof } = await supabase.from('profiles').select('*').eq('id', user.id).single()
+      const { data: prof } = await (supabase.from('profiles') as any).select('*').eq('id', user.id).single()
       if (prof) {
         setProfile(prof)
         setForm({
@@ -70,7 +70,7 @@ export default function AccountPage() {
   const handleSave = async () => {
     setSaving(true)
     setError(null)
-    const { error } = await supabase.from('profiles').update({
+    const { error } = await (supabase.from('profiles') as any).update({
       full_name: form.full_name,
       username: form.username,
       bio: form.bio,
@@ -89,7 +89,7 @@ export default function AccountPage() {
     const { error: uploadError } = await supabase.storage.from('submissions').upload(path, file, { upsert: true })
     if (uploadError) { setError(uploadError.message); return }
     const { data: { publicUrl } } = supabase.storage.from('submissions').getPublicUrl(path)
-    await supabase.from('profiles').update({ avatar_url: publicUrl }).eq('id', user.id)
+    await (supabase.from('profiles') as any).update({ avatar_url: publicUrl }).eq('id', user.id)
     setProfile((p: any) => ({ ...p, avatar_url: publicUrl }))
   }
 
