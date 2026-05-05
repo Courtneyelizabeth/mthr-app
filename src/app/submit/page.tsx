@@ -242,7 +242,7 @@ export default function SubmitPage() {
               {magOpen ? (
                 <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-black text-white px-1.5 py-0.5 rounded-full">Open</span>
               ) : (
-                <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-b1 text-mthr-mid px-1.5 py-0.5 rounded-full">Opens Apr 1</span>
+                <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-b1 text-mthr-mid px-1.5 py-0.5 rounded-full">Opens June 10</span>
               )}
             </button>
             <button onClick={() => setTab('app')}
@@ -750,7 +750,7 @@ walk us through your process. what were you watching for, and what created the c
                   magazine submissions <em>open april 1.</em>
                 </h2>
                 <p className="text-[12px] text-mthr-mid leading-[1.8]">
-                  the magazine submission window opens april 1 — may 3, 2026.<br />
+                  the magazine submission window opens june 10 — july 12, 2026.<br />
                   in the meantime, submit your work to the app feature.
                 </p>
               </div>

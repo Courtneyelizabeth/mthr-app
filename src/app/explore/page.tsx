@@ -90,7 +90,7 @@ export default async function ExplorePage() {
           {/* Magazine submission banner */}
           <div className="mt-10 mx-auto max-w-2xl bg-mthr-black text-white px-8 py-4 rounded-sm flex items-center justify-center gap-6">
             <span className="text-[9px] tracking-[0.2em] uppercase font-medium text-white/60">
-              Summer print magazine — submissions open
+              the long light — summer 2026
             </span>
             <span className="font-cormorant italic text-[20px] font-light">
               Opens June 10, 2026

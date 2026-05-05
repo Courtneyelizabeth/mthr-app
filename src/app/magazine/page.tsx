@@ -12,7 +12,7 @@ export default function MagazinePage() {
         <section className="bg-mthr-black text-white px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
             <p className="text-[9px] tracking-[0.2em] uppercase text-white/30 mb-1">coming soon</p>
-            <p className="font-cormorant italic font-light text-[13px] text-white/50 mb-3">summer print magazine 2026 — submissions open june 10th</p>
+            <p className="font-cormorant italic font-light text-[13px] text-white/50 mb-3">the long light — summer 2026 — submissions open june 10th</p>
             <p className="text-[9px] tracking-[0.2em] uppercase text-white/50 mb-1">next submission window</p>
             <p className="font-cormorant italic font-light text-[24px]">June 10 — July 12, 2026</p>
           </div>
