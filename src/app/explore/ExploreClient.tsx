@@ -117,10 +117,20 @@ export default function ExploreClient({
             className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+          {/* Top left — MTHR tagline */}
+          <div className="absolute top-0 left-0 right-0 p-6 md:p-10 flex items-start justify-between">
+            <div>
+              <p className="font-cormorant italic font-light text-[13px] md:text-[15px] text-white/60 leading-relaxed">
+                where real life<br />is the story.
+              </p>
+            </div>
+            <p className="text-[9px] tracking-[0.2em] uppercase text-white/30">motherhood. elevated.</p>
+          </div>
+
+          {/* Bottom — photographer credit */}
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-            <p className="text-[9px] tracking-[0.2em] uppercase text-white/50 mb-2">featured</p>
             {heroSubmission?.subjects && (
-              <p className="font-cormorant italic font-light text-[28px] md:text-[42px] text-white leading-none mb-2">
+              <p className="font-cormorant italic font-light text-[24px] md:text-[36px] text-white leading-none mb-2">
                 {heroSubmission.subjects}
               </p>
             )}
@@ -129,7 +139,7 @@ export default function ExploreClient({
                 <p className="text-[11px] text-white/70">@{heroSubmission.instagram_handle}</p>
               )}
               {heroSubmission?.location_name && (
-                <p className="text-[11px] text-white/50">{heroSubmission.location_name}</p>
+                <p className="text-[11px] text-white/40">·  {heroSubmission.location_name}</p>
               )}
             </div>
           </div>
