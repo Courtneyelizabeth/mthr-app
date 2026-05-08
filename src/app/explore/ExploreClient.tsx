@@ -106,55 +106,60 @@ export default function ExploreClient({
 
   return (
     <div>
-      {/* ANNOUNCEMENT BAR */}
-      <div className="bg-mthr-black text-white px-6 py-2.5 flex items-center justify-center gap-4">
-        <span className="text-[9px] tracking-[0.2em] uppercase text-white/50">the long light — summer 2026</span>
-        <span className="text-white/20">·</span>
-        <span className="font-cormorant italic text-[14px] font-light text-white/80">submissions open june 10th</span>
-        <span className="text-white/20">·</span>
-        <Link href="/submit" className="text-[9px] tracking-[0.16em] uppercase text-white/50 hover:text-white transition-colors border-b border-white/20 hover:border-white pb-px">submit →</Link>
+{/* HERO — split panel: editorial text left, image right */}
+      <div className="flex flex-col md:flex-row min-h-[480px] md:h-[600px]">
+
+        {/* LEFT — editorial text panel */}
+        <div className="bg-mthr-black flex flex-col justify-between px-8 py-10 md:px-12 md:py-12 md:w-[38%] flex-shrink-0">
+          <div>
+            <p className="text-[9px] tracking-[0.22em] uppercase text-white/30 mb-6">motherhood photography. elevated.</p>
+            <p className="font-cormorant italic font-light text-[38px] md:text-[52px] leading-[1.05] text-white mb-4">
+              where real life<br />is the story.
+            </p>
+            <p className="text-[12px] text-white/40 leading-[1.8] max-w-[260px]">
+              a home for the photographers who find beauty in the ordinary.
+            </p>
+          </div>
+          <div>
+            <div className="w-8 h-px bg-white/20 mb-5" />
+            <p className="text-[9px] tracking-[0.18em] uppercase text-white/30 mb-1">the long light — summer 2026</p>
+            <p className="font-cormorant italic text-[15px] text-white/60 mb-4">submissions open june 10th</p>
+            <Link href="/submit" className="inline-block text-[9px] tracking-[0.18em] uppercase text-white/50 border-b border-white/20 hover:text-white hover:border-white transition-colors pb-px">
+              submit your work →
+            </Link>
+          </div>
+        </div>
+
+        {/* RIGHT — featured image */}
+        {heroImg && (
+          <Link href={profileHref(heroSubmission!)} className="block relative flex-1 min-h-[300px] md:min-h-0 overflow-hidden group">
+            <Image
+              src={heroImg}
+              alt={heroSubmission?.subjects ?? 'featured'}
+              fill
+              priority
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-6">
+              <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">featured</p>
+              {heroSubmission?.subjects && (
+                <p className="font-cormorant italic font-light text-[20px] text-white leading-none mb-1">
+                  {heroSubmission.subjects}
+                </p>
+              )}
+              <div className="flex items-center gap-2">
+                {heroSubmission?.instagram_handle && (
+                  <p className="text-[10px] text-white/60">@{heroSubmission.instagram_handle}</p>
+                )}
+                {heroSubmission?.location_name && (
+                  <p className="text-[10px] text-white/40">· {heroSubmission.location_name}</p>
+                )}
+              </div>
+            </div>
+          </Link>
+        )}
       </div>
-
-      {/* HERO — full bleed featured image */}
-      {heroImg && (
-        <Link href={profileHref(heroSubmission!)} className="block relative h-[70vw] max-h-[600px] min-h-[320px] overflow-hidden group">
-          <Image
-            src={heroImg}
-            alt={heroSubmission?.subjects ?? 'featured'}
-            fill
-            priority
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-          {/* Top — taglines */}
-          <div className="absolute top-0 left-0 right-0 p-6 md:p-10 flex items-start justify-between">
-            <div>
-              <p className="text-[9px] tracking-[0.18em] uppercase text-white/30 mb-1">family photography. elevated.</p>
-              <p className="font-cormorant italic font-light text-[15px] md:text-[18px] text-white/60 leading-relaxed">
-                where real life<br />is the story.
-              </p>
-            </div>
-            <p className="text-[9px] tracking-[0.14em] uppercase text-white/25 hidden md:block">a home for photographers<br />who find beauty in the ordinary.</p>
-          </div>
-
-          {/* Bottom — photographer credit */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-            {heroSubmission?.subjects && (
-              <p className="font-cormorant italic font-light text-[24px] md:text-[36px] text-white leading-none mb-2">
-                {heroSubmission.subjects}
-              </p>
-            )}
-            <div className="flex items-center gap-3">
-              {heroSubmission?.instagram_handle && (
-                <p className="text-[11px] text-white/70">@{heroSubmission.instagram_handle}</p>
-              )}
-              {heroSubmission?.location_name && (
-                <p className="text-[11px] text-white/40">·  {heroSubmission.location_name}</p>
-              )}
-            </div>
-          </div>
-        </Link>
-      )}
 
       {/* FILTER BAR */}
       <div className="sticky top-0 z-20 bg-[#F5F2EE] border-b border-[#E8E4DE] px-4 md:px-8 py-3">
