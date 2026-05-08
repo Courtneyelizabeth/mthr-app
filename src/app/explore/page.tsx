@@ -46,7 +46,7 @@ export default async function ExplorePage() {
       <TopNav />
       <main className="flex-1">
 
-        {/* ── EXPLORE FEED ── */
+        {/* ── EXPLORE FEED ── */}
         <ExploreClient
           submissions={submissions ?? []}
           photographers={photographers ?? []}
