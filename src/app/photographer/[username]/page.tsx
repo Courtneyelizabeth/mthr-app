@@ -145,8 +145,7 @@ export default async function PhotographerPage({ params }: { params: { username:
                 const img = sub.cover_image ?? sub.images?.[0] ?? null
                 if (!img) return null
                 return (
-                  <Link key={sub.id} href={`/submission/${sub.id}`}
-                    className="relative break-inside-avoid block overflow-hidden group rounded-sm photo-warm-1">
+                  <div key={sub.id} className="relative break-inside-avoid block overflow-hidden group rounded-sm photo-warm-1">
                     <Image src={img} alt={sub.subjects ?? sub.title ?? ''} width={600} height={900}
                       className="w-full h-auto object-cover" style={{ display: 'block' }} />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-sm flex flex-col justify-end p-3">
@@ -158,7 +157,7 @@ export default async function PhotographerPage({ params }: { params: { username:
                         <span className="text-[8px] tracking-[0.08em] uppercase bg-white/90 text-mthr-dark px-2 py-0.5 rounded-full font-medium">featured</span>
                       </div>
                     )}
-                  </Link>
+                  </div>
                 )
               })}
             </div>

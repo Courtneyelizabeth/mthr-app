@@ -50,6 +50,39 @@ function isPrintReady(w: number, h: number) {
   return VALID_PRINT_SIZES.some(s => s.w === w && s.h === h)
 }
 
+
+async function compressImage(file: File, maxSizeMB: number): Promise<Blob> {
+  return new Promise((resolve) => {
+    const img = new Image()
+    const url = URL.createObjectURL(file)
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      const canvas = document.createElement('canvas')
+      let { width, height } = img
+      // Scale down if needed
+      const MAX_PX = 2400
+      if (width > MAX_PX || height > MAX_PX) {
+        const ratio = Math.min(MAX_PX / width, MAX_PX / height)
+        width = Math.round(width * ratio)
+        height = Math.round(height * ratio)
+      }
+      canvas.width = width
+      canvas.height = height
+      const ctx = canvas.getContext('2d')!
+      ctx.drawImage(img, 0, 0, width, height)
+      // Try quality 0.85 first, reduce if still too large
+      canvas.toBlob((blob) => {
+        if (blob && blob.size <= maxSizeMB * 1024 * 1024) {
+          resolve(blob!)
+        } else {
+          canvas.toBlob((blob2) => resolve(blob2 || blob!), 'image/jpeg', 0.7)
+        }
+      }, 'image/jpeg', 0.85)
+    }
+    img.src = url
+  })
+}
+
 export default function SubmitPage() {
   const router = useRouter()
   const supabase = createClient()
@@ -139,10 +172,12 @@ export default function SubmitPage() {
       let imageUrls: string[] = []
       if (tab === 'app') {
         if (appFiles.length === 0) { setError('Please select an image.'); setUploading(false); return }
-        for (const file of appFiles) {
-          const ext = file.name.split('.').pop()
-          const path = `${user.id}/app/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-          const { error: uploadError } = await supabase.storage.from('submissions').upload(path, file, { upsert: false })
+        for (let i = 0; i < appFiles.length; i++) {
+          const file = appFiles[i]
+          // Compress image before upload if too large
+          const compressedFile = await compressImage(file, 2000)
+          const path = `${user.id}/app/${Date.now()}-${Math.random().toString(36).slice(2)}.jpg`
+          const { error: uploadError } = await supabase.storage.from('submissions').upload(path, compressedFile, { upsert: false, contentType: 'image/jpeg' })
           if (uploadError) throw new Error(`Upload failed: ${uploadError.message}`)
           const { data: { publicUrl } } = supabase.storage.from('submissions').getPublicUrl(path)
           imageUrls.push(publicUrl)
