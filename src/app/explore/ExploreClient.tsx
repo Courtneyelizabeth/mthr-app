@@ -242,7 +242,7 @@ export default function ExploreClient({
                     </div>
                   </Link>
                   {sub.instagram_handle && (
-                    
+                    <a
                       href={`https://instagram.com/${sub.instagram_handle}`}
                       target="_blank"
                       rel="noopener noreferrer"
