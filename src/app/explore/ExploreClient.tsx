@@ -106,6 +106,15 @@ export default function ExploreClient({
 
   return (
     <div>
+      {/* ANNOUNCEMENT BAR */}
+      <div className="bg-mthr-black text-white px-6 py-2.5 flex items-center justify-center gap-4">
+        <span className="text-[9px] tracking-[0.2em] uppercase text-white/50">the long light — summer 2026</span>
+        <span className="text-white/20">·</span>
+        <span className="font-cormorant italic text-[14px] font-light text-white/80">submissions open june 10th</span>
+        <span className="text-white/20">·</span>
+        <Link href="/submit" className="text-[9px] tracking-[0.16em] uppercase text-white/50 hover:text-white transition-colors border-b border-white/20 hover:border-white pb-px">submit →</Link>
+      </div>
+
       {/* HERO — full bleed featured image */}
       {heroImg && (
         <Link href={profileHref(heroSubmission!)} className="block relative h-[70vw] max-h-[600px] min-h-[320px] overflow-hidden group">
@@ -117,14 +126,15 @@ export default function ExploreClient({
             className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-          {/* Top left — MTHR tagline */}
+          {/* Top — taglines */}
           <div className="absolute top-0 left-0 right-0 p-6 md:p-10 flex items-start justify-between">
             <div>
-              <p className="font-cormorant italic font-light text-[13px] md:text-[15px] text-white/60 leading-relaxed">
+              <p className="text-[9px] tracking-[0.18em] uppercase text-white/30 mb-1">family photography. elevated.</p>
+              <p className="font-cormorant italic font-light text-[15px] md:text-[18px] text-white/60 leading-relaxed">
                 where real life<br />is the story.
               </p>
             </div>
-            <p className="text-[9px] tracking-[0.2em] uppercase text-white/30">motherhood. elevated.</p>
+            <p className="text-[9px] tracking-[0.14em] uppercase text-white/25 hidden md:block">a home for photographers<br />who find beauty in the ordinary.</p>
           </div>
 
           {/* Bottom — photographer credit */}
