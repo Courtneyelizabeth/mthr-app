@@ -42,12 +42,12 @@ type Photographer = {
 }
 
 const CATEGORIES = [
-  { value: 'all',        label: 'All' },
+  { value: 'all', label: 'All' },
   { value: 'motherhood', label: 'Motherhood' },
   { value: 'family_documentary', label: 'Family' },
-  { value: 'editorial',  label: 'Maternity' },
-  { value: 'kids',       label: 'Kids' },
-  { value: 'other',      label: 'Other' },
+  { value: 'editorial', label: 'Maternity' },
+  { value: 'kids', label: 'Kids' },
+  { value: 'other', label: 'Other' },
 ]
 
 export default function ExploreClient({
@@ -69,7 +69,6 @@ export default function ExploreClient({
     supabase.auth.getUser().then(({ data }) => {
       if (data.user) {
         setUserId(data.user.id)
-        // Load existing favorites
         supabase
           .from('favorites')
           .select('submission_id')
@@ -85,10 +84,8 @@ export default function ExploreClient({
     e.preventDefault()
     e.stopPropagation()
     if (!userId) { window.location.href = '/login'; return }
-
     if (favorites.has(submissionId)) {
-      await (supabase.from('favorites') as any).delete()
-        .eq('user_id', userId).eq('submission_id', submissionId)
+      await (supabase.from('favorites') as any).delete().eq('user_id', userId).eq('submission_id', submissionId)
       setFavorites(prev => { const n = new Set(prev); n.delete(submissionId); return n })
     } else {
       await (supabase.from('favorites') as any).insert({ user_id: userId, submission_id: submissionId })
@@ -97,39 +94,56 @@ export default function ExploreClient({
   }
 
   const quarterFeatured = submissions.filter(s => s.quarter_featured)
+  const heroSubmission = quarterFeatured[0] ?? submissions[0] ?? null
+  const heroImg = heroSubmission?.cover_image ?? heroSubmission?.images?.[0] ?? null
 
   const filtered = submissions
     .filter(s => activeCategory === 'all' || s.category === activeCategory)
     .filter(s => activeState === 'all' || s.location_state === activeState)
 
+  const profileHref = (sub: Submission) =>
+    sub.profiles?.id ? `/photographer/${sub.profiles.id}` : '#'
+
   return (
     <div>
-      {/* Page header */}
-      <div className="px-8 pt-10 pb-6 border-b border-[#E8E4DE]">
-        <div className="flex items-baseline justify-between">
-          <div>
-            <h1 className="font-cormorant font-light text-[42px] leading-none text-mthr-black">
-              featured <em>this week.</em>
-            </h1>
-            <p className="text-[11px] text-mthr-mid mt-2 tracking-[0.06em]">
-              {submissions.length} image{submissions.length !== 1 ? 's' : ''} · updated weekly
-            </p>
+      {/* HERO — full bleed featured image */}
+      {heroImg && (
+        <Link href={profileHref(heroSubmission!)} className="block relative h-[70vw] max-h-[600px] min-h-[320px] overflow-hidden group">
+          <Image
+            src={heroImg}
+            alt={heroSubmission?.subjects ?? 'featured'}
+            fill
+            priority
+            className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+            <p className="text-[9px] tracking-[0.2em] uppercase text-white/50 mb-2">featured</p>
+            {heroSubmission?.subjects && (
+              <p className="font-cormorant italic font-light text-[28px] md:text-[42px] text-white leading-none mb-2">
+                {heroSubmission.subjects}
+              </p>
+            )}
+            <div className="flex items-center gap-3">
+              {heroSubmission?.instagram_handle && (
+                <p className="text-[11px] text-white/70">@{heroSubmission.instagram_handle}</p>
+              )}
+              {heroSubmission?.location_name && (
+                <p className="text-[11px] text-white/50">{heroSubmission.location_name}</p>
+              )}
+            </div>
           </div>
-          <Link
-            href="/submit"
-            className="text-[10px] tracking-[0.16em] uppercase text-mthr-mid hover:text-mthr-black transition-colors border-b border-mthr-mid hover:border-mthr-black"
-          >
-            Submit your work →
-          </Link>
-        </div>
+        </Link>
+      )}
 
-        {/* Category tabs */}
-        <div className="flex gap-1 mt-6 flex-wrap">
+      {/* FILTER BAR */}
+      <div className="sticky top-0 z-20 bg-[#F5F2EE] border-b border-[#E8E4DE] px-4 md:px-8 py-3">
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
           {CATEGORIES.map(cat => (
             <button
               key={cat.value}
               onClick={() => setActiveCategory(cat.value)}
-              className={`px-4 py-1.5 text-[9.5px] tracking-[0.14em] uppercase font-medium rounded-full transition-colors border ${
+              className={`flex-shrink-0 px-4 py-1.5 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full transition-colors border ${
                 activeCategory === cat.value
                   ? 'bg-mthr-black text-white border-mthr-black'
                   : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'
@@ -138,118 +152,79 @@ export default function ExploreClient({
               {cat.label}
             </button>
           ))}
-        </div>
-
-        {/* State/location filter */}
-        {states.length > 0 && (
-          <div className="flex gap-1 mt-3 flex-wrap">
+          <div className="w-px h-5 bg-[#E8E4DE] self-center flex-shrink-0 mx-1" />
+          <button
+            onClick={() => setActiveState('all')}
+            className={`flex-shrink-0 px-4 py-1.5 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full transition-colors border ${
+              activeState === 'all'
+                ? 'bg-mthr-black text-white border-mthr-black'
+                : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'
+            }`}
+          >
+            all locations
+          </button>
+          {states.map(state => (
             <button
-              onClick={() => setActiveState('all')}
-              className={`px-3 py-1 text-[9px] tracking-[0.12em] uppercase font-medium rounded-full transition-colors border ${
-                activeState === 'all'
+              key={state}
+              onClick={() => setActiveState(state)}
+              className={`flex-shrink-0 px-3 py-1.5 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full transition-colors border ${
+                activeState === state
                   ? 'bg-mthr-black text-white border-mthr-black'
                   : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'
               }`}
             >
-              all locations
+              {state}
             </button>
-            {states.map(state => (
-              <button
-                key={state}
-                onClick={() => setActiveState(state)}
-                className={`px-3 py-1 text-[9px] tracking-[0.12em] uppercase font-medium rounded-full transition-colors border ${
-                  activeState === state
-                    ? 'bg-mthr-black text-white border-mthr-black'
-                    : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'
-                }`}
-              >
-                {state}
-              </button>
-            ))}
-          </div>
-        )}
+          ))}
+        </div>
       </div>
 
-      {/* Quarter featured */}
-      {quarterFeatured.length > 0 && activeCategory === 'all' && activeState === 'all' && (
-        <div className="px-8 pt-6 pb-2">
-          <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium mb-4">featured this quarter</p>
-          <div className="columns-2 md:columns-4 gap-3 space-y-3">
-            {quarterFeatured.map((sub) => {
-              const img = sub.cover_image ?? sub.images?.[0] ?? null
-              if (!img) return null
-              return (
-                <div key={sub.id} className="relative break-inside-avoid group">
-                  <Link href={sub.profiles?.id ? `/photographer/${sub.profiles.id}` : '#'}>
-                    <Image src={img} alt={sub.subjects ?? sub.title} width={600} height={900}
-                      className="w-full h-auto object-cover rounded-sm" style={{ display: 'block' }} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-sm flex flex-col justify-end p-3.5">
-                      {sub.subjects && <div className="font-cormorant italic text-[14px] font-light text-white leading-none">{sub.subjects}</div>}
-                      <div className="text-[10px] tracking-[0.08em] text-white/70 mt-0.5">{sub.location_name}</div>
-                      {sub.instagram_handle && (
-                        <a href={`https://instagram.com/${sub.instagram_handle}`} target="_blank" rel="noopener noreferrer"
-                          onClick={e => e.stopPropagation()} className="text-[9px] tracking-[0.08em] text-white/55 hover:text-white transition-colors mt-0.5">
-                          @{sub.instagram_handle}
-                        </a>
-                      )}
-                    </div>
-                  </Link>
-                </div>
-              )
-            })}
-          </div>
-          <div className="border-t border-[#E8E4DE] mt-6 mb-0" />
-        </div>
-      )}
-
-      {/* Photo grid */}
-      <div className="px-8 py-6">
+      {/* MAIN GRID */}
+      <div className="px-2 md:px-4 py-4">
         {filtered.length > 0 ? (
-          <div className="columns-2 md:columns-3 gap-3 space-y-3">
-            {filtered.map((sub) => {
+          <div className="columns-2 md:columns-3 gap-2 space-y-2">
+            {filtered.map((sub, idx) => {
               const img = sub.cover_image ?? sub.images?.[0] ?? null
               if (!img) return null
               const isFav = favorites.has(sub.id)
+
               return (
                 <div key={sub.id} className="relative break-inside-avoid group">
-                  <Link href={sub.profiles?.id ? `/photographer/${sub.profiles.id}` : '#'}>
+                  {/* Every ~9 images insert magazine banner */}
+                  {idx === 8 && (
+                    <div className="break-inside-avoid mb-2">
+                      <Link href="/submit" className="block bg-mthr-black px-5 py-6">
+                        <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">the long light — summer 2026</p>
+                        <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">submissions open june 10th</p>
+                        <p className="text-[8px] tracking-[0.16em] uppercase text-white/50 border-b border-white/20 inline-block pb-px">submit your work →</p>
+                      </Link>
+                    </div>
+                  )}
+                  <Link href={profileHref(sub)}>
                     <Image
                       src={img}
-                      alt={sub.subjects ?? sub.title}
+                      alt={sub.subjects ?? sub.title ?? ''}
                       width={600}
                       height={900}
-                      className="w-full h-auto object-cover rounded-sm"
+                      className="w-full h-auto object-cover"
                       style={{ display: 'block' }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-sm flex flex-col justify-end p-3.5">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3">
                       {sub.subjects && (
-                        <div className="font-cormorant italic text-[14px] font-light text-white leading-none">
-                          {sub.subjects}
-                        </div>
+                        <div className="font-cormorant italic text-[14px] font-light text-white leading-none">{sub.subjects}</div>
                       )}
-                      <div className="text-[10px] tracking-[0.08em] text-white/70 mt-0.5">
-                        {sub.location_name}
-                      </div>
+                      <div className="text-[10px] tracking-[0.06em] text-white/70 mt-0.5">{sub.location_name}</div>
                       {sub.instagram_handle && (
-                        <a
-                          href={`https://instagram.com/${sub.instagram_handle}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={e => e.stopPropagation()}
-                          className="text-[9px] tracking-[0.08em] text-white/55 hover:text-white transition-colors mt-0.5"
-                        >
-                          @{sub.instagram_handle}
-                        </a>
+                        <div className="text-[9px] text-white/55 mt-0.5">@{sub.instagram_handle}</div>
                       )}
                     </div>
                   </Link>
-                  {/* Favorite button */}
                   <button
                     onClick={(e) => toggleFavorite(e, sub.id)}
-                    className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white"
-                    title={isFav ? 'Remove from saved' : 'Save to inspo'}
+                    className="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white"
+                    title={isFav ? 'Remove from saved' : 'Save'}
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill={isFav ? '#1A1814' : 'none'} stroke="#1A1814" strokeWidth="1.5">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill={isFav ? '#1A1814' : 'none'} stroke="#1A1814" strokeWidth="1.5">
                       <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                     </svg>
                   </button>
@@ -259,65 +234,40 @@ export default function ExploreClient({
           </div>
         ) : (
           <div className="py-20 text-center">
-            <p className="font-cormorant italic text-[22px] font-light text-mthr-mid">
-              No images in this category yet.
-            </p>
+            <p className="font-cormorant italic text-[22px] font-light text-mthr-mid">no images here yet.</p>
             <Link href="/submit" className="inline-block mt-4 text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors">
-              Be the first to submit →
+              be the first to submit →
             </Link>
           </div>
         )}
       </div>
 
-      {/* Featured photographers */}
+      {/* FEATURED PHOTOGRAPHERS */}
       {photographers.length > 0 && (
-        <div className="px-8 py-8 border-t border-[#E8E4DE]">
-          <h2 className="font-cormorant font-light text-[28px] text-mthr-black mb-6">
-            featured <em>photographers.</em>
-          </h2>
+        <div className="px-4 md:px-8 py-8 border-t border-[#E8E4DE]">
+          <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium mb-6">featured photographers</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {photographers.map((p, i) => (
-              <div key={p.id} className="bg-white rounded-sm p-5 border border-[#E8E4DE]">
+              <Link key={p.id} href={`/photographer/${p.username || p.id}`} className="bg-white border border-[#E8E4DE] p-5 hover:border-mthr-mid transition-colors">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 photo-warm-1">
-                    {p.avatar_url && (
-                      <Image src={p.avatar_url} alt={p.full_name ?? ''} width={48} height={48} className="object-cover w-full h-full" />
+                  <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-[#E8E4DE] flex items-center justify-center">
+                    {p.avatar_url ? (
+                      <Image src={p.avatar_url} alt={p.full_name ?? ''} width={40} height={40} className="object-cover w-full h-full" />
+                    ) : (
+                      <span className="text-[12px] font-medium text-mthr-mid">
+                        {(p.full_name ?? 'M').split(' ').map(n => n[0]).join('').slice(0,2)}
+                      </span>
                     )}
                   </div>
                   <div>
-                    <div className="text-[9px] tracking-[0.1em] uppercase text-mthr-dim mb-0.5">
-                      {String(i + 1).padStart(2, '0')}.
-                    </div>
-                    <Link
-                      href={`/photographer/${p.username || p.id}`}
-                      className="font-cormorant text-[17px] font-light text-mthr-black hover:opacity-60 transition-opacity block leading-none"
-                    >
-                      {p.full_name}
-                    </Link>
-                    {p.location && (
-                      <div className="text-[10px] text-mthr-mid mt-0.5">{p.location}</div>
-                    )}
+                    <p className="font-cormorant text-[17px] font-light text-mthr-black leading-none">{p.full_name}</p>
+                    {p.location && <p className="text-[10px] text-mthr-mid mt-0.5">{p.location}</p>}
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  {p.instagram && (
-                    <a
-                      href={`https://instagram.com/${p.instagram}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[9px] tracking-[0.1em] uppercase text-mthr-mid hover:text-mthr-black transition-colors"
-                    >
-                      @{p.instagram}
-                    </a>
-                  )}
-                  <Link
-                    href={`/photographer/${p.username || p.id}`}
-                    className="text-[9px] tracking-[0.1em] uppercase text-mthr-mid hover:text-mthr-black transition-colors ml-auto"
-                  >
-                    View work →
-                  </Link>
-                </div>
-              </div>
+                {p.instagram && (
+                  <p className="text-[9px] tracking-[0.1em] uppercase text-mthr-mid">@{p.instagram}</p>
+                )}
+              </Link>
             ))}
           </div>
         </div>

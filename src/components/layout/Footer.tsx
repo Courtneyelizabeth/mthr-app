@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="border-t border-mthr-b1 bg-mthr-white">
       <div className="px-6 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <img src="/mthr-logo.svg" alt="MTHR" className="h-6 w-auto" style={{filter: 'brightness(0)'}} />
+          <span className="font-cormorant font-light text-[24px] leading-none text-mthr-black tracking-[-0.02em]">MTHR<span className="text-[18px]">.</span></span>
           <p className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid mt-1">
             Where real life is the story.
           </p>

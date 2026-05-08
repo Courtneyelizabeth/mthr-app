@@ -44,7 +44,7 @@ export default function TopNav() {
           href="/explore"
           className="hover:opacity-60 transition-opacity flex-shrink-0"
         >
-          <img src="/mthr-logo.svg" alt="MTHR" className="h-7 w-auto" style={{filter: 'brightness(0)'}} />
+          <span className="font-cormorant font-light text-[28px] md:text-[32px] leading-none text-mthr-black tracking-[-0.02em]">MTHR<span className="text-[22px] md:text-[26px]">.</span></span>
         </Link>
 
         {/* Desktop nav */}
