@@ -11,10 +11,10 @@ export default function MagazinePage() {
         {/* ── MAGAZINE SUBMISSIONS BANNER — TOP ── */}
         <section className="bg-mthr-black text-white px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
-            <p className="text-[9px] tracking-[0.2em] uppercase text-white/30 mb-1">coming soon</p>
-            <p className="font-cormorant italic font-light text-[13px] text-white/50 mb-3">the long light — summer 2026 — submissions open june 10th</p>
+            <p className="text-[9px] tracking-[0.2em] uppercase text-white/30 mb-1">edition one · the long light · releasing june 3rd</p>
+            <p className="font-cormorant italic font-light text-[13px] text-white/50 mb-3">full bloom — edition two — submissions open june 26th</p>
             <p className="text-[9px] tracking-[0.2em] uppercase text-white/50 mb-1">next submission window</p>
-            <p className="font-cormorant italic font-light text-[24px]">June 10 — July 12, 2026</p>
+            <p className="font-cormorant italic font-light text-[24px]">June 26 — July 20, 2026</p>
           </div>
           <Link
             href="/submit"

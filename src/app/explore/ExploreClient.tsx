@@ -122,8 +122,8 @@ export default function ExploreClient({
           </div>
           <div>
             <div className="w-8 h-px bg-white/20 mb-5" />
-            <p className="text-[9px] tracking-[0.18em] uppercase text-white/30 mb-1">the long light — summer 2026</p>
-            <p className="font-cormorant italic text-[15px] text-white/60 mb-4">submissions open june 10th</p>
+            <p className="text-[9px] tracking-[0.18em] uppercase text-white/30 mb-1">full bloom — edition two</p>
+            <p className="font-cormorant italic text-[15px] text-white/60 mb-4">submissions open june 26th</p>
             <Link href="/submit" className="inline-block text-[9px] tracking-[0.18em] uppercase text-white/50 border-b border-white/20 hover:text-white hover:border-white transition-colors pb-px">
               submit your work →
             </Link>
@@ -219,8 +219,8 @@ export default function ExploreClient({
                   {idx === 8 && (
                     <div className="break-inside-avoid mb-2">
                       <Link href="/submit" className="block bg-mthr-black px-5 py-6">
-                        <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">the long light — summer 2026</p>
-                        <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">submissions open june 10th</p>
+                        <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">full bloom — edition two</p>
+                        <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">submissions open june 26th</p>
                         <p className="text-[8px] tracking-[0.16em] uppercase text-white/50 border-b border-white/20 inline-block pb-px">submit your work →</p>
                       </Link>
                     </div>
