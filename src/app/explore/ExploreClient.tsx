@@ -122,6 +122,17 @@ export default function ExploreClient({
           </div>
           <div>
             <div className="w-8 h-px bg-white/20 mb-5" />
+
+            {/* Edition One */}
+            <p className="text-[9px] tracking-[0.18em] uppercase text-white/20 mb-1">edition one · the long light</p>
+            <p className="font-cormorant italic text-[13px] text-white/40 mb-1">releasing june 3rd, 2026</p>
+            <a href="#" className="inline-block text-[9px] tracking-[0.14em] uppercase text-white/25 border-b border-white/10 pb-px mb-5 cursor-default">
+              available soon on magcloud
+            </a>
+
+            <div className="w-8 h-px bg-white/10 mb-5" />
+
+            {/* Edition Two */}
             <p className="text-[9px] tracking-[0.18em] uppercase text-white/30 mb-1">full bloom — edition two</p>
             <p className="font-cormorant italic text-[15px] text-white/60 mb-4">submissions open june 26th</p>
             <Link href="/submit" className="inline-block text-[9px] tracking-[0.18em] uppercase text-white/50 border-b border-white/20 hover:text-white hover:border-white transition-colors pb-px">
