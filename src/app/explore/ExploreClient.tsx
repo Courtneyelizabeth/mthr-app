@@ -238,7 +238,7 @@ export default function ExploreClient({
                       {sub.subjects && (
                         <div className="font-cormorant italic text-[14px] font-light text-white leading-none">{sub.subjects}</div>
                       )}
-                      <div className="text-[10px] tracking-[0.06em] text-white/70 mt-0.5">{sub.location_name}</div>
+                      <div className="text-[10px] tracking-[0.06em] text-white/70 mt-1">{sub.location_name}</div>
                     </div>
                   </Link>
                   {sub.instagram_handle && (
@@ -247,7 +247,7 @@ export default function ExploreClient({
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={e => e.stopPropagation()}
-                      className="absolute bottom-2 left-2 text-[9px] text-white/55 hover:text-white transition-colors opacity-0 group-hover:opacity-100"
+                      className="absolute bottom-2 left-2 text-[9px] text-white/55 hover:text-white transition-colors opacity-0 group-hover:opacity-100 mt-1"
                     >
                       @{sub.instagram_handle}
                     </a>
