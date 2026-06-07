@@ -106,61 +106,55 @@ export default function ExploreClient({
 
   return (
     <div>
-{/* HERO — split panel: editorial text left, image right */}
-      <div className="flex flex-col md:flex-row min-h-[480px] md:h-[600px]">
+      {/* HERO — editorial text + portrait magazine cover */}
+      <div className="bg-[#F5F2EE] border-b border-[#E8E4DE] px-8 py-10 md:px-12 md:py-12">
+        <p className="text-[9px] tracking-[0.22em] uppercase text-mthr-mid mb-6">motherhood photography. elevated.</p>
+        <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
 
-        {/* LEFT — editorial text panel */}
-        <div className="bg-[#F5F2EE] flex flex-col justify-between px-8 py-10 md:px-12 md:py-12 md:w-[38%] flex-shrink-0 border-r border-[#E8E4DE]">
-          <div>
-            <p className="text-[9px] tracking-[0.22em] uppercase text-mthr-mid mb-6">motherhood photography. elevated.</p>
-            <p className="font-cormorant italic font-light text-[38px] md:text-[52px] leading-[1.05] text-mthr-black mb-4">
+          {/* Left — text */}
+          <div className="flex-1">
+            <p className="font-cormorant italic font-light text-[42px] md:text-[58px] leading-[1.0] text-mthr-black mb-4">
               where real life<br />is the story.
             </p>
-            <p className="text-[12px] text-mthr-mid leading-[1.8] max-w-[260px]">
+            <p className="text-[12px] text-mthr-mid leading-[1.8] mb-8 max-w-[320px]">
               a home for the photographers who find beauty in the ordinary.
             </p>
-          </div>
-          <div>
+
             <div className="w-8 h-px bg-[#D0CCC6] mb-5" />
 
-            {/* Edition One */}
             <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-dim mb-1">edition one · the long light</p>
-            <p className="font-cormorant italic text-[13px] text-mthr-mid mb-1">releasing june 3rd, 2026</p>
-            <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px mb-5">
+            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">get your copy.</p>
+            <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px mb-6">
               buy on magcloud →
             </a>
 
             <div className="w-8 h-px bg-[#E8E4DE] mb-5" />
 
-            {/* Edition Two */}
             <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-mid mb-1">full bloom — edition two</p>
-            <p className="font-cormorant italic text-[15px] text-mthr-black mb-4">submissions open june 26th</p>
+            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">submissions open june 26th</p>
             <Link href="/submit" className="inline-block text-[9px] tracking-[0.18em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
               submit your work →
             </Link>
           </div>
-        </div>
 
-        {/* RIGHT — featured image */}
-        {heroImg && (
-          <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer" className="block relative flex-1 min-h-[300px] md:min-h-0 overflow-hidden group">
+          {/* Right — magazine cover portrait */}
+          <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer"
+            className="block relative w-full md:w-[260px] flex-shrink-0 overflow-hidden group">
             <Image
               src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/MTHRMAGCOVER.jpg"
               alt="MTHR Magazine — The Long Light, Edition One"
-              fill
+              width={520}
+              height={693}
+              className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
               priority
-              className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-6">
-              <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">edition one · the long light</p>
-              <p className="font-cormorant italic font-light text-[20px] text-white leading-none mb-1">
-                available now
-              </p>
-              <p className="text-[10px] text-white/50">buy on magcloud →</p>
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-4">
+              <p className="text-[8px] tracking-[0.16em] uppercase text-white/60">click to purchase</p>
             </div>
           </a>
-        )}
+
+        </div>
       </div>
 
       {/* FILTER BAR */}
