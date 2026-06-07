@@ -143,32 +143,23 @@ export default function ExploreClient({
 
         {/* RIGHT — featured image */}
         {heroImg && (
-          <Link href={profileHref(heroSubmission!)} className="block relative flex-1 min-h-[300px] md:min-h-0 overflow-hidden group">
+          <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer" className="block relative flex-1 min-h-[300px] md:min-h-0 overflow-hidden group">
             <Image
-              src={heroImg}
-              alt={heroSubmission?.subjects ?? 'featured'}
+              src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/MTHRMAGCOVER"
+              alt="MTHR Magazine — The Long Light, Edition One"
               fill
               priority
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+              className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-6">
-              <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">featured</p>
-              {heroSubmission?.subjects && (
-                <p className="font-cormorant italic font-light text-[20px] text-white leading-none mb-1">
-                  {heroSubmission.subjects}
-                </p>
-              )}
-              <div className="flex items-center gap-2">
-                {heroSubmission?.instagram_handle && (
-                  <p className="text-[10px] text-white/60">@{heroSubmission.instagram_handle}</p>
-                )}
-                {heroSubmission?.location_name && (
-                  <p className="text-[10px] text-white/40">· {heroSubmission.location_name}</p>
-                )}
-              </div>
+              <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">edition one · the long light</p>
+              <p className="font-cormorant italic font-light text-[20px] text-white leading-none mb-1">
+                available now
+              </p>
+              <p className="text-[10px] text-white/50">buy on magcloud →</p>
             </div>
-          </Link>
+          </a>
         )}
       </div>
 
