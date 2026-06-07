@@ -107,16 +107,16 @@ export default function ExploreClient({
   return (
     <div>
       {/* HERO — editorial text + portrait magazine cover */}
-      <div className="bg-[#F5F2EE] border-b border-[#E8E4DE] px-8 py-10 md:px-12 md:py-12">
+      <div className="bg-[#F5F2EE] border-b border-[#E8E4DE] px-8 py-10 md:px-16 md:py-14">
         <p className="text-[9px] tracking-[0.22em] uppercase text-mthr-mid mb-6">motherhood photography. elevated.</p>
-        <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
+        <div className="flex flex-col md:flex-row gap-10 md:gap-20 items-start max-w-5xl">
 
           {/* Left — text */}
           <div className="flex-1">
             <p className="font-cormorant italic font-light text-[42px] md:text-[58px] leading-[1.0] text-mthr-black mb-4">
               where real life<br />is the story.
             </p>
-            <p className="text-[12px] text-mthr-mid leading-[1.8] mb-8 max-w-[320px]">
+            <p className="text-[12px] text-mthr-mid leading-[1.8] mb-8">
               a home for the photographers who find beauty in the ordinary.
             </p>
 
@@ -139,7 +139,7 @@ export default function ExploreClient({
 
           {/* Right — magazine cover portrait */}
           <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer"
-            className="block relative w-full md:w-[260px] flex-shrink-0 overflow-hidden group">
+            className="block relative w-full md:w-[320px] lg:w-[380px] flex-shrink-0 overflow-hidden group">
             <Image
               src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/MTHRMAGCOVER.jpg"
               alt="MTHR Magazine — The Long Light, Edition One"
