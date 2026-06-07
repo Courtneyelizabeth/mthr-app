@@ -126,8 +126,8 @@ export default function ExploreClient({
             {/* Edition One */}
             <p className="text-[9px] tracking-[0.18em] uppercase text-white/20 mb-1">edition one · the long light</p>
             <p className="font-cormorant italic text-[13px] text-white/40 mb-1">releasing june 3rd, 2026</p>
-            <a href="#" className="inline-block text-[9px] tracking-[0.14em] uppercase text-white/25 border-b border-white/10 pb-px mb-5 cursor-default">
-              available soon on magcloud
+            <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-white/50 border-b border-white/20 hover:text-white hover:border-white transition-colors pb-px mb-5">
+              buy on magcloud →
             </a>
 
             <div className="w-8 h-px bg-white/10 mb-5" />
