@@ -110,32 +110,32 @@ export default function ExploreClient({
       <div className="flex flex-col md:flex-row min-h-[480px] md:h-[600px]">
 
         {/* LEFT — editorial text panel */}
-        <div className="bg-mthr-black flex flex-col justify-between px-8 py-10 md:px-12 md:py-12 md:w-[38%] flex-shrink-0">
+        <div className="bg-[#F5F2EE] flex flex-col justify-between px-8 py-10 md:px-12 md:py-12 md:w-[38%] flex-shrink-0 border-r border-[#E8E4DE]">
           <div>
-            <p className="text-[9px] tracking-[0.22em] uppercase text-white/30 mb-6">motherhood photography. elevated.</p>
-            <p className="font-cormorant italic font-light text-[38px] md:text-[52px] leading-[1.05] text-white mb-4">
+            <p className="text-[9px] tracking-[0.22em] uppercase text-mthr-mid mb-6">motherhood photography. elevated.</p>
+            <p className="font-cormorant italic font-light text-[38px] md:text-[52px] leading-[1.05] text-mthr-black mb-4">
               where real life<br />is the story.
             </p>
-            <p className="text-[12px] text-white/40 leading-[1.8] max-w-[260px]">
+            <p className="text-[12px] text-mthr-mid leading-[1.8] max-w-[260px]">
               a home for the photographers who find beauty in the ordinary.
             </p>
           </div>
           <div>
-            <div className="w-8 h-px bg-white/20 mb-5" />
+            <div className="w-8 h-px bg-[#D0CCC6] mb-5" />
 
             {/* Edition One */}
-            <p className="text-[9px] tracking-[0.18em] uppercase text-white/20 mb-1">edition one · the long light</p>
-            <p className="font-cormorant italic text-[13px] text-white/40 mb-1">releasing june 3rd, 2026</p>
-            <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-white/50 border-b border-white/20 hover:text-white hover:border-white transition-colors pb-px mb-5">
+            <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-dim mb-1">edition one · the long light</p>
+            <p className="font-cormorant italic text-[13px] text-mthr-mid mb-1">releasing june 3rd, 2026</p>
+            <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px mb-5">
               buy on magcloud →
             </a>
 
-            <div className="w-8 h-px bg-white/10 mb-5" />
+            <div className="w-8 h-px bg-[#E8E4DE] mb-5" />
 
             {/* Edition Two */}
-            <p className="text-[9px] tracking-[0.18em] uppercase text-white/30 mb-1">full bloom — edition two</p>
-            <p className="font-cormorant italic text-[15px] text-white/60 mb-4">submissions open june 26th</p>
-            <Link href="/submit" className="inline-block text-[9px] tracking-[0.18em] uppercase text-white/50 border-b border-white/20 hover:text-white hover:border-white transition-colors pb-px">
+            <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-mid mb-1">full bloom — edition two</p>
+            <p className="font-cormorant italic text-[15px] text-mthr-black mb-4">submissions open june 26th</p>
+            <Link href="/submit" className="inline-block text-[9px] tracking-[0.18em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
               submit your work →
             </Link>
           </div>
