@@ -145,7 +145,7 @@ export default function ExploreClient({
         {heroImg && (
           <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer" className="block relative flex-1 min-h-[300px] md:min-h-0 overflow-hidden group">
             <Image
-              src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/MTHRMAGCOVER"
+              src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/MTHRMAGCOVER.jpg"
               alt="MTHR Magazine — The Long Light, Edition One"
               fill
               priority
