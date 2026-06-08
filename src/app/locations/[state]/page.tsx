@@ -77,7 +77,7 @@ export default async function LocationPage({ params }: { params: { state: string
                         <div className="text-[12px] tracking-[0.06em] text-white/80">{sub.location_name}</div>
                         {sub.instagram_handle && (
                           <a href={`https://instagram.com/${sub.instagram_handle}`} target="_blank" rel="noopener noreferrer"
-                            onClick={e => e.stopPropagation()} className="text-[11px] text-white/60 hover:text-white transition-colors mt-0.5">
+                            className="text-[11px] text-white/60 hover:text-white transition-colors mt-0.5">
                             @{sub.instagram_handle}
                           </a>
                         )}
