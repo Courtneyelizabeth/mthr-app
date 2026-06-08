@@ -62,7 +62,7 @@ export default async function LocationPage({ params }: { params: { state: string
                 if (!img) return null
                 return (
                   <div key={sub.id} className="relative break-inside-avoid group">
-                    <Link href={sub.profiles?.id ? `/photographer/${sub.profiles.id}` : '#'}>
+                    <Link href={`/photographer/${(sub as any).profiles?.id ?? (sub as any).photographer_id ?? ''}`}>
                       <Image src={img} alt={sub.subjects ?? sub.title ?? state}
                         width={600} height={900} className="w-full h-auto object-cover rounded-sm"
                         style={{ display: 'block' }} />

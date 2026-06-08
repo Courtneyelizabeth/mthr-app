@@ -232,10 +232,10 @@ export default function ExploreClient({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
                       {sub.subjects && (
-                        <div className="font-cormorant italic text-[16px] font-light text-white leading-tight mb-1">{sub.subjects}</div>
+                        <div className="font-cormorant italic text-[20px] font-light text-white leading-tight mb-1">{sub.subjects}</div>
                       )}
                       {sub.location_name && (
-                        <div className="text-[11px] tracking-[0.06em] text-white/70">{sub.location_name}</div>
+                        <div className="text-[12px] tracking-[0.06em] text-white/80">{sub.location_name}</div>
                       )}
                     </div>
                   </Link>
