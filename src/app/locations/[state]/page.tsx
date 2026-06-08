@@ -8,22 +8,28 @@ export default async function LocationPage({ params }: { params: { state: string
   const state = decodeURIComponent(params.state)
   const supabase = createClient()
 
-  const { data: submissions } = await (supabase as any)
+  const { data: rawSubmissions } = await (supabase as any)
     .from('submissions')
     .select(`
       id, title, location_name, location_country, location_state,
       subjects, instagram_handle, cover_image, images,
-      category, status, created_at,
+      category, status, created_at, photographer_id,
       profiles:photographer_id (id, full_name, username, avatar_url, instagram)
     `)
     .in('status', ['approved', 'featured'])
     .eq('submission_type', 'app')
     .eq('location_state', state)
-    .not('location_name', 'is', null)
     .order('created_at', { ascending: false })
 
-  // Get unique venues within this state
-  const venues: string[] = Array.from(new Set(((submissions ?? []) as any[]).map((s: any) => s.location_name as string).filter(Boolean))).sort()
+  // Only show submissions with a specific venue name
+  const submissions = (rawSubmissions ?? []).filter((s: any) =>
+    s.location_name && s.location_name.trim() !== '' &&
+    s.location_name.trim().toLowerCase() !== state.toLowerCase()
+  )
+
+  const venues: string[] = Array.from(new Set(
+    submissions.map((s: any) => s.location_name as string).filter(Boolean)
+  )).sort() as string[]
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F5F2EE]">
@@ -31,17 +37,16 @@ export default async function LocationPage({ params }: { params: { state: string
       <main className="flex-1">
         <div className="px-8 pt-12 pb-6 border-b border-[#E8E4DE]">
           <Link href="/location-guide" className="text-[9px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors mb-4 block">
-            ← shoot guides
+            ← location guide
           </Link>
           <h1 className="font-cormorant font-light text-[42px] leading-none text-mthr-black mb-1">
             {state}<em>.</em>
           </h1>
-          <p className="text-[12px] text-mthr-mid">{submissions?.length ?? 0} images</p>
+          <p className="text-[12px] text-mthr-mid">{submissions.length} image{submissions.length !== 1 ? 's' : ''}</p>
 
-          {/* Venue filter pills — member only */}
           {venues.length > 1 && (
             <div className="flex gap-2 flex-wrap mt-4">
-              {venues.map(venue => (
+              {venues.map((venue: string) => (
                 <Link
                   key={venue}
                   href={`/locations/${encodeURIComponent(state)}?venue=${encodeURIComponent(venue)}`}
@@ -55,23 +60,24 @@ export default async function LocationPage({ params }: { params: { state: string
         </div>
 
         <div className="px-8 py-6">
-          {submissions && submissions.length > 0 ? (
+          {submissions.length > 0 ? (
             <div className="columns-2 md:columns-3 gap-3 space-y-3">
-              {((submissions ?? []) as any[]).map((sub: any) => {
+              {submissions.map((sub: any) => {
                 const img = sub.cover_image ?? sub.images?.[0] ?? null
                 if (!img) return null
+                const profileId = sub.profiles?.id ?? sub.photographer_id ?? ''
                 return (
                   <div key={sub.id} className="relative break-inside-avoid group">
-                    <Link href={`/photographer/${(sub as any).profiles?.id ?? (sub as any).photographer_id ?? ''}`}>
+                    <Link href={profileId ? `/photographer/${profileId}` : '/explore'}>
                       <Image src={img} alt={sub.subjects ?? sub.title ?? state}
                         width={600} height={900} className="w-full h-auto object-cover rounded-sm"
                         style={{ display: 'block' }} />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-sm flex flex-col justify-end p-3.5">
-                        {sub.subjects && <div className="font-cormorant italic text-[14px] font-light text-white leading-none">{sub.subjects}</div>}
-                        <div className="text-[10px] tracking-[0.08em] text-white/70 mt-0.5">{sub.location_name}</div>
+                        {sub.subjects && <div className="font-cormorant italic text-[18px] font-light text-white leading-tight mb-1">{sub.subjects}</div>}
+                        <div className="text-[12px] tracking-[0.06em] text-white/80">{sub.location_name}</div>
                         {sub.instagram_handle && (
                           <a href={`https://instagram.com/${sub.instagram_handle}`} target="_blank" rel="noopener noreferrer"
-                            onClick={e => e.stopPropagation()} className="text-[9px] tracking-[0.08em] text-white/55 hover:text-white transition-colors mt-0.5">
+                            onClick={e => e.stopPropagation()} className="text-[11px] text-white/60 hover:text-white transition-colors mt-0.5">
                             @{sub.instagram_handle}
                           </a>
                         )}
