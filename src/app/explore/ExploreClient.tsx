@@ -230,11 +230,13 @@ export default function ExploreClient({
                       className="w-full h-auto object-cover"
                       style={{ display: 'block' }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
                       {sub.subjects && (
-                        <div className="font-cormorant italic text-[14px] font-light text-white leading-none">{sub.subjects}</div>
+                        <div className="font-cormorant italic text-[16px] font-light text-white leading-tight mb-1">{sub.subjects}</div>
                       )}
-                      <div className="text-[10px] tracking-[0.06em] text-white/70 mt-1">{sub.location_name}</div>
+                      {sub.location_name && (
+                        <div className="text-[11px] tracking-[0.06em] text-white/70">{sub.location_name}</div>
+                      )}
                     </div>
                   </Link>
                   {sub.instagram_handle && (

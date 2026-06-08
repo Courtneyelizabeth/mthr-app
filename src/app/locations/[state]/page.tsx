@@ -30,8 +30,8 @@ export default async function LocationPage({ params }: { params: { state: string
       <TopNav />
       <main className="flex-1">
         <div className="px-8 pt-12 pb-6 border-b border-[#E8E4DE]">
-          <Link href="/explore" className="text-[9px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors mb-4 block">
-            ← all locations
+          <Link href="/location-guide" className="text-[9px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors mb-4 block">
+            ← shoot guides
           </Link>
           <h1 className="font-cormorant font-light text-[42px] leading-none text-mthr-black mb-1">
             {state}<em>.</em>
@@ -62,7 +62,7 @@ export default async function LocationPage({ params }: { params: { state: string
                 if (!img) return null
                 return (
                   <div key={sub.id} className="relative break-inside-avoid group">
-                    <Link href={`/submission/${sub.id}`}>
+                    <Link href={sub.profiles?.id ? `/photographer/${sub.profiles.id}` : '#'}>
                       <Image src={img} alt={sub.subjects ?? sub.title ?? state}
                         width={600} height={900} className="w-full h-auto object-cover rounded-sm"
                         style={{ display: 'block' }} />

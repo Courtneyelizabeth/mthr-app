@@ -12,7 +12,7 @@ const NAV_LINKS = [
   { href: '/submit',         label: 'Submit' },
   { href: '/magazine',       label: 'Magazine' },
   { href: '/community',      label: 'Community' },
-  { href: '/location-guide', label: 'Locations' },
+  { href: '/location-guide', label: 'Location Guide' },
 ]
 
 export default function TopNav() {
