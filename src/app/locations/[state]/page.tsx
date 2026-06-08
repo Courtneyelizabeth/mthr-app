@@ -19,6 +19,7 @@ export default async function LocationPage({ params }: { params: { state: string
     .in('status', ['approved', 'featured'])
     .eq('submission_type', 'app')
     .eq('location_state', state)
+    .not('location_name', 'is', null)
     .order('created_at', { ascending: false })
 
   // Get unique venues within this state

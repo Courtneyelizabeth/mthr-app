@@ -555,7 +555,7 @@ export default function SubmitPage() {
                 </Field>
 
                 <Field label="Venue or park name (optional)">
-                  <input type="text" placeholder="e.g. Rocky Mountain National Park"
+                  <input type="text" placeholder="e.g. Rocky Mountain National Park, Chautauqua Park, Maroon Bells"
                     value={form.venue} onChange={e => setForm(f => ({ ...f, venue: e.target.value }))}
                     className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
                 </Field>

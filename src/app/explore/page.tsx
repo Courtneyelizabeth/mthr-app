@@ -28,6 +28,7 @@ export default async function ExplorePage() {
     .in('status', ['approved', 'featured'])
     .eq('submission_type', 'app')
     .not('location_state', 'is', null)
+    .not('location_name', 'is', null)
 
   const states = Array.from(new Set((locationData ?? [] as any[])
     .map((s: any) => s.location_state)
