@@ -11,7 +11,7 @@ export default function MagazinePage() {
         {/* ── MAGAZINE SUBMISSIONS BANNER — TOP ── */}
         <section className="bg-mthr-black text-white px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
-            <p className="text-[9px] tracking-[0.2em] uppercase text-white/30 mb-1">edition one · the long light · releasing june 3rd</p>
+            <p className="text-[9px] tracking-[0.2em] uppercase text-white/30 mb-1">edition one · the long light · available now</p>
             <p className="font-cormorant italic font-light text-[13px] text-white/50 mb-3">full bloom — edition two — submissions open june 26th</p>
             <p className="text-[9px] tracking-[0.2em] uppercase text-white/50 mb-1">next submission window</p>
             <p className="font-cormorant italic font-light text-[24px]">June 26 — July 20, 2026</p>
@@ -28,7 +28,7 @@ export default function MagazinePage() {
         <section className="grid grid-cols-1 md:grid-cols-2 min-h-[90vh] border-b border-[#E8E4DE]">
           {/* Left — photo placeholder */}
           <div className="relative min-h-[50vh] md:min-h-full overflow-hidden">
-            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/katiemitzphoto-170.jpg" alt="Courtney Maxwell" className="absolute inset-0 w-full h-full object-cover" />
+            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/MTHRMAGCOVER.jpg" alt="Courtney Maxwell" className="absolute inset-0 w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
 
