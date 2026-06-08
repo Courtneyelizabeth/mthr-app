@@ -11,10 +11,16 @@ export default function MagazinePage() {
         {/* ── MAGAZINE SUBMISSIONS BANNER — TOP ── */}
         <section className="bg-mthr-black text-white px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
-            <p className="text-[9px] tracking-[0.2em] uppercase text-white/30 mb-1">edition one · the long light · available now</p>
-            <p className="font-cormorant italic font-light text-[13px] text-white/50 mb-3">full bloom — edition two — submissions open june 26th</p>
-            <p className="text-[9px] tracking-[0.2em] uppercase text-white/50 mb-1">next submission window</p>
-            <p className="font-cormorant italic font-light text-[24px]">June 26 — July 20, 2026</p>
+            <p className="text-[9px] tracking-[0.2em] uppercase text-white/30 mb-1">edition one · the long light</p>
+            <p className="font-cormorant italic font-light text-[20px] text-white mb-2">available now</p>
+            <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer"
+              className="inline-block text-[9px] tracking-[0.14em] uppercase text-white/60 border-b border-white/30 hover:text-white hover:border-white transition-colors pb-px mb-4">
+              get your copy →
+            </a>
+            <div className="border-t border-white/10 pt-3">
+              <p className="text-[9px] tracking-[0.2em] uppercase text-white/40 mb-1">full bloom · edition two</p>
+              <p className="font-cormorant italic font-light text-[18px] text-white/70">june 26 — july 20, 2026</p>
+            </div>
           </div>
           <Link
             href="/submit"
