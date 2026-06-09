@@ -1,171 +1,151 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 
-type Post = {
+const PROMPTS: Record<number, string> = {
+  1: 'the in between',
+  2: 'love without looking at the camera',
+  3: 'what your hands do all day',
+  4: 'after the rain',
+  5: 'a meal together',
+  6: 'golden hour with nowhere to be',
+  7: 'water',
+  8: 'the last days of summer',
+  9: 'back to the ordinary',
+  10: 'what they carry',
+  11: 'a quiet moment',
+  12: 'light in the dark',
+}
+
+type ContentDay = {
   id: string
-  type: string
   title: string
   description: string | null
   location_name: string | null
   location_state: string | null
   event_date: string | null
-  spots_available: number | null
-  instagram_handle: string | null
-  image_url: string | null
-  created_at: string
-  profiles: { full_name: string | null; username: string | null; instagram: string | null } | null
+  spots_total: number | null
+  spots_remaining: number | null
+  host_instagram: string | null
+  model_instagram: string | null
+  booking_url: string | null
+  releasing_date: string | null
 }
 
-type Project365Entry = {
+type OpenCall = {
   id: string
-  day_number: number
+  brand_name: string
+  title: string
+  description: string | null
+  call_type: string
+  location: string | null
+  closes_at: string | null
+}
+
+type Profile = {
+  id: string
+  full_name: string | null
+  username: string | null
+  location: string | null
+  avatar_url: string | null
+  instagram: string | null
+}
+
+type PromptSubmission = {
+  id: string
   image_url: string
   caption: string | null
-  created_at: string
-  profiles: { full_name: string | null; username: string | null; avatar_url: string | null } | null
+  profiles: Profile | null
 }
 
-const TABS = ['all', 'workshops', 'content days', '365 project']
-const POST_TYPES = ['workshop', 'content_day']
-
 export default function CommunityClient({
-  posts,
-  project365,
+  contentDays,
+  openCalls,
+  promptSubmissions,
+  photographers,
   userId,
 }: {
-  posts: Post[]
-  project365: Project365Entry[]
+  contentDays: ContentDay[]
+  openCalls: OpenCall[]
+  promptSubmissions: PromptSubmission[]
+  photographers: Profile[]
   userId: string | null
 }) {
   const supabase = createClient()
-  const [activeTab, setActiveTab] = useState('all')
-  const [showForm, setShowForm] = useState(false)
-  const [show365Form, setShow365Form] = useState(false)
+  const [activeTab, setActiveTab] = useState('content days')
+  const [showApplyForm, setShowApplyForm] = useState<string | null>(null)
+  const [showPromptForm, setShowPromptForm] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const imageRef = useRef<HTMLInputElement>(null)
-  const image365Ref = useRef<HTMLInputElement>(null)
+  const [success, setSuccess] = useState(''
 
-  const [form, setForm] = useState({
-    type: 'workshop',
-    title: '',
-    description: '',
-    location_name: '',
-    location_state: '',
-    event_date: '',
-    spots_available: '',
-    instagram_handle: '',
+  const now = new Date()
+  const month = now.getMonth() + 1
+  const year = now.getFullYear()
+  const currentPrompt = PROMPTS[month]
+
+  const [applyForm, setApplyForm] = useState({
+    full_name: '', location: '', family_description: '',
+    instagram_handle: '', photo_link: '', email: ''
   })
+  const [promptImage, setPromptImage] = useState<File | null>(null)
+  const [promptCaption, setPromptCaption] = useState('')
 
-  const [form365, setForm365] = useState({
-    caption: '',
-    image: null as File | null,
-  })
-
-  const filteredPosts = activeTab === 'all'
-    ? posts.filter(p => p.type !== '365')
-    : activeTab === 'workshops'
-    ? posts.filter(p => p.type === 'workshop')
-    : activeTab === 'content days'
-    ? posts.filter(p => p.type === 'content_day')
-    : []
-
-  const handleSubmitPost = async () => {
-    if (!userId) { window.location.href = "/login?redirectTo=/community"; return }
+  const handleApply = async (openCallId: string) => {
     setSubmitting(true)
-    let imageUrl = null
-
-    // Upload image if provided
-    const file = imageRef.current?.files?.[0]
-    if (file) {
-      const path = `community/${userId}/${Date.now()}.${file.name.split('.').pop()}`
-      const { error } = await supabase.storage.from('submissions').upload(path, file)
-      if (!error) {
-        const { data: { publicUrl } } = supabase.storage.from('submissions').getPublicUrl(path)
-        imageUrl = publicUrl
-      }
+    try {
+      await (supabase.from('open_call_applications') as any).insert({
+        open_call_id: openCallId,
+        ...applyForm,
+      })
+      setSuccess('application submitted! we'll be in touch.')
+      setShowApplyForm(null)
+      setApplyForm({ full_name: '', location: '', family_description: '', instagram_handle: '', photo_link: '', email: '' })
+    } catch (e) {
+      setSuccess('something went wrong. please try again.')
     }
-
-    await supabase.from('community_posts').insert({
-      photographer_id: userId,
-      type: form.type,
-      title: form.title,
-      description: form.description || null,
-      location_name: form.location_name || null,
-      location_state: form.location_state || null,
-      event_date: form.event_date || null,
-      spots_available: form.spots_available ? parseInt(form.spots_available) : null,
-      instagram_handle: form.instagram_handle || null,
-      image_url: imageUrl,
-    })
-
-    setSuccess(true)
-    setShowForm(false)
     setSubmitting(false)
   }
 
-  const handleSubmit365 = async () => {
-    if (!userId) { window.location.href = "/login?redirectTo=/community"; return }
-    if (!form365.image) return
+  const handlePromptSubmit = async () => {
+    if (!promptImage || !userId) return
     setSubmitting(true)
-
-    const path = `365/${userId}/${Date.now()}.${form365.image.name.split('.').pop()}`
-    const { error } = await supabase.storage.from('submissions').upload(path, form365.image)
-    if (error) { setSubmitting(false); return }
-
-    const { data: { publicUrl } } = supabase.storage.from('submissions').getPublicUrl(path)
-    const dayNum = project365.filter(e => {
-      const profiles = e.profiles as { username?: string | null } | null
-      return profiles?.username === userId
-    }).length + 1
-
-    await supabase.from('project_365').insert({
-      photographer_id: userId,
-      day_number: dayNum,
-      image_url: publicUrl,
-      caption: form365.caption || null,
-      date_taken: form365.date_taken || new Date().toISOString().split('T')[0],
-    })
-
-    setShow365Form(false)
+    try {
+      const path = `prompts/${userId}/${year}-${month}-${Date.now()}.${promptImage.name.split('.').pop()}`
+      const { error: uploadError } = await supabase.storage.from('submissions').upload(path, promptImage)
+      if (uploadError) throw uploadError
+      const { data: { publicUrl } } = supabase.storage.from('submissions').getPublicUrl(path)
+      await (supabase.from('prompt_submissions') as any).insert({
+        photographer_id: userId, month, year, image_url: publicUrl, caption: promptCaption || null
+      })
+      setSuccess('image submitted!')
+      setShowPromptForm(false)
+      setPromptImage(null)
+      setPromptCaption('')
+    } catch (e) {
+      setSuccess('something went wrong. please try again.')
+    }
     setSubmitting(false)
-    window.location.reload()
   }
+
+  const TABS = ['content days', 'monthly prompt', 'find a photographer', 'open calls']
 
   return (
     <div>
       {/* Header */}
-      <div className="px-8 pt-10 pb-6 border-b border-[#E8E4DE]">
-        <div className="flex items-baseline justify-between mb-1">
-          <h1 className="font-cormorant font-light text-[42px] leading-none text-mthr-black">
-            the <em>community.</em>
-          </h1>
-          <button
-            onClick={() => setShowForm(true)}
-            className="text-[10px] tracking-[0.16em] uppercase font-medium px-4 py-2 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm"
-          >
-            + Add yours
-          </button>
-        </div>
-        <p className="text-[12px] text-mthr-mid leading-[1.7] max-w-xl mt-2">
-          workshops, content days and the 365 project. a place to share, connect and grow alongside photographers who see the world the way you do.
+      <div className="bg-white px-8 pt-10 pb-0 border-b border-[#E8E4DE]">
+        <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid mb-2">community</p>
+        <p className="font-cormorant italic font-light text-[36px] leading-none text-mthr-black mb-6">
+          photographers helping<br /><em>photographers.</em>
         </p>
-
-        {/* Tabs */}
-        <div className="flex gap-0 mt-6 border-b border-[#E8E4DE]">
+        <div className="flex gap-0 overflow-x-auto">
           {TABS.map(tab => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-5 py-3 text-[10px] tracking-[0.14em] uppercase font-medium border-b-2 transition-colors -mb-px ${
-                activeTab === tab
-                  ? 'border-mthr-black text-mthr-black'
-                  : 'border-transparent text-mthr-mid hover:text-mthr-black'
-              }`}
-            >
+            <button key={tab} onClick={() => setActiveTab(tab)}
+              className={`px-5 py-3 text-[9.5px] tracking-[0.14em] uppercase font-medium border-b-2 transition-colors -mb-px whitespace-nowrap ${
+                activeTab === tab ? 'border-mthr-black text-mthr-black' : 'border-transparent text-mthr-mid hover:text-mthr-black'
+              }`}>
               {tab}
             </button>
           ))}
@@ -173,314 +153,283 @@ export default function CommunityClient({
       </div>
 
       {success && (
-        <div className="mx-8 mt-6 px-4 py-3 bg-white border border-[#E8E4DE] rounded-sm">
-          <p className="text-[12px] text-mthr-black">your submission has been received and will appear once approved. thank you!</p>
+        <div className="mx-8 mt-4 p-3 bg-[#F0F7F0] border border-[#C5DFC5] rounded-sm text-[11px] text-mthr-black">
+          {success}
         </div>
       )}
 
-      {/* Community dark banner */}
-      {activeTab !== '365 project' && (
-        <div className="mx-8 mt-6 bg-mthr-black text-white rounded-sm p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div>
-            <p className="text-[9px] tracking-[0.2em] uppercase text-white/50 mb-2">Share with the community</p>
-            <h2 className="font-cormorant italic font-light text-[26px] md:text-[32px] leading-tight text-white mb-2">
-              have a workshop or content day<br className="hidden md:block" /> you want to share? add it here.
-            </h2>
-            <p className="text-[12px] text-white/60 leading-[1.7]">open to all photographers. full credit always. connect with others who are doing the work.</p>
-          </div>
-          <button
-            onClick={() => setShowForm(true)}
-            className="flex-shrink-0 text-[10px] tracking-[0.16em] uppercase font-medium px-6 py-3 border border-white/50 text-white hover:bg-white hover:text-mthr-black transition-colors rounded-sm"
-          >
-            + add yours
-          </button>
-        </div>
-      )}
-
-      {/* WORKSHOPS + CONTENT DAYS */}
-      {activeTab !== '365 project' && (
+      {/* CONTENT DAYS */}
+      {activeTab === 'content days' && (
         <div className="px-8 py-8">
-          {filteredPosts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {filteredPosts.map(post => (
-                <div key={post.id} className="bg-white rounded-sm border border-[#E8E4DE] overflow-hidden">
-                  {post.image_url && (
-                    <div className="relative h-48 photo-warm-1">
-                      <Image src={post.image_url} alt={post.title} fill className="object-cover" />
-                      <div className="absolute top-3 left-3">
-                        <span className={`text-[8px] tracking-[0.1em] uppercase font-medium px-2.5 py-1 rounded-full ${
-                          post.type === 'workshop'
-                            ? 'bg-mthr-black text-white'
-                            : 'bg-white text-mthr-black border border-mthr-black'
-                        }`}>
-                          {post.type === 'workshop' ? 'Workshop' : 'Content day'}
-                        </span>
+          <div className="space-y-4">
+            {contentDays.length > 0 ? contentDays.map(day => {
+              const isReleased = !day.releasing_date || new Date(day.releasing_date) <= now
+              return (
+                <div key={day.id} className="border border-[#E8E4DE] rounded-sm overflow-hidden">
+                  <div style={{ background: '#E8E2D9' }} className="px-6 py-5">
+                    <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-mid mb-1">
+                      content day · {day.location_state ?? day.location_name}
+                    </p>
+                    <p className="font-cormorant italic font-light text-[26px] leading-tight text-mthr-black">
+                      {day.title}
+                    </p>
+                  </div>
+                  <div className="bg-white px-6 py-5">
+                    {day.description && (
+                      <p className="text-[12px] text-mthr-mid leading-[1.85] mb-5">{day.description}</p>
+                    )}
+                    <div className="grid grid-cols-3 gap-3 mb-5">
+                      <div className="bg-[#F5F2EE] rounded-sm p-3 text-center">
+                        <p className="text-[9px] tracking-[0.12em] uppercase text-mthr-dim mb-1">date</p>
+                        <p className="font-cormorant font-light text-[13px] text-mthr-black">
+                          {day.event_date ? new Date(day.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'TBD'}
+                        </p>
+                      </div>
+                      <div className="bg-[#F5F2EE] rounded-sm p-3 text-center">
+                        <p className="text-[9px] tracking-[0.12em] uppercase text-mthr-dim mb-1">location</p>
+                        <p className="font-cormorant font-light text-[13px] text-mthr-black">{day.location_state ?? 'TBD'}</p>
+                      </div>
+                      <div className="bg-[#F5F2EE] rounded-sm p-3 text-center">
+                        <p className="text-[9px] tracking-[0.12em] uppercase text-mthr-dim mb-1">spots</p>
+                        <p className="font-cormorant font-light text-[13px] text-mthr-black">
+                          {day.spots_remaining !== null ? `${day.spots_remaining} of ${day.spots_total} left` : 'limited'}
+                        </p>
                       </div>
                     </div>
-                  )}
-                  <div className="p-5">
-                    <h3 className="font-cormorant text-[20px] font-light text-mthr-black leading-tight mb-1">
-                      {post.title}
-                    </h3>
-                    {post.event_date && (
-                      <p className="text-[10px] tracking-[0.1em] text-mthr-mid mb-1">
-                        {new Date(post.event_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
-                        {post.location_name && ` · ${post.location_name}`}
-                        {post.location_state && `, ${post.location_state}`}
-                        {post.spots_available && ` · ${post.spots_available} spots`}
-                      </p>
-                    )}
-                    {post.description && (
-                      <p className="text-[12px] text-mthr-mid leading-[1.7] mt-2 line-clamp-3">{post.description}</p>
-                    )}
-                    {post.instagram_handle && (
-                      <a
-                        href={`https://instagram.com/${post.instagram_handle}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block mt-3 text-[9px] tracking-[0.1em] uppercase text-mthr-mid hover:text-mthr-black transition-colors"
-                      >
-                        hosted by @{post.instagram_handle} →
-                      </a>
-                    )}
+                    <div className="flex items-center gap-4 mb-4 text-[11px] text-mthr-mid">
+                      {day.host_instagram && <span>hosted by @{day.host_instagram}</span>}
+                      {day.model_instagram && <span>· models: @{day.model_instagram}</span>}
+                    </div>
+                    <div className="border-t border-[#E8E4DE] pt-4 flex items-center justify-between">
+                      <div>
+                        {!isReleased && day.releasing_date && (
+                          <p className="text-[10px] text-mthr-dim">
+                            releasing {new Date(day.releasing_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
+                          </p>
+                        )}
+                      </div>
+                      {day.booking_url && isReleased ? (
+                        <a href={day.booking_url} target="_blank" rel="noopener noreferrer"
+                          className="text-[9px] tracking-[0.16em] uppercase font-medium px-5 py-2.5 bg-mthr-black text-white hover:bg-mthr-dark transition-colors rounded-sm">
+                          book your spot →
+                        </a>
+                      ) : (
+                        <span className="text-[9px] tracking-[0.14em] uppercase text-mthr-dim border border-[#E8E4DE] px-4 py-2 rounded-sm">
+                          coming soon
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
-              ))}
+              )
+            }) : (
+              <p className="font-cormorant italic text-[18px] font-light text-mthr-mid py-12 text-center">no content days yet.</p>
+            )}
+
+            <div className="border border-dashed border-[#D0CCC6] rounded-sm p-6 text-center mt-6">
+              <p className="font-cormorant italic text-[18px] font-light text-mthr-mid mb-2">hosting a content day?</p>
+              <p className="text-[11px] text-mthr-dim mb-4">share it with the MTHR community.</p>
+              <a href="mailto:hello@mthrmag.com?subject=Content Day Submission"
+                className="inline-block text-[9px] tracking-[0.16em] uppercase font-medium px-5 py-2.5 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm">
+                get in touch →
+              </a>
             </div>
-          ) : (
-            <div className="py-16 text-center">
-              <p className="font-cormorant italic text-[20px] font-light text-mthr-mid">
-                no {activeTab} yet.
-              </p>
-              <button
-                onClick={() => setShowForm(true)}
-                className="inline-block mt-4 text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors"
-              >
-                be the first to add one →
-              </button>
-            </div>
-          )}
+          </div>
         </div>
       )}
 
-      {/* 365 PROJECT */}
-      {activeTab === '365 project' && (
+      {/* MONTHLY PROMPT */}
+      {activeTab === 'monthly prompt' && (
         <div className="px-8 py-8">
-          <div className="flex items-baseline justify-between mb-6">
-            <div>
-              <h2 className="font-cormorant font-light text-[28px] text-mthr-black">
-                the <em>365 project.</em>
-              </h2>
-              <p className="text-[11px] text-mthr-mid mt-1">
-                one image. every day. a community committed to showing up for their craft.
-              </p>
-            </div>
+          <div className="bg-mthr-black rounded-sm px-8 py-8 mb-8">
+            <p className="text-[9px] tracking-[0.2em] uppercase text-white/40 mb-3">
+              {now.toLocaleDateString('en-US', { month: 'long' })} {year} · monthly prompt
+            </p>
+            <p className="font-cormorant italic font-light text-[38px] text-white leading-tight mb-4">
+              {currentPrompt}.
+            </p>
+            <p className="text-[11px] text-white/50 mb-5">submit one image that captures this prompt. open through the end of the month.</p>
             {userId ? (
-              <button
-                onClick={() => setShow365Form(true)}
-                className="text-[10px] tracking-[0.16em] uppercase font-medium px-4 py-2 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm"
-              >
-                + add today's image
+              <button onClick={() => setShowPromptForm(!showPromptForm)}
+                className="text-[9px] tracking-[0.16em] uppercase font-medium px-5 py-2.5 border border-white/40 text-white hover:bg-white hover:text-mthr-black transition-colors rounded-sm">
+                {showPromptForm ? 'cancel' : 'submit your image →'}
               </button>
             ) : (
-              <a href="/login"
-                className="text-[10px] tracking-[0.16em] uppercase font-medium px-4 py-2 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm"
-              >
-                sign in to join →
-              </a>
+              <Link href="/login" className="inline-block text-[9px] tracking-[0.16em] uppercase font-medium px-5 py-2.5 border border-white/40 text-white hover:bg-white hover:text-mthr-black transition-colors rounded-sm">
+                sign in to submit →
+              </Link>
             )}
           </div>
 
-          {project365.length > 0 ? (
-            <div className="columns-2 md:columns-4 gap-2 space-y-2">
-              {project365.map((entry) => (
-                <div key={entry.id} className="relative break-inside-avoid group">
-                  <Image
-                    src={entry.image_url}
-                    alt={`Day ${entry.day_number}`}
-                    width={400}
-                    height={400}
-                    className="w-full h-auto object-cover rounded-sm"
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-sm flex flex-col justify-end p-2.5">
-                    <div className="text-[10px] tracking-[0.08em] text-white/80">day {entry.day_number}</div>
-                    {entry.profiles?.full_name && (
-                      <div className="text-[9px] text-white/60">{entry.profiles.full_name}</div>
-                    )}
+          {showPromptForm && (
+            <div className="border border-[#E8E4DE] rounded-sm p-6 bg-white mb-8">
+              <p className="text-[9px] tracking-[0.16em] uppercase text-mthr-mid mb-4">submit for: {currentPrompt}</p>
+              <div className="space-y-4">
+                <div>
+                  <label className="text-[9px] tracking-[0.14em] uppercase text-mthr-mid block mb-2">your image</label>
+                  <input type="file" accept="image/jpeg,image/png" onChange={e => setPromptImage(e.target.files?.[0] ?? null)}
+                    className="text-[11px] text-mthr-mid w-full" />
+                </div>
+                <div>
+                  <label className="text-[9px] tracking-[0.14em] uppercase text-mthr-mid block mb-2">caption (optional)</label>
+                  <textarea value={promptCaption} onChange={e => setPromptCaption(e.target.value)} rows={2}
+                    className="w-full border border-[#E8E4DE] rounded-sm px-3 py-2 text-[12px] text-mthr-black focus:outline-none focus:border-mthr-mid" />
+                </div>
+                <button onClick={handlePromptSubmit} disabled={submitting || !promptImage}
+                  className="text-[9px] tracking-[0.16em] uppercase font-medium px-5 py-2.5 bg-mthr-black text-white hover:bg-mthr-dark transition-colors rounded-sm disabled:opacity-50">
+                  {submitting ? 'submitting…' : 'submit →'}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {promptSubmissions.length > 0 ? (
+            <div className="columns-2 md:columns-3 gap-3 space-y-3">
+              {promptSubmissions.map(sub => (
+                <div key={sub.id} className="relative break-inside-avoid group">
+                  <Image src={sub.image_url} alt={sub.caption ?? currentPrompt} width={600} height={900}
+                    className="w-full h-auto object-cover rounded-sm" style={{ display: 'block' }} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-sm flex flex-col justify-end p-3">
+                    {sub.caption && <p className="font-cormorant italic text-[13px] font-light text-white">{sub.caption}</p>}
+                    {sub.profiles?.full_name && <p className="text-[10px] text-white/70">{sub.profiles.full_name}</p>}
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="py-16 text-center">
-              <p className="font-cormorant italic text-[20px] font-light text-mthr-mid">
-                no images yet. be the first to start your 365.
-              </p>
+            <div className="py-12 text-center border border-dashed border-[#D0CCC6] rounded-sm">
+              <p className="font-cormorant italic text-[18px] font-light text-mthr-mid">no submissions yet — be the first.</p>
             </div>
           )}
         </div>
       )}
 
-      {/* EDUCATION BLOCK */}
-      {activeTab !== '365 project' && (
-        <div className="mx-8 mb-8 border border-[#E8E4DE] rounded-sm overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            <div className="px-8 py-10 bg-white">
-              <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium mb-3">coming soon</p>
-              <h2 className="font-cormorant font-light text-[32px] leading-tight text-mthr-black mb-3">
-                education &amp; <em>behind the scenes.</em>
-              </h2>
-              <p className="text-[12px] text-mthr-mid leading-[1.8]">
-                process videos and real insight into the work. coming soon to MTHR.
-              </p>
+      {/* FIND A PHOTOGRAPHER */}
+      {activeTab === 'find a photographer' && (
+        <div className="px-8 py-8">
+          <p className="text-[12px] text-mthr-mid leading-[1.8] mb-6 max-w-lg">
+            these photographers are available for hire. all are part of the MTHR community — documentary family work, elevated.
+          </p>
+          {photographers.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {photographers.map(p => {
+                const initials = (p.full_name ?? 'M').split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase()
+                return (
+                  <Link key={p.id} href={`/photographer/${p.id}`}
+                    className="bg-white border border-[#E8E4DE] rounded-sm p-5 hover:border-mthr-mid transition-colors flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-[#E8E4DE] flex items-center justify-center">
+                      {p.avatar_url ? (
+                        <Image src={p.avatar_url} alt={p.full_name ?? ''} width={48} height={48} className="object-cover w-full h-full" />
+                      ) : (
+                        <span className="text-[14px] font-medium text-mthr-mid">{initials}</span>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-cormorant text-[18px] font-light text-mthr-black leading-none mb-0.5">{p.full_name}</p>
+                      {p.location && <p className="text-[11px] text-mthr-mid mb-2">{p.location}</p>}
+                      <div className="flex items-center gap-3">
+                        <span className="text-[8px] tracking-[0.1em] uppercase border border-[#D0CCC6] text-mthr-mid px-2 py-0.5 rounded-full">available for hire</span>
+                        {p.instagram && <span className="text-[10px] text-mthr-dim">@{p.instagram}</span>}
+                      </div>
+                    </div>
+                  </Link>
+                )
+              })}
             </div>
-            <div className="relative min-h-[300px] overflow-hidden">
-              <img
-                src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/courtneymaxwell_photography_communityimage.jpg"
-                alt="MTHR community"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
+          ) : (
+            <div className="py-12 text-center border border-dashed border-[#D0CCC6] rounded-sm">
+              <p className="font-cormorant italic text-[18px] font-light text-mthr-mid mb-3">no photographers listed yet.</p>
+              <Link href="/account" className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors border-b border-[#D0CCC6]">
+                mark yourself as available →
+              </Link>
             </div>
-          </div>
+          )}
         </div>
       )}
 
-      {/* SUBMIT POST FORM MODAL */}
-      {showForm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[#E8E4DE]">
-              <h2 className="font-cormorant font-light text-[24px] text-mthr-black">
-                share with the <em>community.</em>
-              </h2>
-              <button onClick={() => setShowForm(false)} className="text-mthr-mid hover:text-mthr-black text-[20px] leading-none">×</button>
-            </div>
-            <div className="px-6 py-5 space-y-4">
-              <div>
-                <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">Type</label>
-                <div className="flex gap-2">
-                  {POST_TYPES.map(t => (
-                    <button
-                      key={t}
-                      onClick={() => setForm(f => ({ ...f, type: t }))}
-                      className={`px-4 py-2 text-[9px] tracking-[0.12em] uppercase font-medium rounded-sm border transition-colors ${
-                        form.type === t ? 'bg-mthr-black text-white border-mthr-black' : 'border-[#D0CCC6] text-mthr-mid hover:text-mthr-black'
-                      }`}
-                    >
-                      {t === 'workshop' ? 'Workshop' : 'Content Day'}
+      {/* OPEN CALLS */}
+      {activeTab === 'open calls' && (
+        <div className="px-8 py-8">
+          <div className="space-y-4">
+            {openCalls.length > 0 ? openCalls.map(call => (
+              <div key={call.id} className="bg-white border border-[#E8E4DE] rounded-sm p-6">
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div>
+                    <p className="text-[9px] tracking-[0.14em] uppercase text-mthr-dim mb-1">
+                      {call.call_type === 'casting' ? 'casting call' : 'open call'} · {call.brand_name}
+                    </p>
+                    <p className="font-cormorant font-light text-[20px] leading-tight text-mthr-black">{call.title}</p>
+                  </div>
+                  <span className="flex-shrink-0 text-[8px] tracking-[0.1em] uppercase bg-[#E8E4DE] text-mthr-dark px-2.5 py-1 rounded-full font-medium">
+                    {call.call_type === 'casting' ? 'casting' : 'open call'}
+                  </span>
+                </div>
+                {call.description && (
+                  <p className="text-[12px] text-mthr-mid leading-[1.85] mb-4">{call.description}</p>
+                )}
+                <div className="border-t border-[#E8E4DE] pt-4 flex items-center justify-between">
+                  <div className="flex items-center gap-4 text-[11px] text-mthr-dim">
+                    {call.closes_at && <span>closes {new Date(call.closes_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</span>}
+                    {call.location && <span>· {call.location}</span>}
+                  </div>
+                  <button onClick={() => setShowApplyForm(showApplyForm === call.id ? null : call.id)}
+                    className="text-[9px] tracking-[0.16em] uppercase font-medium px-4 py-2 bg-mthr-black text-white hover:bg-mthr-dark transition-colors rounded-sm">
+                    {showApplyForm === call.id ? 'close' : 'apply →'}
+                  </button>
+                </div>
+
+                {showApplyForm === call.id && (
+                  <div className="mt-5 pt-5 border-t border-[#E8E4DE] space-y-4">
+                    <p className="text-[9px] tracking-[0.16em] uppercase text-mthr-mid">application form</p>
+                    {[
+                      { key: 'full_name', label: 'full name', placeholder: 'your name' },
+                      { key: 'email', label: 'email', placeholder: 'your@email.com' },
+                      { key: 'location', label: 'location', placeholder: 'city, state' },
+                      { key: 'instagram_handle', label: 'instagram handle', placeholder: '@yourhandle' },
+                      { key: 'photo_link', label: 'link to photos', placeholder: 'instagram, website, or google drive link' },
+                    ].map(field => (
+                      <div key={field.key}>
+                        <label className="text-[9px] tracking-[0.12em] uppercase text-mthr-mid block mb-1.5">{field.label}</label>
+                        <input
+                          value={(applyForm as any)[field.key]}
+                          onChange={e => setApplyForm(prev => ({ ...prev, [field.key]: e.target.value }))}
+                          placeholder={field.placeholder}
+                          className="w-full border border-[#E8E4DE] rounded-sm px-3 py-2 text-[12px] text-mthr-black focus:outline-none focus:border-mthr-mid"
+                        />
+                      </div>
+                    ))}
+                    <div>
+                      <label className="text-[9px] tracking-[0.12em] uppercase text-mthr-mid block mb-1.5">tell us about your family</label>
+                      <textarea
+                        value={applyForm.family_description}
+                        onChange={e => setApplyForm(prev => ({ ...prev, family_description: e.target.value }))}
+                        placeholder="ages, a little about your family..."
+                        rows={3}
+                        className="w-full border border-[#E8E4DE] rounded-sm px-3 py-2 text-[12px] text-mthr-black focus:outline-none focus:border-mthr-mid"
+                      />
+                    </div>
+                    <button onClick={() => handleApply(call.id)} disabled={submitting || !applyForm.full_name || !applyForm.email}
+                      className="text-[9px] tracking-[0.16em] uppercase font-medium px-5 py-2.5 bg-mthr-black text-white hover:bg-mthr-dark transition-colors rounded-sm disabled:opacity-50">
+                      {submitting ? 'submitting…' : 'submit application →'}
                     </button>
-                  ))}
-                </div>
+                  </div>
+                )}
               </div>
-              <Field label="Title *">
-                <input type="text" placeholder="Golden hour family workshop" value={form.title}
-                  onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-                  className="mthr-input" />
-              </Field>
-              <div className="grid grid-cols-2 gap-3">
-                <Field label="City">
-                  <input type="text" placeholder="Denver" value={form.location_name}
-                    onChange={e => setForm(f => ({ ...f, location_name: e.target.value }))}
-                    className="mthr-input" />
-                </Field>
-                <Field label="State">
-                  <input type="text" placeholder="CO" value={form.location_state}
-                    onChange={e => setForm(f => ({ ...f, location_state: e.target.value }))}
-                    className="mthr-input" />
-                </Field>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <Field label="Date">
-                  <input type="date" value={form.event_date}
-                    onChange={e => setForm(f => ({ ...f, event_date: e.target.value }))}
-                    className="mthr-input" />
-                </Field>
-                <Field label="Spots available">
-                  <input type="number" placeholder="8" value={form.spots_available}
-                    onChange={e => setForm(f => ({ ...f, spots_available: e.target.value }))}
-                    className="mthr-input" />
-                </Field>
-              </div>
-              <Field label="Instagram handle">
-                <input type="text" placeholder="@yourhandle" value={form.instagram_handle}
-                  onChange={e => setForm(f => ({ ...f, instagram_handle: e.target.value.replace('@', '') }))}
-                  className="mthr-input" />
-              </Field>
-              <Field label="Description">
-                <textarea placeholder="Tell us about your workshop or content day..." value={form.description} rows={3}
-                  onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                  className="mthr-input resize-none leading-relaxed" />
-              </Field>
-              <Field label="Image (optional)">
-                <input ref={imageRef} type="file" accept="image/jpeg,image/png" className="text-[12px] text-mthr-mid" />
-              </Field>
+            )) : (
+              <p className="font-cormorant italic text-[18px] font-light text-mthr-mid py-12 text-center">no open calls right now.</p>
+            )}
 
-              <button
-                onClick={handleSubmitPost}
-                disabled={submitting || !form.title}
-                className="w-full py-3 bg-mthr-black text-white text-[10px] tracking-[0.16em] uppercase font-medium rounded-sm hover:bg-mthr-dark transition-colors disabled:opacity-40"
-              >
-                {submitting ? 'Submitting…' : 'Submit for review →'}
-              </button>
-              <p className="text-[10px] text-mthr-mid text-center">posts are reviewed before appearing publicly</p>
+            <div className="border border-dashed border-[#D0CCC6] rounded-sm p-6 text-center mt-4">
+              <p className="font-cormorant italic text-[18px] font-light text-mthr-mid mb-2">are you a brand looking for photographers or models?</p>
+              <p className="text-[11px] text-mthr-dim mb-4">post an open call to the MTHR community.</p>
+              <a href="mailto:hello@mthrmag.com?subject=Open Call Submission"
+                className="inline-block text-[9px] tracking-[0.16em] uppercase font-medium px-5 py-2.5 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm">
+                get in touch →
+              </a>
             </div>
           </div>
         </div>
       )}
-
-      {/* 365 UPLOAD MODAL */}
-      {show365Form && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-sm max-w-sm w-full">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[#E8E4DE]">
-              <h2 className="font-cormorant font-light text-[22px] text-mthr-black">
-                today's <em>image.</em>
-              </h2>
-              <button onClick={() => setShow365Form(false)} className="text-mthr-mid hover:text-mthr-black text-[20px] leading-none">×</button>
-            </div>
-            <div className="px-6 py-5 space-y-4">
-              <div
-                onClick={() => image365Ref.current?.click()}
-                className="border border-dashed border-[#D0CCC6] rounded-sm p-8 text-center cursor-pointer hover:border-mthr-mid transition-colors"
-              >
-                <div className="text-[22px] text-mthr-dim mb-1">+</div>
-                <div className="text-[10px] tracking-[0.1em] uppercase text-mthr-mid">
-                  {form365.image ? form365.image.name : 'Upload today\'s image'}
-                </div>
-                <input ref={image365Ref} type="file" accept="image/jpeg,image/png" className="hidden"
-                  onChange={e => setForm365(f => ({ ...f, image: e.target.files?.[0] ?? null }))} />
-              </div>
-              <Field label="Date taken *">
-                <input type="date" value={form365.date_taken}
-                  onChange={e => setForm365(f => ({ ...f, date_taken: e.target.value }))}
-                  className="mthr-input" />
-                <p className="text-[10px] text-mthr-mid mt-1">catching up? use the date the photo was actually taken.</p>
-              </Field>
-              <Field label="Caption (optional)">
-                <input type="text" placeholder="what do you see today?" value={form365.caption}
-                  onChange={e => setForm365(f => ({ ...f, caption: e.target.value }))}
-                  className="mthr-input" />
-              </Field>
-              <button
-                onClick={handleSubmit365}
-                disabled={submitting || !form365.image}
-                className="w-full py-3 bg-mthr-black text-white text-[10px] tracking-[0.16em] uppercase font-medium rounded-sm hover:bg-mthr-dark transition-colors disabled:opacity-40"
-              >
-                {submitting ? 'Uploading…' : 'Add to my 365 →'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="block text-[9px] tracking-[0.16em] uppercase font-medium text-mthr-mid mb-1.5">{label}</label>
-      {children}
     </div>
   )
 }
