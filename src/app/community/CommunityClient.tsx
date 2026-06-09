@@ -77,6 +77,8 @@ export default function CommunityClient({
   const supabase = createClient()
   const [activeTab, setActiveTab] = useState('content days')
   const [showApplyForm, setShowApplyForm] = useState<string | null>(null)
+  const [showHireForm, setShowHireForm] = useState(false)
+  const [hireSubmitted, setHireSubmitted] = useState(false)
   const [showPromptForm, setShowPromptForm] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState('')
@@ -90,8 +92,28 @@ export default function CommunityClient({
     full_name: '', location: '', family_description: '',
     instagram_handle: '', photo_link: '', email: ''
   })
+  const [hireForm, setHireForm] = useState({
+    full_name: '', location: '', instagram: '', website: '', bio: '', portfolio_link: ''
+  })
   const [promptImage, setPromptImage] = useState<File | null>(null)
   const [promptCaption, setPromptCaption] = useState('')
+
+  const handleHireSubmit = async () => {
+    if (!userId || !hireForm.full_name) return
+    setSubmitting(true)
+    try {
+      await (supabase.from('for_hire_applications') as any).insert({
+        photographer_id: userId,
+        ...hireForm,
+        status: 'pending'
+      })
+      setHireSubmitted(true)
+      setShowHireForm(false)
+    } catch (e) {
+      setSuccess('something went wrong. please try again.')
+    }
+    setSubmitting(false)
+  }
 
   const handleApply = async (openCallId: string) => {
     setSubmitting(true)
@@ -339,9 +361,9 @@ export default function CommunityClient({
           ) : (
             <div className="py-12 text-center border border-dashed border-[#D0CCC6] rounded-sm">
               <p className="font-cormorant italic text-[18px] font-light text-mthr-mid mb-3">no photographers listed yet.</p>
-              <Link href="/account" className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors border-b border-[#D0CCC6]">
-                mark yourself as available →
-              </Link>
+              <button onClick={() => setShowHireForm(true)} className="text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors border-b border-[#D0CCC6]">
+                list yourself →
+              </button>
             </div>
           )}
         </div>
@@ -427,6 +449,72 @@ export default function CommunityClient({
                 get in touch →
               </a>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* FIND A PHOTOGRAPHER — list yourself CTA */}
+      {activeTab === 'find a photographer' && !hireSubmitted && (
+        <div className="px-8 pb-8">
+          <div className="border border-dashed border-[#D0CCC6] rounded-sm p-6 text-center">
+            <p className="font-cormorant italic text-[18px] font-light text-mthr-mid mb-2">are you available for hire?</p>
+            <p className="text-[11px] text-mthr-dim mb-4">submit your info to be listed in the MTHR photographer directory.</p>
+            {userId ? (
+              <button onClick={() => setShowHireForm(!showHireForm)}
+                className="inline-block text-[9px] tracking-[0.16em] uppercase font-medium px-5 py-2.5 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm">
+                {showHireForm ? 'cancel' : 'list yourself →'}
+              </button>
+            ) : (
+              <Link href="/login" className="inline-block text-[9px] tracking-[0.16em] uppercase font-medium px-5 py-2.5 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm">
+                sign in to apply →
+              </Link>
+            )}
+          </div>
+
+          {showHireForm && (
+            <div className="border border-[#E8E4DE] rounded-sm p-6 bg-white mt-4 space-y-4">
+              <p className="text-[9px] tracking-[0.16em] uppercase text-mthr-mid">your information</p>
+              {[
+                { key: 'full_name', label: 'full name', placeholder: 'your name' },
+                { key: 'location', label: 'location', placeholder: 'city, state' },
+                { key: 'instagram', label: 'instagram handle', placeholder: '@yourhandle' },
+                { key: 'website', label: 'website', placeholder: 'yourwebsite.com' },
+                { key: 'portfolio_link', label: 'portfolio link', placeholder: 'link to your best work' },
+              ].map(field => (
+                <div key={field.key}>
+                  <label className="text-[9px] tracking-[0.12em] uppercase text-mthr-mid block mb-1.5">{field.label}</label>
+                  <input
+                    value={(hireForm as any)[field.key]}
+                    onChange={e => setHireForm(prev => ({ ...prev, [field.key]: e.target.value }))}
+                    placeholder={field.placeholder}
+                    className="w-full border border-[#E8E4DE] rounded-sm px-3 py-2 text-[12px] text-mthr-black focus:outline-none focus:border-mthr-mid"
+                  />
+                </div>
+              ))}
+              <div>
+                <label className="text-[9px] tracking-[0.12em] uppercase text-mthr-mid block mb-1.5">a little about your work</label>
+                <textarea
+                  value={hireForm.bio}
+                  onChange={e => setHireForm(prev => ({ ...prev, bio: e.target.value }))}
+                  placeholder="documentary, natural light, the real moments..."
+                  rows={3}
+                  className="w-full border border-[#E8E4DE] rounded-sm px-3 py-2 text-[12px] text-mthr-black focus:outline-none focus:border-mthr-mid"
+                />
+              </div>
+              <button onClick={handleHireSubmit} disabled={submitting || !hireForm.full_name}
+                className="text-[9px] tracking-[0.16em] uppercase font-medium px-5 py-2.5 bg-mthr-black text-white hover:bg-mthr-dark transition-colors rounded-sm disabled:opacity-50">
+                {submitting ? 'submitting…' : 'submit for review →'}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === 'find a photographer' && hireSubmitted && (
+        <div className="px-8 pb-8">
+          <div className="border border-[#E8E4DE] rounded-sm p-6 text-center bg-white">
+            <p className="font-cormorant italic text-[20px] font-light text-mthr-black mb-2">you are submitted.</p>
+            <p className="text-[12px] text-mthr-mid">we will review your application and be in touch soon. 🌿</p>
           </div>
         </div>
       )}
