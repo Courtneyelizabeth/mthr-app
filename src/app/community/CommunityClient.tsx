@@ -79,7 +79,7 @@ export default function CommunityClient({
   const [showApplyForm, setShowApplyForm] = useState<string | null>(null)
   const [showPromptForm, setShowPromptForm] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  const [success, setSuccess] = useState(''
+  const [success, setSuccess] = useState('')
 
   const now = new Date()
   const month = now.getMonth() + 1
@@ -100,7 +100,7 @@ export default function CommunityClient({
         open_call_id: openCallId,
         ...applyForm,
       })
-      setSuccess('application submitted! we'll be in touch.')
+      setSuccess('application submitted! we will be in touch.')
       setShowApplyForm(null)
       setApplyForm({ full_name: '', location: '', family_description: '', instagram_handle: '', photo_link: '', email: '' })
     } catch (e) {
