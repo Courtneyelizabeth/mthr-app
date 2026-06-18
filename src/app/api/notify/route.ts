@@ -152,11 +152,11 @@ export async function POST(request: Request) {
       <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; margin-bottom: 32px;">
         <tr>
           <td style="width: 50%; text-align: center; padding: 16px 8px 8px;">
-            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/mthr-badge-dark.svg" width="160" height="160" alt="MTHR featured badge dark" style="display: block; margin: 0 auto;" />
+            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/mthr-badge-dark.png" width="160" height="160" alt="MTHR featured badge dark" style="display: block; margin: 0 auto;" />
             <p style="font-size: 10px; color: #C0BCB6; letter-spacing: 0.08em; text-transform: uppercase; font-family: sans-serif; margin: 8px 0 0;">dark</p>
           </td>
           <td style="width: 50%; text-align: center; padding: 16px 8px 8px; background: #F5F2EE;">
-            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/mthr-badge-clear.svg" width="160" height="160" alt="MTHR featured badge clear" style="display: block; margin: 0 auto;" />
+            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/mthr-badge-clear.png" width="160" height="160" alt="MTHR featured badge clear" style="display: block; margin: 0 auto;" />
             <p style="font-size: 10px; color: #C0BCB6; letter-spacing: 0.08em; text-transform: uppercase; font-family: sans-serif; margin: 8px 0 0;">clear</p>
           </td>
         </tr>
@@ -251,11 +251,11 @@ export async function POST(request: Request) {
       <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; margin-bottom: 32px;">
         <tr>
           <td style="width: 50%; text-align: center; padding: 16px 8px 8px;">
-            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/mthr-badge-dark.svg" width="160" height="160" alt="MTHR featured badge dark" style="display: block; margin: 0 auto;" />
+            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/mthr-badge-dark.png" width="160" height="160" alt="MTHR featured badge dark" style="display: block; margin: 0 auto;" />
             <p style="font-size: 10px; color: #C0BCB6; letter-spacing: 0.08em; text-transform: uppercase; font-family: sans-serif; margin: 8px 0 0;">dark</p>
           </td>
           <td style="width: 50%; text-align: center; padding: 16px 8px 8px; background: #F5F2EE;">
-            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/mthr-badge-clear.svg" width="160" height="160" alt="MTHR featured badge clear" style="display: block; margin: 0 auto;" />
+            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/mthr-badge-clear.png" width="160" height="160" alt="MTHR featured badge clear" style="display: block; margin: 0 auto;" />
             <p style="font-size: 10px; color: #C0BCB6; letter-spacing: 0.08em; text-transform: uppercase; font-family: sans-serif; margin: 8px 0 0;">clear</p>
           </td>
         </tr>
