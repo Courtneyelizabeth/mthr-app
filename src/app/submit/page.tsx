@@ -7,8 +7,8 @@ import Footer from '@/components/layout/Footer'
 import { createClient } from '@/lib/supabase/client'
 
 // ── Magazine submission window ──────────────────────────────
-const MAG_OPEN  = new Date('2026-04-01T00:00:00')
-const MAG_CLOSE = new Date('2026-05-04T05:59:59')
+const MAG_OPEN  = new Date('2026-06-26T00:00:00')
+const MAG_CLOSE = new Date('2026-07-20T23:59:59')
 function isMagOpen() {
   const now = new Date()
   return now >= MAG_OPEN && now <= MAG_CLOSE
