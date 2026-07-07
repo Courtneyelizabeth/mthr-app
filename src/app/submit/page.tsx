@@ -8,7 +8,7 @@ import { createClient } from '@/lib/supabase/client'
 
 // ── Magazine submission window ──────────────────────────────
 const MAG_OPEN  = new Date('2026-06-26T00:00:00')
-const MAG_CLOSE = new Date('2026-07-27T23:59:59')
+const MAG_CLOSE = new Date('2026-07-27T23:59:59-06:00')
 function isMagOpen() {
   const now = new Date()
   return now >= MAG_OPEN && now <= MAG_CLOSE
@@ -785,7 +785,7 @@ walk us through your process. what were you watching for, and what created the c
                   magazine submissions <em>open april 1.</em>
                 </h2>
                 <p className="text-[12px] text-mthr-mid leading-[1.8]">
-                  the magazine submission window opens june 26 — july 20, 2026.<br />
+                  the magazine submission window opens june 26 — july 27, 2026.<br />
                   in the meantime, submit your work to the app feature.
                 </p>
               </div>

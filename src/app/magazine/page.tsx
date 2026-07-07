@@ -19,7 +19,7 @@ export default function MagazinePage() {
             </a>
             <div className="border-t border-white/10 pt-3">
               <p className="text-[9px] tracking-[0.2em] uppercase text-white/40 mb-1">full bloom · edition two</p>
-              <p className="font-cormorant italic font-light text-[18px] text-white/70">june 26 — july 20, 2026</p>
+              <p className="font-cormorant italic font-light text-[18px] text-white/70">june 26 — july 27, 2026</p>
             </div>
           </div>
           <Link
