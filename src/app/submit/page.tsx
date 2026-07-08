@@ -13,6 +13,9 @@ function isMagOpen() {
   const now = new Date()
   return now >= MAG_OPEN && now <= MAG_CLOSE
 }
+function isAppOpen() {
+  return new Date() > MAG_CLOSE   // app reopens when the magazine window closes
+}
 
 const CATEGORIES: { value: string; label: string }[] = [
   { value: "motherhood",         label: "Motherhood" },
@@ -89,7 +92,7 @@ export default function SubmitPage() {
   const appFileRef = useRef<HTMLInputElement>(null)
   const magFileRef = useRef<HTMLInputElement>(null)
 
-  const [tab, setTab] = useState<'app' | 'magazine'>('app')
+  const [tab, setTab] = useState<'app' | 'magazine'>(isMagOpen() ? 'magazine' : 'app')
   const [user, setUser] = useState<any>(undefined) // undefined = loading, null = logged out
 
   useEffect(() => {
@@ -134,6 +137,7 @@ export default function SubmitPage() {
   const [error, setError] = useState<string | null>(null)
 
   const magOpen = isMagOpen()
+  const appOpen = isAppOpen()
   const isIntl = form.state_code === 'International'
 
   const handleAppFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -285,7 +289,11 @@ export default function SubmitPage() {
                 tab === 'app' ? 'border-mthr-black text-mthr-black' : 'border-transparent text-mthr-dark hover:text-mthr-black'
               }`}>
               Instagram & App
-              <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-black text-white px-1.5 py-0.5 rounded-full">Open</span>
+              {appOpen ? (
+                <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-black text-white px-1.5 py-0.5 rounded-full">Open</span>
+              ) : (
+                <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-b1 text-mthr-mid px-1.5 py-0.5 rounded-full">Opens July 27</span>
+              )}
             </button>
 
           </div>
@@ -346,9 +354,26 @@ export default function SubmitPage() {
                   submissions <em>open soon.</em>
                 </h2>
                 <p className="text-[12px] text-mthr-mid leading-[1.8]">
-                  magazine submissions open <strong>April 1 — May 1, 2026.</strong>
+                  magazine submissions open <strong>June 26 — July 27, 2026.</strong>
                   <br />come back then to submit your print-ready work.
                 </p>
+              </div>
+            )}
+
+            {tab === 'app' && !appOpen && (
+              <div className="py-16 text-center">
+                <h2 className="font-cormorant font-light text-[32px] text-mthr-black mb-3">
+                  instagram &amp; app <em>paused.</em>
+                </h2>
+                <p className="text-[12px] text-mthr-mid leading-[1.8]">
+                  we've paused feed submissions while the print magazine window is open.<br />
+                  submit your work for <strong>Full Bloom</strong> — magazine submissions close july 27.<br />
+                  app &amp; instagram submissions reopen july 27.
+                </p>
+                <button onClick={() => { if (magOpen) setTab('magazine') }}
+                  className="mt-6 px-6 py-2.5 text-[10px] tracking-[0.16em] uppercase font-medium bg-mthr-black text-white rounded-full hover:bg-mthr-dark transition-colors">
+                  submit to the magazine →
+                </button>
               </div>
             )}
 
@@ -506,7 +531,7 @@ export default function SubmitPage() {
               </div>
             )}
 
-            {(tab === 'app' || (tab === 'magazine' && magOpen)) && (
+            {((tab === 'app' && appOpen) || (tab === 'magazine' && magOpen)) && (
               <div className="space-y-4">
                 <Field label="Your Instagram handle">
                   <div className="relative">
@@ -660,7 +685,7 @@ walk us through your process. what were you watching for, and what created the c
                   <>
                     {error && <p className="text-[11px] text-red-600 bg-red-50 px-3 py-2 rounded-sm">{error}</p>}
                     <button onClick={handleSubmit}
-                      disabled={uploading || (tab === 'app' ? !canSubmitApp : !canSubmitMag)}
+                      disabled={uploading || (tab === 'app' ? (!appOpen || !canSubmitApp) : !canSubmitMag)}
                       className="w-full py-3.5 bg-mthr-black text-white text-[10px] tracking-[0.18em] uppercase font-medium rounded-sm hover:bg-mthr-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
                       {uploading ? 'submitting…' : tab === 'app' ? 'submit for instagram & app →' : 'submit for magazine consideration →'}
                     </button>
@@ -672,7 +697,7 @@ walk us through your process. what were you watching for, and what created the c
 
           {/* RIGHT — UPLOAD */}
           <div className="px-10 py-10 bg-[#F5F2EE]">
-            {tab === 'app' ? (
+            {tab === 'app' && appOpen ? (
               <>
                 <h2 className="font-cormorant font-light text-[32px] leading-none text-mthr-black mb-2">
                   your <em>images.</em>
