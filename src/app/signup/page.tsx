@@ -22,6 +22,22 @@ export default function SignupPage() {
       options: { data: { full_name: form.full_name } },
     })
     if (error) { setError(error.message); setLoading(false); return }
+
+    // Add to Resend audience
+    try {
+      await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: form.email,
+          first_name: form.full_name.split(' ')[0] ?? form.full_name,
+          last_name: form.full_name.split(' ').slice(1).join(' ') ?? '',
+        }),
+      })
+    } catch (e) {
+      console.error('Resend subscribe error:', e)
+    }
+
     setSuccess(true)
     setLoading(false)
   }
