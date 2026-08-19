@@ -122,11 +122,16 @@ export default function ExploreClient({
 
             <div className="w-8 h-px bg-[#D0CCC6] mb-5" />
 
-            <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-dim mb-1">edition one · the long light</p>
-            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">get your copy.</p>
-            <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px mb-6">
-              buy on magcloud →
-            </a>
+            <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-dim mb-1">full bloom · edition two</p>
+            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">available now — two covers.</p>
+            <div className="flex gap-4 mb-6">
+              <a href="https://www.magcloud.com/browse/issue/3386019" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
+                cover one →
+              </a>
+              <a href="https://www.magcloud.com/browse/issue/3386366" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
+                cover two →
+              </a>
+            </div>
 
             <div className="w-8 h-px bg-[#E8E4DE] mb-5" />
 
@@ -137,22 +142,38 @@ export default function ExploreClient({
             </Link>
           </div>
 
-          {/* Right — magazine cover portrait */}
-          <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer"
-            className="block relative w-full md:w-[320px] lg:w-[380px] flex-shrink-0 overflow-hidden group">
-            <Image
-              src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/MTHRMAGCOVER.jpg"
-              alt="MTHR Magazine — The Long Light, Edition One"
-              width={520}
-              height={693}
-              className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
-              priority
-            />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-4">
-              <p className="text-[8px] tracking-[0.16em] uppercase text-white/60">click to purchase</p>
-            </div>
-          </a>
+          {/* Right — two Full Bloom covers */}
+          <div className="flex gap-4 w-full md:w-auto flex-shrink-0">
+            <a href="https://www.magcloud.com/browse/issue/3386019" target="_blank" rel="noopener noreferrer"
+              className="block relative w-1/2 md:w-[190px] lg:w-[210px] flex-shrink-0 overflow-hidden group">
+              <Image
+                src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/fullbloom-cover-1.jpg"
+                alt="MTHR Magazine — Full Bloom, Cover One"
+                width={520}
+                height={693}
+                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+                priority
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-3">
+                <p className="text-[8px] tracking-[0.16em] uppercase text-white/70">cover one →</p>
+              </div>
+            </a>
+            <a href="https://www.magcloud.com/browse/issue/3386366" target="_blank" rel="noopener noreferrer"
+              className="block relative w-1/2 md:w-[190px] lg:w-[210px] flex-shrink-0 overflow-hidden group">
+              <Image
+                src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/fullbloom-cover-2.jpg"
+                alt="MTHR Magazine — Full Bloom, Cover Two"
+                width={520}
+                height={693}
+                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-3">
+                <p className="text-[8px] tracking-[0.16em] uppercase text-white/70">cover two →</p>
+              </div>
+            </a>
+          </div>
 
         </div>
       </div>
