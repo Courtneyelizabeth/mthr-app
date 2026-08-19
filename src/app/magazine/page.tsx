@@ -11,16 +11,9 @@ export default function MagazinePage() {
         {/* ── MAGAZINE SUBMISSIONS BANNER — TOP ── */}
         <section className="bg-mthr-black text-white px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
-            <p className="text-[9px] tracking-[0.2em] uppercase text-white/30 mb-1">edition one · the long light</p>
-            <p className="font-cormorant italic font-light text-[20px] text-white mb-2">available now</p>
-            <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer"
-              className="inline-block text-[9px] tracking-[0.14em] uppercase text-white/60 border-b border-white/30 hover:text-white hover:border-white transition-colors pb-px mb-4">
-              get your copy →
-            </a>
-            <div className="border-t border-white/10 pt-3">
-              <p className="text-[9px] tracking-[0.2em] uppercase text-white/40 mb-1">full bloom · edition two</p>
-              <p className="font-cormorant italic font-light text-[18px] text-white/70">june 26 — july 27, 2026</p>
-            </div>
+            <p className="text-[9px] tracking-[0.2em] uppercase text-white/40 mb-1">full bloom · edition two</p>
+            <p className="font-cormorant italic font-light text-[20px] text-white mb-1">submissions open</p>
+            <p className="font-cormorant italic font-light text-[16px] text-white/60">june 26 — july 27, 2026</p>
           </div>
           <Link
             href="/submit"
@@ -28,6 +21,61 @@ export default function MagazinePage() {
           >
             Submit your work →
           </Link>
+        </section>
+
+        {/* ── ISSUES ── */}
+        <section className="border-b border-[#E8E4DE]">
+          {/* Current issue */}
+          <div className="text-center px-8 pt-16 pb-4">
+            <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium mb-4">The Current Issue</p>
+            <h2 className="font-cormorant italic font-light text-[52px] md:text-[68px] leading-[1.05] text-mthr-black mb-3">
+              full bloom.
+            </h2>
+            <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium">Edition Two · available now with two covers</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#E8E4DE] border-y border-[#E8E4DE] mt-10">
+            {/* Cover 1 */}
+            <div className="bg-[#F5F2EE] px-8 md:px-16 py-14 flex flex-col items-center text-center">
+              <div className="w-full max-w-[340px] aspect-[3/4] overflow-hidden bg-[#1A1814] mb-7 shadow-sm">
+                <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/fullbloom-cover-1.jpg" alt="Full Bloom — Cover One" className="w-full h-full object-cover" />
+              </div>
+              <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-dim mb-3">Cover One</p>
+              <a href="https://www.magcloud.com/browse/issue/3386019" target="_blank" rel="noopener noreferrer"
+                className="inline-block text-[10px] tracking-[0.16em] uppercase font-medium px-7 py-3 bg-mthr-black text-white hover:opacity-80 transition-opacity rounded-sm">
+                Get this cover →
+              </a>
+            </div>
+            {/* Cover 2 */}
+            <div className="bg-[#F5F2EE] px-8 md:px-16 py-14 flex flex-col items-center text-center">
+              <div className="w-full max-w-[340px] aspect-[3/4] overflow-hidden bg-[#1A1814] mb-7 shadow-sm">
+                <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/fullbloom-cover-2.jpg" alt="Full Bloom — Cover Two" className="w-full h-full object-cover" />
+              </div>
+              <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-dim mb-3">Cover Two</p>
+              <a href="https://www.magcloud.com/browse/issue/3386366" target="_blank" rel="noopener noreferrer"
+                className="inline-block text-[10px] tracking-[0.16em] uppercase font-medium px-7 py-3 bg-mthr-black text-white hover:opacity-80 transition-opacity rounded-sm">
+                Get this cover →
+              </a>
+            </div>
+          </div>
+
+          {/* Past issues */}
+          <div className="px-8 md:px-16 py-14">
+            <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium mb-8 text-center">Past Issues</p>
+            <div className="flex flex-wrap justify-center gap-10">
+              <div className="flex flex-col items-center text-center w-[180px]">
+                <div className="w-full aspect-[3/4] overflow-hidden bg-[#1A1814] mb-4 opacity-90 hover:opacity-100 transition-opacity">
+                  <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/MTHRMAGCOVER.jpg" alt="The Long Light — Edition One" className="w-full h-full object-cover" />
+                </div>
+                <p className="font-cormorant italic font-light text-[20px] text-mthr-black leading-none mb-1">the long light</p>
+                <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-dim mb-3">Edition One</p>
+                <a href="https://www.magcloud.com/browse/issue/3341060?__r=8718597" target="_blank" rel="noopener noreferrer"
+                  className="text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#B5B0A8] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
+                  get your copy →
+                </a>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ── LETTER FROM THE FOUNDER ── */}
