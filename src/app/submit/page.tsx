@@ -7,14 +7,14 @@ import Footer from '@/components/layout/Footer'
 import { createClient } from '@/lib/supabase/client'
 
 // ── Magazine submission window ──────────────────────────────
-const MAG_OPEN  = new Date('2026-06-26T00:00:00')
-const MAG_CLOSE = new Date('2026-07-27T23:59:59-06:00')
+const MAG_OPEN  = new Date('2026-09-27T00:00:00')
+const MAG_CLOSE = new Date('2026-10-18T23:59:59-06:00')
 function isMagOpen() {
   const now = new Date()
   return now >= MAG_OPEN && now <= MAG_CLOSE
 }
 function isAppOpen() {
-  return new Date() > MAG_CLOSE   // app reopens when the magazine window closes
+  return true   // Instagram/app submissions open year-round
 }
 
 const CATEGORIES: { value: string; label: string }[] = [
@@ -292,7 +292,7 @@ export default function SubmitPage() {
               {appOpen ? (
                 <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-black text-white px-1.5 py-0.5 rounded-full">Open</span>
               ) : (
-                <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-b1 text-mthr-mid px-1.5 py-0.5 rounded-full">Opens July 27</span>
+                <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-black text-white px-1.5 py-0.5 rounded-full">Open</span>
               )}
             </button>
 
@@ -368,7 +368,7 @@ export default function SubmitPage() {
                 <p className="text-[12px] text-mthr-mid leading-[1.8]">
                   we've paused feed submissions while the print magazine window is open.<br />
                   submit your work for <strong>Full Bloom</strong> — magazine submissions close july 27.<br />
-                  app &amp; instagram submissions reopen july 27.
+                  app &amp; instagram submissions are open year-round.
                 </p>
                 <button onClick={() => { if (magOpen) setTab('magazine') }}
                   className="mt-6 px-6 py-2.5 text-[10px] tracking-[0.16em] uppercase font-medium bg-mthr-black text-white rounded-full hover:bg-mthr-dark transition-colors">
@@ -810,7 +810,7 @@ walk us through your process. what were you watching for, and what created the c
                   magazine submissions <em>open april 1.</em>
                 </h2>
                 <p className="text-[12px] text-mthr-mid leading-[1.8]">
-                  the magazine submission window opens june 26 — july 27, 2026.<br />
+                  the magazine submission window opens september 27 — october 18, 2026.<br />
                   in the meantime, submit your work to the app feature.
                 </p>
               </div>

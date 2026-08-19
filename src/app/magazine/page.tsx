@@ -11,9 +11,9 @@ export default function MagazinePage() {
         {/* ── MAGAZINE SUBMISSIONS BANNER — TOP ── */}
         <section className="bg-mthr-black text-white px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
-            <p className="text-[9px] tracking-[0.2em] uppercase text-white/40 mb-1">full bloom · edition two</p>
+            <p className="text-[9px] tracking-[0.2em] uppercase text-white/40 mb-1">the golden season · edition three</p>
             <p className="font-cormorant italic font-light text-[20px] text-white mb-1">submissions open</p>
-            <p className="font-cormorant italic font-light text-[16px] text-white/60">june 26 — july 27, 2026</p>
+            <p className="font-cormorant italic font-light text-[16px] text-white/60">september 27 — october 18, 2026</p>
           </div>
           <Link
             href="/submit"

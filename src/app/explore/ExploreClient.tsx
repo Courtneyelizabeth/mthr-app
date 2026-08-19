@@ -135,8 +135,8 @@ export default function ExploreClient({
 
             <div className="w-8 h-px bg-[#E8E4DE] mb-5" />
 
-            <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-mid mb-1">full bloom — edition two</p>
-            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">submissions open june 26th</p>
+            <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-mid mb-1">the golden season — edition three</p>
+            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">submissions open sept 27th</p>
             <Link href="/submit" className="inline-block text-[9px] tracking-[0.18em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
               submit your work →
             </Link>
@@ -236,8 +236,8 @@ export default function ExploreClient({
                   {idx === 8 && (
                     <div className="break-inside-avoid mb-2">
                       <Link href="/submit" className="block bg-mthr-black px-5 py-6">
-                        <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">full bloom — edition two</p>
-                        <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">submissions open june 26th</p>
+                        <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">the golden season — edition three</p>
+                        <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">submissions open sept 27th</p>
                         <p className="text-[8px] tracking-[0.16em] uppercase text-white/50 border-b border-white/20 inline-block pb-px">submit your work →</p>
                       </Link>
                     </div>
