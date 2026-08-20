@@ -123,6 +123,10 @@ export default function SubmitPage() {
     team_credits: '',
     gallery_link: '',
     copyright_declared: false,
+    is_styled: false,
+    styled_leads: '',
+    styled_name: '',
+    permission_declared: false,
   })
   const [articleForm, setArticleForm] = useState({
     print_name: '', instagram: '', title: '', category: '', length: '', about: '', status: '', text: '', gallery_link: '', copyright_declared: false,
@@ -164,7 +168,7 @@ export default function SubmitPage() {
   }
 
   const canSubmitApp = appFiles.length > 0
-  const canSubmitMag = form.title && magForm.gallery_link && magForm.copyright_declared
+  const canSubmitMag = form.title && magForm.gallery_link && magForm.copyright_declared && magForm.permission_declared
 
   const handleSubmit = async () => {
     setError(null)
@@ -196,7 +200,7 @@ export default function SubmitPage() {
         : `${form.state_code || 'USA'}${form.venue ? ` · ${form.venue}` : ''}`
 
       const fullDescription = tab === 'magazine'
-        ? [form.description, magForm.submission_statement ? 'Statement: ' + magForm.submission_statement : '', magForm.team_credits ? 'Credits: ' + magForm.team_credits : ''].filter(Boolean).join('\n\n')
+        ? [form.description, magForm.submission_statement ? 'Statement: ' + magForm.submission_statement : '', magForm.team_credits ? 'Credits: ' + magForm.team_credits : '', magForm.is_styled ? 'Styled shoot / content day / workshop: yes' + (magForm.styled_name ? ' — ' + magForm.styled_name : '') + (magForm.styled_leads ? ' (led by ' + magForm.styled_leads + ')' : '') : '', magForm.permission_declared ? 'Permission to share & credit: confirmed' : ''].filter(Boolean).join('\n\n')
         : form.description
 
       const { error: insertError } = await (supabase.from('submissions') as any).insert({
@@ -595,8 +599,8 @@ export default function SubmitPage() {
                   </div>
                 )}
 
-                <Field label="Collab or brand credits (optional)">
-                  <input type="text" placeholder="e.g. Styled by The Bloom Studio, MUA: Sarah Jones"
+                <Field label="Subjects / caption (optional)">
+                  <input type="text" placeholder="e.g. the Rivera family, or a short caption"
                     value={form.subjects} onChange={e => setForm(f => ({ ...f, subjects: e.target.value }))}
                     className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
                 </Field>
@@ -655,6 +659,53 @@ walk us through your process. what were you watching for, and what created the c
                         onChange={e => setMagForm(f => ({ ...f, team_credits: e.target.value }))}
                         className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors resize-none leading-relaxed" />
                     </Field>
+
+                    {/* Styled shoot / content day / workshop */}
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <div className="relative mt-0.5 flex-shrink-0">
+                        <input type="checkbox" checked={magForm.is_styled}
+                          onChange={e => setMagForm(f => ({ ...f, is_styled: e.target.checked }))}
+                          className="sr-only" />
+                        <div className={`w-4 h-4 rounded-sm border transition-colors flex items-center justify-center ${magForm.is_styled ? 'bg-mthr-black border-mthr-black' : 'bg-white border-[#D0CCC6]'}`}>
+                          {magForm.is_styled && (
+                            <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          )}
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-mthr-black leading-[1.5]">this was a styled shoot, content day, or workshop</p>
+                    </label>
+
+                    {magForm.is_styled && (
+                      <div className="space-y-4 pl-1 border-l border-[#E8E4DE] ml-1 pl-4">
+                        <Field label="Photographer(s) who led it">
+                          <input type="text" placeholder="who ran the shoot / workshop / content day"
+                            value={magForm.styled_leads}
+                            onChange={e => setMagForm(f => ({ ...f, styled_leads: e.target.value }))}
+                            className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
+                        </Field>
+                        <Field label="Name of the workshop / content day / shoot">
+                          <input type="text" placeholder="e.g. Golden Hour Workshop, Spring Content Day"
+                            value={magForm.styled_name}
+                            onChange={e => setMagForm(f => ({ ...f, styled_name: e.target.value }))}
+                            className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors" />
+                        </Field>
+                      </div>
+                    )}
+
+                    {/* Required: permission to share & credit */}
+                    <label className="flex items-start gap-3 cursor-pointer p-4 border border-[#D0CCC6] rounded-sm bg-[#F5F2EE]">
+                      <div className="relative mt-0.5 flex-shrink-0">
+                        <input type="checkbox" checked={magForm.permission_declared}
+                          onChange={e => setMagForm(f => ({ ...f, permission_declared: e.target.checked }))}
+                          className="sr-only" />
+                        <div className={`w-4 h-4 rounded-sm border transition-colors flex items-center justify-center ${magForm.permission_declared ? 'bg-mthr-black border-mthr-black' : 'bg-white border-[#D0CCC6]'}`}>
+                          {magForm.permission_declared && (
+                            <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          )}
+                        </div>
+                      </div>
+                      <p className="text-[11px] font-medium text-mthr-black leading-[1.5]">I have permission to share these images and have credited all collaborators. *</p>
+                    </label>
 
                     <label className="flex items-start gap-3 cursor-pointer p-4 border border-[#D0CCC6] rounded-sm bg-[#F5F2EE]">
                       <div className="relative mt-0.5 flex-shrink-0">
