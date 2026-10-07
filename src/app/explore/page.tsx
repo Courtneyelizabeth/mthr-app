@@ -19,7 +19,9 @@ export default async function ExplorePage() {
     `)
     .in('status', ['approved', 'featured'])
     .eq('submission_type', 'app')
+    .order('quarter_featured', { ascending: false })
     .order('created_at', { ascending: false })
+    .limit(50)
 
   // Get unique states for location filter
   const { data: locationData } = await supabase
