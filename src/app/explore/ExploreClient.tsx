@@ -137,7 +137,7 @@ export default function ExploreClient({
 
             <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-mid mb-1">the golden season — edition three</p>
             <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">submissions open sept 27th</p>
-            <Link href="/submit" className="inline-block text-[9px] tracking-[0.18em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
+            <Link href="/submit" className="inline-block mt-6 text-[9px] tracking-[0.18em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
               submit your work →
             </Link>
           </div>
