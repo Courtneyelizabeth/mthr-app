@@ -100,7 +100,7 @@ export default function ExploreClient({
 
   const filtered = submissions
     .filter(s => activeCategory === 'all' || s.category === activeCategory)
-    .filter(s => activeState === 'all' || s.location_state === activeState)
+    .filter(s => activeState === 'all' || (s.location_state ?? '') === activeState)
 
   const profileHref = (sub: Submission) =>
     sub.profiles?.id ? `/photographer/${sub.profiles.id}` : '#'
