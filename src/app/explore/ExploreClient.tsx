@@ -225,79 +225,68 @@ export default function ExploreClient({
       {/* MAIN GRID */}
       <div className="px-2 md:px-4 py-4">
         {filtered.length > 0 ? (
-          <div className="columns-2 md:columns-3 gap-2 space-y-2">
-            {filtered.slice(0, visibleCount).map((sub, idx) => {
-              const img = sub.cover_image ?? sub.images?.[0] ?? null
-              if (!img) return null
-              const isFav = favorites.has(sub.id)
-
-              return (
-                <div key={sub.id} className="relative break-inside-avoid group">
-                  {/* Every ~9 images insert magazine banner */}
-                  {idx === 8 && (
-                    <div className="break-inside-avoid mb-2">
-                      <Link href="/submit" className="block bg-mthr-black px-5 py-6">
-                        <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">the golden season — edition three</p>
-                        <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">submissions open sept 27th</p>
-                        <p className="text-[8px] tracking-[0.16em] uppercase text-white/50 border-b border-white/20 inline-block pb-px">submit your work →</p>
-                      </Link>
-                    </div>
-                  )}
-                  <Link href={profileHref(sub)}>
-                    <Image
-                      src={img}
-                      alt={sub.subjects ?? sub.title ?? ''}
-                      width={600}
-                      height={900}
-                      className="w-full h-auto object-cover"
-                      style={{ display: 'block' }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
-                      {sub.subjects && (
-                        <div className="font-cormorant italic text-[22px] font-light text-white leading-tight mb-1">{sub.subjects}</div>
-                      )}
-                      {sub.location_name && (
-                        <div className="text-[13px] tracking-[0.04em] text-white/80">{sub.location_name}</div>
-                      )}
-                    </div>
-                  </Link>
-                  {sub.instagram_handle && (
-                    <a
-                      href={`https://instagram.com/${sub.instagram_handle}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      className="absolute bottom-2 left-2 text-[9px] text-white/55 hover:text-white transition-colors opacity-0 group-hover:opacity-100 mt-1"
-                    >
-                      @{sub.instagram_handle}
-                    </a>
-                  )}
-                  <button
-                    onClick={(e) => toggleFavorite(e, sub.id)}
-                    className="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white"
-                    title={isFav ? 'Remove from saved' : 'Save'}
-                  >
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill={isFav ? '#1A1814' : 'none'} stroke="#1A1814" strokeWidth="1.5">
-                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                    </svg>
-                  </button>
-                </div>
-              )
-            })}
-          </div>
-          {filtered.length > visibleCount && (
-            <div className="text-center mt-8 pb-4">
-              <button onClick={() => setVisibleCount(v => v + 40)}
-                className="text-[9px] tracking-[0.16em] uppercase font-medium px-6 py-2.5 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm">
-                explore more
-              </button>
+          <>
+            <div className="columns-2 md:columns-3 gap-2 space-y-2">
+              {filtered.slice(0, visibleCount).map((sub, idx) => {
+                const img = sub.cover_image ?? sub.images?.[0] ?? null
+                if (!img) return null
+                const isFav = favorites.has(sub.id)
+                return (
+                  <div key={sub.id} className="relative break-inside-avoid group">
+                    {idx === 8 && (
+                      <div className="break-inside-avoid mb-2">
+                        <Link href="/submit" className="block bg-mthr-black px-5 py-6">
+                          <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">full bloom — edition two</p>
+                          <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">submissions open june 26th</p>
+                          <p className="text-[8px] tracking-[0.16em] uppercase text-white/50 border-b border-white/20 inline-block pb-px">submit your work →</p>
+                        </Link>
+                      </div>
+                    )}
+                    <Link href={profileHref(sub)}>
+                      <Image src={img} alt={sub.subjects ?? sub.title ?? ''} width={600} height={900}
+                        className="w-full h-auto object-cover" style={{ display: 'block' }} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3">
+                        {sub.subjects && <div className="font-cormorant italic text-[22px] font-light text-white leading-tight mb-1">{sub.subjects}</div>}
+                        {sub.location_name && <div className="text-[13px] tracking-[0.04em] text-white/80">{sub.location_name}</div>}
+                      </div>
+                    </Link>
+                    {sub.instagram_handle && (
+                      <a href={`https://instagram.com/${sub.instagram_handle}`} target="_blank" rel="noopener noreferrer"
+                        className="absolute bottom-2 left-2 text-[9px] text-white/55 hover:text-white transition-colors opacity-0 group-hover:opacity-100">
+                        @{sub.instagram_handle}
+                      </a>
+                    )}
+                    <button onClick={(e) => toggleFavorite(e, sub.id)}
+                      className="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white"
+                      title={isFav ? 'Remove from saved' : 'Save'}>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill={isFav ? '#1A1814' : 'none'} stroke="#1A1814" strokeWidth="1.5">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                      </svg>
+                    </button>
+                  </div>
+                )
+              })}
             </div>
-          )}
-        </div>
-      )}
+            {filtered.length > visibleCount && (
+              <div className="text-center mt-8 pb-4">
+                <button onClick={() => setVisibleCount(v => v + 40)}
+                  className="text-[9px] tracking-[0.16em] uppercase font-medium px-6 py-2.5 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm">
+                  explore more
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="py-20 text-center">
+            <p className="font-cormorant italic text-[22px] font-light text-mthr-mid">no images here yet.</p>
+            <Link href="/submit" className="inline-block mt-4 text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors">
+              be the first to submit →
+            </Link>
+          </div>
+        )}
       </div>
 
-      {/* FEATURED PHOTOGRAPHERS */}
+            {/* FEATURED PHOTOGRAPHERS */}
       {photographers.length > 0 && (
         <div className="px-4 md:px-8 py-8 border-t border-[#E8E4DE]">
           <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium mb-6">featured photographers</p>
