@@ -275,7 +275,6 @@ export default function AdminPage() {
                         >
                           {(sub as any).quarter_featured ? '★ pinned' : '☆ pin to explore'}
                         </button>
-                        <>
                         <button onClick={() => updateStatus(sub.id, 'approved')} disabled={updating === sub.id}
                           className="px-4 py-2 border border-[#D0CCC6] text-mthr-mid text-[9px] tracking-[0.12em] uppercase font-medium rounded-sm hover:text-mthr-black transition-colors disabled:opacity-40">
                           Move to approved
@@ -284,7 +283,6 @@ export default function AdminPage() {
                           className="px-4 py-2 border border-[#D0CCC6] text-mthr-mid text-[9px] tracking-[0.12em] uppercase font-medium rounded-sm hover:text-mthr-black transition-colors disabled:opacity-40">
                           Reject
                         </button>
-                      </>
                       </>
                     )}
                     {filter === 'rejected' && (
