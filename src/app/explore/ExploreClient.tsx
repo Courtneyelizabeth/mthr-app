@@ -285,6 +285,14 @@ export default function ExploreClient({
               )
             })}
           </div>
+          {filtered.length > visibleCount && (
+            <div className="text-center mt-8 pb-4">
+              <button onClick={() => setVisibleCount(v => v + 40)}
+                className="text-[9px] tracking-[0.16em] uppercase font-medium px-6 py-2.5 border border-[#D0CCC6] text-mthr-mid hover:border-mthr-black hover:text-mthr-black transition-colors rounded-sm">
+                load more
+              </button>
+            </div>
+          )}
         ) : (
           <div className="py-20 text-center">
             <p className="font-cormorant italic text-[22px] font-light text-mthr-mid">no images here yet.</p>
