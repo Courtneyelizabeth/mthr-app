@@ -294,13 +294,6 @@ export default function ExploreClient({
             </div>
           )}
         </div>
-      ) : (
-        <div className="py-20 text-center">
-          <p className="font-cormorant italic text-[22px] font-light text-mthr-mid">no images here yet.</p>
-          <Link href="/submit" className="inline-block mt-4 text-[10px] tracking-[0.14em] uppercase text-mthr-mid hover:text-mthr-black transition-colors">
-            be the first to submit →
-          </Link>
-        </div>
       )}
       </div>
 
