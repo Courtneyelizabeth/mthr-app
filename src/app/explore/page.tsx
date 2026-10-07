@@ -31,6 +31,11 @@ export default async function ExplorePage() {
     .not('location_name', 'is', null)
 
   const states = Array.from(new Set((locationData ?? [] as any[])
+    .filter((s: any) => {
+      if (!s.location_name || s.location_name.trim() === '') return false
+      const wordCount = s.location_name.trim().split(/\s+/).filter(Boolean).length
+      return wordCount >= 2
+    })
     .map((s: any) => s.location_state)
     .filter(Boolean)
   )).sort() as string[]

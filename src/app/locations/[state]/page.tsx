@@ -22,10 +22,15 @@ export default async function LocationPage({ params }: { params: { state: string
     .order('created_at', { ascending: false })
 
   // Only show submissions with a specific venue name
-  const submissions = (rawSubmissions ?? []).filter((s: any) =>
-    s.location_name && s.location_name.trim() !== '' &&
-    s.location_name.trim().toLowerCase() !== state.toLowerCase()
-  )
+  const submissions = (rawSubmissions ?? []).filter((s: any) => {
+    if (!s.location_name || s.location_name.trim() === '') return false
+    const name = s.location_name.trim().toLowerCase()
+    if (name === state.toLowerCase()) return false
+    if (name === (s.location_country ?? '').toLowerCase()) return false
+    // Must have at least 2 words to be specific enough
+    const wordCount = name.split(/\s+/).filter(Boolean).length
+    return wordCount >= 2
+  })
 
   const venues: string[] = Array.from(new Set(
     submissions.map((s: any) => s.location_name as string).filter(Boolean)
