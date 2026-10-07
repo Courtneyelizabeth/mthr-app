@@ -17,7 +17,7 @@ export default async function ExplorePage() {
       category, status, created_at, quarter_featured,
       profiles:photographer_id (id, full_name, username, avatar_url, instagram)
     `)
-    .in('status', ['approved', 'featured'])
+    .eq('status', 'featured')
     .eq('submission_type', 'app')
     .order('quarter_featured', { ascending: false })
     .order('created_at', { ascending: false })
