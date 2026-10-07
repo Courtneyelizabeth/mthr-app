@@ -289,7 +289,7 @@ export default function ExploreClient({
             <div className="text-center mt-8 pb-4">
               <button onClick={() => setVisibleCount(v => v + 40)}
                 className="text-[9px] tracking-[0.16em] uppercase font-medium px-6 py-2.5 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm">
-                load more
+                explore more
               </button>
             </div>
           )}
