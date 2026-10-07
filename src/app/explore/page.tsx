@@ -19,7 +19,6 @@ export default async function ExplorePage() {
     `)
     .eq('status', 'featured')
     .eq('submission_type', 'app')
-    .order('quarter_featured', { ascending: false })
     .order('created_at', { ascending: false })
     .limit(500)
 
