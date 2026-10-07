@@ -61,6 +61,7 @@ export default function ExploreClient({
 }) {
   const supabase = createClient()
   const [activeCategory, setActiveCategory] = useState('all')
+  const [visibleCount, setVisibleCount] = useState(40)
   const [activeState, setActiveState] = useState('all')
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [userId, setUserId] = useState<string | null>(null)
@@ -225,7 +226,7 @@ export default function ExploreClient({
       <div className="px-2 md:px-4 py-4">
         {filtered.length > 0 ? (
           <div className="columns-2 md:columns-3 gap-2 space-y-2">
-            {filtered.map((sub, idx) => {
+            {filtered.slice(0, visibleCount).map((sub, idx) => {
               const img = sub.cover_image ?? sub.images?.[0] ?? null
               if (!img) return null
               const isFav = favorites.has(sub.id)
