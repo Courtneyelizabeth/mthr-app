@@ -9,7 +9,7 @@ export const revalidate = 60
 export default async function ExplorePage() {
   const supabase = createClient()
 
-  const { data: submissions } = await supabase
+  const { data: submissions } = await (supabase as any)
     .from('submissions')
     .select(`
       id, title, location_name, location_country, location_state,
