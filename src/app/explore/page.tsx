@@ -17,10 +17,9 @@ export default async function ExplorePage() {
       category, status, created_at, quarter_featured,
       profiles:photographer_id (id, full_name, username, avatar_url, instagram)
     `)
-    .eq('status', 'featured')
     .eq('submission_type', 'app')
+    .eq('quarter_featured', true)
     .order('created_at', { ascending: false })
-    .limit(500)
 
   // Get unique states for location filter
   const { data: locationData } = await supabase
