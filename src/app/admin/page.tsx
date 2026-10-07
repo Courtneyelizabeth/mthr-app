@@ -264,6 +264,18 @@ export default function AdminPage() {
                       </>
                     )}
                     {filter === 'featured' && (
+                        <button
+                          onClick={async () => {
+                            const newVal = !(sub as any).quarter_featured
+                            await (supabase.from('submissions') as any).update({ quarter_featured: newVal }).eq('id', sub.id)
+                            setSubmissions(prev => prev.map(s => s.id === sub.id ? { ...s, quarter_featured: newVal } as any : s))
+                          }}
+                          className={`px-4 py-2 text-[9px] tracking-[0.12em] uppercase font-medium border rounded-sm transition-colors ${
+                            (sub as any).quarter_featured ? 'bg-mthr-black text-white border-mthr-black' : 'border-[#D0CCC6] text-mthr-mid hover:border-mthr-black hover:text-mthr-black'
+                          }`}
+                        >
+                          {(sub as any).quarter_featured ? '★ pinned' : '☆ pin to explore'}
+                        </button>
                       <>
                         <button onClick={() => updateStatus(sub.id, 'approved')} disabled={updating === sub.id}
                           className="px-4 py-2 border border-[#D0CCC6] text-mthr-mid text-[9px] tracking-[0.12em] uppercase font-medium rounded-sm hover:text-mthr-black transition-colors disabled:opacity-40">
