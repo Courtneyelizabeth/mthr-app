@@ -61,7 +61,7 @@ export default function ExploreClient({
 }) {
   const supabase = createClient()
   const [activeCategory, setActiveCategory] = useState('all')
-  const [visibleCount, setVisibleCount] = useState(40)
+  const [visibleCount, setVisibleCount] = useState(175)
   const [activeState, setActiveState] = useState('all')
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [userId, setUserId] = useState<string | null>(null)
