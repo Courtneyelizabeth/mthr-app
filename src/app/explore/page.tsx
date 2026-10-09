@@ -56,7 +56,7 @@ export default async function ExplorePage() {
 
         {/* ── EXPLORE FEED ── */}
         <ExploreClient
-          submissions={submissions ?? []}
+          submissions={allSubmissions ?? []}
           photographers={photographers ?? []}
           states={states ?? []}
         />
