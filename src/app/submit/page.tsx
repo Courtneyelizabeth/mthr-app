@@ -8,7 +8,7 @@ import { createClient } from '@/lib/supabase/client'
 
 // ── Magazine submission window ──────────────────────────────
 const MAG_OPEN  = new Date('2026-09-27T00:00:00')
-const MAG_CLOSE = new Date('2026-10-18T23:59:59-06:00')
+const MAG_CLOSE = new Date('2026-10-20T06:00:00Z')
 function isMagOpen() {
   const now = new Date()
   return now >= MAG_OPEN && now <= MAG_CLOSE
@@ -371,7 +371,7 @@ export default function SubmitPage() {
                 </h2>
                 <p className="text-[12px] text-mthr-mid leading-[1.8]">
                   we've paused feed submissions while the print magazine window is open.<br />
-                  submit your work for <strong>Full Bloom</strong> — magazine submissions close july 27.<br />
+                  submit your work for <strong>Full Bloom</strong> — magazine submissions close october 19, midnight MT.<br />
                   app &amp; instagram submissions are open year-round.
                 </p>
                 <button onClick={() => { if (magOpen) setTab('magazine') }}
@@ -861,7 +861,7 @@ walk us through your process. what were you watching for, and what created the c
                   magazine submissions <em>open april 1.</em>
                 </h2>
                 <p className="text-[12px] text-mthr-mid leading-[1.8]">
-                  the magazine submission window opens september 27 — october 18, 2026.<br />
+                  the magazine submission window opens september 27 — october 19, 2026 (midnight MT).<br />
                   in the meantime, submit your work to the app feature.
                 </p>
               </div>

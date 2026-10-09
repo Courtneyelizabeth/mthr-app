@@ -237,7 +237,7 @@ export default function ExploreClient({
                       <div className="break-inside-avoid mb-2">
                         <Link href="/submit" className="block bg-mthr-black px-5 py-6">
                           <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">full bloom — edition two</p>
-                          <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">submissions open june 26th</p>
+                          <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">submissions close october 19 · midnight MT</p>
                           <p className="text-[8px] tracking-[0.16em] uppercase text-white/50 border-b border-white/20 inline-block pb-px">submit your work →</p>
                         </Link>
                       </div>
