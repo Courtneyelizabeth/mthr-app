@@ -215,6 +215,9 @@ export default function AdminPage() {
                     {sub.subjects && <span>people: <strong className="text-mthr-black">{sub.subjects}</strong></span>}
                     {sub.instagram_handle && <span>@{sub.instagram_handle}</span>}
                     <span>by: <strong className="text-mthr-black">{sub.profiles?.full_name ?? 'Unknown'}</strong></span>
+                    {sub.photographer_email
+                      ? <a href={`mailto:${sub.photographer_email}`} className="underline hover:text-mthr-black">{sub.photographer_email}</a>
+                      : <span className="italic opacity-50">no email</span>}
                     <span>{sub.images?.length ?? 0} images</span>
                     <span>{new Date(sub.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                   </div>
