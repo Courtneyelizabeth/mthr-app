@@ -2,6 +2,8 @@ import TopNav from '@/components/layout/TopNav'
 import Footer from '@/components/layout/Footer'
 import Link from 'next/link'
 
+export const revalidate = 60
+
 export default function MagazinePage() {
   return (
     <div className="flex flex-col min-h-screen bg-[#F5F2EE]">
@@ -12,14 +14,14 @@ export default function MagazinePage() {
         <section className="bg-mthr-black text-white px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
             <p className="text-[9px] tracking-[0.2em] uppercase text-white/40 mb-1">the golden season · edition three</p>
-            <p className="font-cormorant italic font-light text-[20px] text-white mb-1">submissions open</p>
-            <p className="font-cormorant italic font-light text-[16px] text-white/60">september 27 — october 18, 2026</p>
+            <p className="font-cormorant italic font-light text-[20px] text-white mb-1">submissions closed</p>
+            <p className="font-cormorant italic font-light text-[16px] text-white/60">winter submissions opening soon</p>
           </div>
           <Link
-            href="/submit"
+            href="https://www.magcloud.com/browse/issue/3439629?__r=8718597"
             className="text-[10px] tracking-[0.16em] uppercase font-medium px-6 py-2.5 border border-white/50 text-white hover:bg-white hover:text-mthr-black transition-colors rounded-sm flex-shrink-0"
           >
-            Submit your work →
+            Get the magazine →
           </Link>
         </section>
 
@@ -29,32 +31,20 @@ export default function MagazinePage() {
           <div className="text-center px-8 pt-16 pb-4">
             <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium mb-4">The Current Issue</p>
             <h2 className="font-cormorant italic font-light text-[52px] md:text-[68px] leading-[1.05] text-mthr-black mb-3">
-              full bloom.
+              the golden season.
             </h2>
-            <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium">Edition Two · available now with two covers</p>
+            <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium">Edition Three · 2 volumes · {new Date() >= new Date('2026-11-23T00:00:00-07:00') ? 'available now' : 'available monday 11/23'}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#E8E4DE] border-y border-[#E8E4DE] mt-10">
-            {/* Cover 1 */}
+          <div className="border-y border-[#E8E4DE] mt-10">
             <div className="bg-[#F5F2EE] px-8 md:px-16 py-14 flex flex-col items-center text-center">
               <div className="w-full max-w-[340px] aspect-[3/4] overflow-hidden bg-[#1A1814] mb-7 shadow-sm">
-                <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/fullbloom-cover-1.jpg" alt="Full Bloom — Cover One" className="w-full h-full object-cover" />
+                <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/goldenseason-cover.jpg" alt="The Golden Season — Edition Three" className="w-full h-full object-cover" />
               </div>
-              <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-dim mb-3">Cover One</p>
-              <a href="https://www.magcloud.com/browse/issue/3386019" target="_blank" rel="noopener noreferrer"
+              <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-dim mb-3">Two Volumes</p>
+              <a href="https://www.magcloud.com/browse/issue/3439629?__r=8718597" target="_blank" rel="noopener noreferrer"
                 className="inline-block text-[10px] tracking-[0.16em] uppercase font-medium px-7 py-3 bg-mthr-black text-white hover:opacity-80 transition-opacity rounded-sm">
-                Get this cover →
-              </a>
-            </div>
-            {/* Cover 2 */}
-            <div className="bg-[#F5F2EE] px-8 md:px-16 py-14 flex flex-col items-center text-center">
-              <div className="w-full max-w-[340px] aspect-[3/4] overflow-hidden bg-[#1A1814] mb-7 shadow-sm">
-                <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/fullbloom-cover-2.jpg" alt="Full Bloom — Cover Two" className="w-full h-full object-cover" />
-              </div>
-              <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-dim mb-3">Cover Two</p>
-              <a href="https://www.magcloud.com/browse/issue/3386366" target="_blank" rel="noopener noreferrer"
-                className="inline-block text-[10px] tracking-[0.16em] uppercase font-medium px-7 py-3 bg-mthr-black text-white hover:opacity-80 transition-opacity rounded-sm">
-                Get this cover →
+                Get the magazine →
               </a>
             </div>
           </div>
@@ -63,6 +53,23 @@ export default function MagazinePage() {
           <div className="px-8 md:px-16 py-14">
             <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium mb-8 text-center">Past Issues</p>
             <div className="flex flex-wrap justify-center gap-10">
+              <div className="flex flex-col items-center text-center w-[180px]">
+                <div className="w-full aspect-[3/4] overflow-hidden bg-[#1A1814] mb-4 opacity-90 hover:opacity-100 transition-opacity">
+                  <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/fullbloom-cover-1.jpg" alt="Full Bloom — Edition Two" className="w-full h-full object-cover" />
+                </div>
+                <p className="font-cormorant italic font-light text-[20px] text-mthr-black leading-none mb-1">full bloom</p>
+                <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-dim mb-3">Edition Two · two covers</p>
+                <div className="flex gap-4">
+                  <a href="https://www.magcloud.com/browse/issue/3386019" target="_blank" rel="noopener noreferrer"
+                    className="text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#B5B0A8] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
+                    cover one →
+                  </a>
+                  <a href="https://www.magcloud.com/browse/issue/3386366" target="_blank" rel="noopener noreferrer"
+                    className="text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#B5B0A8] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
+                    cover two →
+                  </a>
+                </div>
+              </div>
               <div className="flex flex-col items-center text-center w-[180px]">
                 <div className="w-full aspect-[3/4] overflow-hidden bg-[#1A1814] mb-4 opacity-90 hover:opacity-100 transition-opacity">
                   <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/MTHRMAGCOVER.jpg" alt="The Long Light — Edition One" className="w-full h-full object-cover" />
@@ -82,7 +89,7 @@ export default function MagazinePage() {
         <section className="grid grid-cols-1 md:grid-cols-2 min-h-[90vh] border-b border-[#E8E4DE]">
           {/* Left — photo placeholder */}
           <div className="relative min-h-[50vh] md:min-h-full overflow-hidden bg-[#1A1814] flex items-center justify-center">
-            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/MTHRMAGCOVER.jpg" alt="MTHR Magazine Cover" className="w-full h-full object-contain" />
+            <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/goldenseason-cover.jpg" alt="MTHR Magazine Cover" className="w-full h-full object-contain" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
 
