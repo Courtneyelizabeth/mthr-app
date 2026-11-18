@@ -123,55 +123,35 @@ export default function ExploreClient({
 
             <div className="w-8 h-px bg-[#D0CCC6] mb-5" />
 
-            <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-dim mb-1">full bloom · edition two</p>
-            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">available now — two covers.</p>
+            <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-dim mb-1">the golden season · edition three</p>
+            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">{new Date() >= new Date('2026-11-23T00:00:00-07:00') ? 'now available' : 'available monday 11/23'} — 2 volumes.</p>
             <div className="flex gap-4 mb-6">
-              <a href="https://www.magcloud.com/browse/issue/3386019" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
-                cover one →
-              </a>
-              <a href="https://www.magcloud.com/browse/issue/3386366" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
-                cover two →
+              <a href="https://www.magcloud.com/browse/issue/3439629?__r=8718597" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
+                get the magazine →
               </a>
             </div>
 
             <div className="w-8 h-px bg-[#E8E4DE] mb-5" />
 
-            <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-mid mb-1">the golden season — edition three</p>
-            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">submissions open sept 27th</p>
-            <Link href="/submit" className="inline-block mt-6 text-[9px] tracking-[0.18em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
-              submit your work →
-            </Link>
+            <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-mid mb-1">golden season submissions</p>
+            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">closed — winter submissions opening soon.</p>
           </div>
 
-          {/* Right — two Full Bloom covers */}
-          <div className="flex gap-4 w-full md:w-auto flex-shrink-0">
-            <a href="https://www.magcloud.com/browse/issue/3386019" target="_blank" rel="noopener noreferrer"
-              className="block relative w-1/2 md:w-[190px] lg:w-[210px] flex-shrink-0 overflow-hidden group">
+          {/* Right — Golden Season cover */}
+          <div className="w-full md:w-auto flex-shrink-0">
+            <a href="https://www.magcloud.com/browse/issue/3439629?__r=8718597" target="_blank" rel="noopener noreferrer"
+              className="block relative w-2/3 max-w-[260px] mx-auto md:mx-0 md:w-[280px] lg:w-[320px] overflow-hidden group">
               <Image
-                src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/fullbloom-cover-1.jpg"
-                alt="MTHR Magazine — Full Bloom, Cover One"
-                width={520}
-                height={693}
+                src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/goldenseason-cover.jpg"
+                alt="MTHR Magazine — The Golden Season, Edition Three"
+                width={600}
+                height={776}
                 className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
                 priority
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-3">
-                <p className="text-[8px] tracking-[0.16em] uppercase text-white/70">cover one →</p>
-              </div>
-            </a>
-            <a href="https://www.magcloud.com/browse/issue/3386366" target="_blank" rel="noopener noreferrer"
-              className="block relative w-1/2 md:w-[190px] lg:w-[210px] flex-shrink-0 overflow-hidden group">
-              <Image
-                src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/fullbloom-cover-2.jpg"
-                alt="MTHR Magazine — Full Bloom, Cover Two"
-                width={520}
-                height={693}
-                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-3">
-                <p className="text-[8px] tracking-[0.16em] uppercase text-white/70">cover two →</p>
+                <p className="text-[8px] tracking-[0.16em] uppercase text-white/70">2 volumes →</p>
               </div>
             </a>
           </div>
@@ -235,10 +215,10 @@ export default function ExploreClient({
                   <div key={sub.id} className="relative break-inside-avoid group">
                     {idx === 8 && (
                       <div className="break-inside-avoid mb-2">
-                        <Link href="/submit" className="block bg-mthr-black px-5 py-6">
-                          <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">full bloom — edition two</p>
-                          <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">submissions close october 19 · midnight MT</p>
-                          <p className="text-[8px] tracking-[0.16em] uppercase text-white/50 border-b border-white/20 inline-block pb-px">submit your work →</p>
+                        <Link href="/magazine" className="block bg-mthr-black px-5 py-6">
+                          <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">the golden season — edition three</p>
+                          <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">2 volumes, {new Date() >= new Date('2026-11-23T00:00:00-07:00') ? 'now available' : 'available monday 11/23'}. winter submissions opening soon.</p>
+                          <p className="text-[8px] tracking-[0.16em] uppercase text-white/50 border-b border-white/20 inline-block pb-px">get the magazine →</p>
                         </Link>
                       </div>
                     )}
