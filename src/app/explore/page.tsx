@@ -21,7 +21,31 @@ export default async function ExplorePage() {
     .eq('status', 'featured')
     .order('quarter_featured', { ascending: false })
     .order('created_at', { ascending: false })
-    .limit(500)
+    .limit(1000)
+
+  // Approved images, speckled in 1 per 4 featured
+  const { data: approvedData } = await (supabase as any)
+    .from('submissions')
+    .select(`
+      id, title, location_name, location_country, location_state,
+      subjects, instagram_handle, cover_image, images,
+      category, status, created_at, quarter_featured,
+      profiles:photographer_id (id, full_name, username, avatar_url, instagram)
+    `)
+    .eq('submission_type', 'app')
+    .eq('status', 'approved')
+    .order('created_at', { ascending: false })
+    .limit(300)
+
+  const featuredList: any[] = submissions ?? []
+  const approvedList: any[] = approvedData ?? []
+  const allSubmissions: any[] = []
+  let ai = 0
+  featuredList.forEach((s: any, i: number) => {
+    allSubmissions.push(s)
+    if ((i + 1) % 4 === 0 && ai < approvedList.length) allSubmissions.push(approvedList[ai++])
+  })
+  allSubmissions.push(...approvedList.slice(ai))
 
   // Get unique states for location filter
   const { data: locationData } = await supabase
@@ -56,7 +80,7 @@ export default async function ExplorePage() {
 
         {/* ── EXPLORE FEED ── */}
         <ExploreClient
-          submissions={submissions ?? []}
+          submissions={allSubmissions}
           photographers={photographers ?? []}
           states={states ?? []}
         />

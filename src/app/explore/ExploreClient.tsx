@@ -61,7 +61,7 @@ export default function ExploreClient({
 }) {
   const supabase = createClient()
   const [activeCategory, setActiveCategory] = useState('all')
-  const [visibleCount, setVisibleCount] = useState(175)
+  const [visibleCount, setVisibleCount] = useState(350)
   const [activeState, setActiveState] = useState('all')
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [userId, setUserId] = useState<string | null>(null)
@@ -249,7 +249,7 @@ export default function ExploreClient({
             </div>
             {filtered.length > visibleCount && (
               <div className="text-center mt-8 pb-4">
-                <button onClick={() => setVisibleCount(v => v + 40)}
+                <button onClick={() => setVisibleCount(v => v + 80)}
                   className="text-[9px] tracking-[0.16em] uppercase font-medium px-6 py-2.5 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm">
                   explore more
                 </button>
