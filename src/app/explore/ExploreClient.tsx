@@ -154,7 +154,7 @@ export default function ExploreClient({
                 <p className="text-[8px] tracking-[0.16em] uppercase text-white/70">2 volumes →</p>
               </div>
             </a>
-            <a href="https://www.instagram.com/mthrmag/" target="_blank" rel="noopener noreferrer"
+            <a href="https://www.instagram.com/mthrmagazine/" target="_blank" rel="noopener noreferrer"
               className="block relative w-1/2 md:w-[190px] lg:w-[210px] flex-shrink-0 overflow-hidden group aspect-[600/776]">
               <Image
                 src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/mthr-instagram.jpg"
@@ -165,7 +165,7 @@ export default function ExploreClient({
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-3">
-                <p className="text-[8px] tracking-[0.16em] uppercase text-white/70">@mthrmag →</p>
+                <p className="text-[8px] tracking-[0.16em] uppercase text-white/70">@mthrmagazine →</p>
               </div>
             </a>
           </div>
