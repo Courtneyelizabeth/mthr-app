@@ -41,6 +41,11 @@ export default function AdminPage() {
   const [viewType, setViewType] = useState<'app' | 'magazine' | 'article'>('app')
   const [updating, setUpdating] = useState<string | null>(null)
   const [expandedDesc, setExpandedDesc] = useState<string | null>(null)
+  const [search, setSearch] = useState('')
+  const q = search.trim().toLowerCase()
+  const visible = q
+    ? submissions.filter(s => [s.profiles?.full_name, s.instagram_handle, s.photographer_email, s.title].some(v => (v ?? '').toLowerCase().includes(q)))
+    : submissions
 
   const fetchSubmissions = async () => {
     setLoading(true)
@@ -144,15 +149,22 @@ export default function AdminPage() {
       </div>
 
       <div className="px-8 py-8">
+        <input
+          type="text"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="search name, @instagram or email"
+          className="w-full max-w-[420px] mb-6 px-4 py-2.5 text-[13px] bg-white border border-[#D0CCC6] rounded-sm outline-none focus:border-mthr-black"
+        />
         {loading ? (
           <p className="text-[12px] text-mthr-mid">loading...</p>
-        ) : submissions.length === 0 ? (
+        ) : visible.length === 0 ? (
           <div className="py-16 text-center">
-            <p className="font-cormorant italic text-[20px] font-light text-mthr-mid">no {filter} {viewType} submissions.</p>
+            <p className="font-cormorant italic text-[20px] font-light text-mthr-mid">no {filter} {viewType} submissions{q ? ' matching your search' : ''}.</p>
           </div>
         ) : (
           <div className="space-y-4">
-            {submissions.map(sub => (
+            {visible.map(sub => (
               <div key={sub.id} className="bg-white border border-[#E8E4DE] rounded-sm overflow-hidden flex">
                 <div className="w-[260px] flex-shrink-0">
                   {sub.submission_type === 'article' ? (
