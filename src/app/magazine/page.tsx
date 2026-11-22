@@ -18,7 +18,7 @@ export default function MagazinePage() {
             <p className="font-cormorant italic font-light text-[16px] text-white/60">winter submissions opening soon</p>
           </div>
           <Link
-            href="https://www.magcloud.com/browse/issue/3439629?__r=8718597"
+            href="https://www.magcloud.com/browse/issue/3444542?__r=8718597"
             className="text-[10px] tracking-[0.16em] uppercase font-medium px-6 py-2.5 border border-white/50 text-white hover:bg-white hover:text-mthr-black transition-colors rounded-sm flex-shrink-0"
           >
             Get the magazine →
@@ -42,7 +42,7 @@ export default function MagazinePage() {
                 <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/goldenseason-cover.jpg" alt="The Golden Season — Edition Three" className="w-full h-full object-cover" />
               </div>
               <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-dim mb-3">Two Volumes</p>
-              <a href="https://www.magcloud.com/browse/issue/3439629?__r=8718597" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.magcloud.com/browse/issue/3444542?__r=8718597" target="_blank" rel="noopener noreferrer"
                 className="inline-block text-[10px] tracking-[0.16em] uppercase font-medium px-7 py-3 bg-mthr-black text-white hover:opacity-80 transition-opacity rounded-sm">
                 Get the magazine →
               </a>
