@@ -33,7 +33,7 @@ export default function MagazinePage() {
             <h2 className="font-cormorant italic font-light text-[52px] md:text-[68px] leading-[1.05] text-mthr-black mb-3">
               the golden season.
             </h2>
-            <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium">Edition Three · 2 volumes · {new Date() >= new Date('2026-11-23T00:00:00-07:00') ? 'available now' : 'available monday 11/23'}</p>
+            <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-mid font-medium">Edition Three · 2 volumes · {new Date() >= new Date('2026-11-24T00:00:00-07:00') ? 'available now' : 'available tuesday 11/24'}</p>
           </div>
 
           <div className="border-y border-[#E8E4DE] mt-10">

@@ -124,7 +124,7 @@ export default function ExploreClient({
             <div className="w-8 h-px bg-[#D0CCC6] mb-5" />
 
             <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-dim mb-1">the golden season · edition three</p>
-            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">{new Date() >= new Date('2026-11-23T00:00:00-07:00') ? 'now available' : 'available monday 11/23'} — 2 volumes.</p>
+            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">{new Date() >= new Date('2026-11-24T00:00:00-07:00') ? 'now available' : 'available tuesday 11/24'} — 2 volumes.</p>
             <div className="flex gap-4 mb-6">
               <a href="https://www.magcloud.com/browse/issue/3444542?__r=8718597" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
                 get the magazine →
@@ -217,7 +217,7 @@ export default function ExploreClient({
                       <div className="break-inside-avoid mb-2">
                         <Link href="/magazine" className="block bg-mthr-black px-5 py-6">
                           <p className="text-[8px] tracking-[0.2em] uppercase text-white/40 mb-1">the golden season — edition three</p>
-                          <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">2 volumes, {new Date() >= new Date('2026-11-23T00:00:00-07:00') ? 'now available' : 'available monday 11/23'}. winter submissions opening soon.</p>
+                          <p className="font-cormorant italic font-light text-[20px] text-white leading-tight mb-3">2 volumes, {new Date() >= new Date('2026-11-24T00:00:00-07:00') ? 'now available' : 'available tuesday 11/24'}. winter submissions opening soon.</p>
                           <p className="text-[8px] tracking-[0.16em] uppercase text-white/50 border-b border-white/20 inline-block pb-px">get the magazine →</p>
                         </Link>
                       </div>
