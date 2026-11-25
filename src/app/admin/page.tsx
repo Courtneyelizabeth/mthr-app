@@ -64,6 +64,7 @@ export default function AdminPage() {
   const updateStatus = async (id: string, status: string) => {
     setUpdating(id)
     await (supabase.from('submissions') as any).update({ status }).eq('id', id)
+    fetch('/api/revalidate', { method: 'POST' }).catch(() => {})
 
     // Send status email for approved and featured
     if (status === 'featured' || status === 'approved') {
@@ -284,6 +285,7 @@ export default function AdminPage() {
                           onClick={async () => {
                             const newVal = !(sub as any).quarter_featured
                             await (supabase.from('submissions') as any).update({ quarter_featured: newVal }).eq('id', sub.id)
+                          fetch('/api/revalidate', { method: 'POST' }).catch(() => {})
                             setSubmissions(prev => prev.map(s => s.id === sub.id ? { ...s, quarter_featured: newVal } as any : s))
                           }}
                           className={`px-4 py-2 text-[9px] tracking-[0.12em] uppercase font-medium border rounded-sm transition-colors ${(sub as any).quarter_featured ? 'bg-mthr-black text-white border-mthr-black' : 'border-[#D0CCC6] text-mthr-mid hover:border-mthr-black hover:text-mthr-black'}`}
