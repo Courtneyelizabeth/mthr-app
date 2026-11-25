@@ -15,7 +15,7 @@ export default function MagazinePage() {
           <div>
             <p className="text-[9px] tracking-[0.2em] uppercase text-white/40 mb-1">the golden season · edition three</p>
             <p className="font-cormorant italic font-light text-[20px] text-white mb-1">submissions closed</p>
-            <p className="font-cormorant italic font-light text-[16px] text-white/60">winter submissions opening soon</p>
+            <p className="font-cormorant italic font-light text-[16px] text-white/60">winter submissions open january 5 — january 17</p>
           </div>
           <Link
             href="https://www.magcloud.com/browse/issue/3445022?__r=8718597"
