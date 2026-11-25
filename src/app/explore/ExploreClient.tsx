@@ -133,8 +133,8 @@ export default function ExploreClient({
 
             <div className="w-8 h-px bg-[#E8E4DE] mb-5" />
 
-            <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-mid mb-1">golden season submissions</p>
-            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">closed — winter submissions open january 5 — january 17.</p>
+            <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-mid mb-1">winter submissions</p>
+            <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">open january 5 — january 17.</p>
           </div>
 
           {/* Right — Golden Season cover */}
