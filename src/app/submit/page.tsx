@@ -7,8 +7,8 @@ import Footer from '@/components/layout/Footer'
 import { createClient } from '@/lib/supabase/client'
 
 // ── Magazine submission window ──────────────────────────────
-const MAG_OPEN  = new Date('2026-12-09T07:00:00Z')
-const MAG_CLOSE = new Date('2027-01-20T07:00:00Z')
+const MAG_OPEN  = new Date('2027-01-05T07:00:00Z')
+const MAG_CLOSE = new Date('2027-01-18T07:00:00Z')
 function isMagOpen() {
   const now = new Date()
   return now >= MAG_OPEN && now <= MAG_CLOSE
@@ -285,7 +285,7 @@ export default function SubmitPage() {
               {magOpen ? (
                 <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-black text-white px-1.5 py-0.5 rounded-full">Open</span>
               ) : (
-                <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-b1 text-mthr-mid px-1.5 py-0.5 rounded-full">Opens Dec 9</span>
+                <span className="ml-2 text-[8px] tracking-[0.08em] bg-mthr-b1 text-mthr-mid px-1.5 py-0.5 rounded-full">Opens Jan 5</span>
               )}
             </button>
             <button onClick={() => setTab('app')}
@@ -358,7 +358,7 @@ export default function SubmitPage() {
                   submissions <em>open soon.</em>
                 </h2>
                 <p className="text-[12px] text-mthr-mid leading-[1.8]">
-                  magazine submissions open <strong>december 9, 2026 — january 19, 2027.</strong>
+                  magazine submissions open <strong>january 5 — january 17, 2027.</strong>
                   <br />come back then to submit your print-ready work.
                 </p>
               </div>
@@ -371,7 +371,7 @@ export default function SubmitPage() {
                 </h2>
                 <p className="text-[12px] text-mthr-mid leading-[1.8]">
                   we've paused feed submissions while the print magazine window is open.<br />
-                  submit your work for the <strong>winter edition</strong> — magazine submissions close january 19, midnight MT.<br />
+                  submit your work for the <strong>winter edition</strong> — magazine submissions close january 17, midnight MT.<br />
                   app &amp; instagram submissions are open year-round.
                 </p>
                 <button onClick={() => { if (magOpen) setTab('magazine') }}
@@ -861,7 +861,7 @@ walk us through your process. what were you watching for, and what created the c
                   magazine submissions <em>open april 1.</em>
                 </h2>
                 <p className="text-[12px] text-mthr-mid leading-[1.8]">
-                  the magazine submission window opens december 9, 2026 — january 19, 2027 (midnight MT).<br />
+                  the magazine submission window opens january 5 — january 17, 2027 (midnight MT).<br />
                   in the meantime, submit your work to the app feature.
                 </p>
               </div>
