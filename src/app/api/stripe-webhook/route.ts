@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     const item = ITEMS[s.metadata?.item ?? '']
     if (to && item && s.payment_status === 'paid') {
       const link = `https://www.mthrmag.com/download?session_id=${s.id}`
-      await fetch('https://api.resend.com/emails', {
+      const mail = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -29,6 +29,9 @@ export async function POST(req: Request) {
           html: `<p>thank you for supporting MTHR.</p><p>your ${item.name} is ready:</p><p><a href="${link}">download your files →</a></p><p>download now and save the files somewhere safe. each file can be downloaded up to 3 times.</p><p>The MTHR Team</p>`,
         }),
       })
+      if (!mail.ok) {
+        return NextResponse.json({ error: 'email failed' }, { status: 500 })
+      }
     }
   }
   return NextResponse.json({ received: true })
