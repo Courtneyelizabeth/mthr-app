@@ -50,8 +50,9 @@ export default function LocationGuideClient({ submissions = [] }: { submissions:
       {/* Header */}
       <div className="px-8 pt-10 pb-6 border-b border-[#E8E4DE]">
         <h1 className="font-cormorant font-light text-[42px] leading-none text-mthr-black">
-          location <em>guide.</em>
+          where we’re <em>from.</em>
         </h1>
+        <p className="text-[12px] text-mthr-mid mt-3">the photographers of MTHR, by place.</p>
         <p className="text-[11px] text-mthr-mid mt-2">
           discover beautiful places to shoot, shared by the community.
         </p>
