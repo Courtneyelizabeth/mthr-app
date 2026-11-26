@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { href: '/submit',         label: 'Submit' },
   { href: '/magazine',       label: 'Magazine' },
   { href: '/community',      label: 'Community' },
+  { href: '/read', label: 'Read' },
   { href: '/mood', label: 'Mood' },
   { href: '/location-guide', label: 'Where We’re From' },
 ]
