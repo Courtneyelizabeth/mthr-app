@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { href: '/magazine',       label: 'Magazine' },
   { href: '/community',      label: 'Community' },
   { href: '/mood', label: 'Mood' },
+  { href: '/mood', label: 'Mood' },
   { href: '/location-guide', label: 'Location Guide' },
 ]
 
