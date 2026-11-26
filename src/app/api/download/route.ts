@@ -23,10 +23,12 @@ export async function GET(req: Request) {
       return new NextResponse('download limit reached for this file. please contact us and we will help.', { status: 429 })
     }
     const n = file.replace('vol', '')
-    const { data, error } = await sb.storage.from('downloads').createSignedUrl(`${file}.pdf`, 120, { download: `MTHR-The-Golden-Season-Volume-${n}.pdf` })
+    const { data, error } = await sb.storage.from('downloads').createSignedUrl(`${file}.pdf`, 600, { download: `MTHR-The-Golden-Season-Volume-${n}.pdf` })
     if (error || !data) return NextResponse.json({ error: 'file unavailable' }, { status: 500 })
     await sb.from('download_counts').upsert({ session_id: id, file, count: used + 1 })
-    return NextResponse.redirect(data.signedUrl)
+    const res = NextResponse.redirect(data.signedUrl)
+    res.headers.set('Cache-Control', 'no-store')
+    return res
   } catch {
     return NextResponse.json({ error: 'not found' }, { status: 404 })
   }
