@@ -146,7 +146,16 @@ export default function ExploreClient({
 
           {/* Right — Golden Season cover */}
           <div className="w-full md:w-auto flex-shrink-0">
-            <a href="/read/vol1" className="block relative w-full max-w-[520px] mx-auto md:mx-0 md:w-[560px] lg:w-[680px] group shadow-md">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+              <a href="https://www.magcloud.com/browse/issue/3445022?__r=8718597" target="_blank" rel="noopener noreferrer" className="block relative group shadow-md w-1/2 max-w-[200px] md:max-w-none md:w-[150px] lg:w-[190px] flex-shrink-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/goldenseason-cover.jpg" alt="MTHR Magazine — The Golden Season, Edition Three" className="w-full h-auto block" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-3">
+                  <p className="text-[8px] tracking-[0.16em] uppercase text-white/80">order a print →</p>
+                </div>
+              </a>
+              <a href="/read/vol1" className="block relative w-full max-w-[520px] md:max-w-none md:w-[460px] lg:w-[560px] group shadow-md">
               <div className="flex">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/reader/vol1/004.jpg" alt="MTHR — the golden season, pages 4 and 5" className="w-1/2 h-auto block" />
@@ -158,6 +167,7 @@ export default function ExploreClient({
                 <p className="text-[8px] tracking-[0.16em] uppercase text-white/80">read free →</p>
               </div>
             </a>
+            </div>
           </div>
 
         </div>
