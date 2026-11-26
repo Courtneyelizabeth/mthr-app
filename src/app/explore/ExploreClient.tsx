@@ -163,18 +163,6 @@ export default function ExploreClient({
 
       {/* FILTER BAR */}
       <div className="sticky top-0 z-20 bg-[#F5F2EE] border-b border-[#E8E4DE] px-4 md:px-8 py-3">
-        {submissions.some(s => ((s as any).moods ?? []).length > 0) && (
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-            {['all', 'quiet', 'golden', 'tender', 'wild', 'ordinary', 'together', 'colorful', 'documentary', 'editorial', 'brand'].map(m => (
-              <button key={m} onClick={() => setActiveMood(m)}
-                className={`flex-shrink-0 px-4 py-1.5 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full transition-colors border ${
-                  activeMood === m ? 'bg-mthr-black text-white border-mthr-black' : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'
-                }`}>
-                {m === 'all' ? 'all moods' : m}
-              </button>
-            ))}
-          </div>
-        )}
         <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
           {CATEGORIES.map(cat => (
             <button
@@ -190,27 +178,12 @@ export default function ExploreClient({
             </button>
           ))}
           <div className="w-px h-5 bg-[#E8E4DE] self-center flex-shrink-0 mx-1" />
-          <button
-            onClick={() => setActiveState('all')}
-            className={`flex-shrink-0 px-4 py-1.5 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full transition-colors border ${
-              activeState === 'all'
-                ? 'bg-mthr-black text-white border-mthr-black'
-                : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'
-            }`}
-          >
-            all locations
-          </button>
-          {states.map(state => (
-            <button
-              key={state}
-              onClick={() => setActiveState(state)}
-              className={`flex-shrink-0 px-3 py-1.5 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full transition-colors border ${
-                activeState === state
-                  ? 'bg-mthr-black text-white border-mthr-black'
-                  : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'
-              }`}
-            >
-              {state}
+          {['all', 'quiet', 'golden', 'tender', 'wild', 'ordinary', 'together', 'colorful', 'documentary', 'editorial', 'brand'].map(m => (
+            <button key={m} onClick={() => setActiveMood(m)}
+              className={`flex-shrink-0 px-4 py-1.5 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full transition-colors border ${
+                activeMood === m ? 'bg-mthr-black text-white border-mthr-black' : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'
+              }`}>
+              {m === 'all' ? 'all moods' : m}
             </button>
           ))}
         </div>
