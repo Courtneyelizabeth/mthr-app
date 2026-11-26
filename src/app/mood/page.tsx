@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export const revalidate = 60
 
-const MOODS = ['quiet', 'golden', 'tender', 'wild', 'everyday', 'together', 'colorful', 'documentary', 'editorial', 'brand']
+const MOODS = ['quiet', 'golden', 'tender', 'wild', 'everyday', 'playful', 'together', 'colorful', 'documentary', 'editorial', 'brand']
 
 export default async function MoodPage({ searchParams }: { searchParams: { m?: string } }) {
   const supabase = createClient()
