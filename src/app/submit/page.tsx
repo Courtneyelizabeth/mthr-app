@@ -93,6 +93,7 @@ export default function SubmitPage() {
   const magFileRef = useRef<HTMLInputElement>(null)
 
   const [tab, setTab] = useState<'app' | 'magazine'>(isMagOpen() ? 'magazine' : 'app')
+  const [moods, setMoods] = useState<string[]>([])
   const [user, setUser] = useState<any>(undefined) // undefined = loading, null = logged out
 
   useEffect(() => {
@@ -213,6 +214,7 @@ export default function SubmitPage() {
         location_state: form.state_code || null,
         location_state_code: form.state_code || null,
         category: form.category,
+        moods: moods,
         submission_type: tab,
         images: imageUrls,
         cover_image: imageUrls[0] ?? null,
@@ -610,6 +612,18 @@ export default function SubmitPage() {
                     className="w-full px-3 py-2.5 bg-[#F5F2EE] border border-[#D0CCC6] text-[13px] text-mthr-black rounded-sm outline-none focus:border-mthr-black transition-colors">
                     {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
                   </select>
+                </Field>
+
+                <Field label="mood — choose up to 2">
+                  <div className="flex flex-wrap gap-2">
+                    {['quiet', 'golden', 'tender', 'wild', 'ordinary', 'together', 'colorful', 'documentary', 'editorial', 'brand'].map(m => (
+                      <button type="button" key={m}
+                        onClick={() => setMoods(prev => prev.includes(m) ? prev.filter(x => x !== m) : prev.length >= 2 ? prev : [...prev, m])}
+                        className={`px-4 py-1.5 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full border transition-colors ${moods.includes(m) ? 'bg-mthr-black text-white border-mthr-black' : 'border-[#D0CCC6] text-mthr-mid hover:border-mthr-black hover:text-mthr-black'}`}>
+                        {m}
+                      </button>
+                    ))}
+                  </div>
                 </Field>
 
                 {tab === 'app' && (

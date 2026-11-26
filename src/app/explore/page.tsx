@@ -14,7 +14,7 @@ export default async function ExplorePage() {
     .select(`
       id, title, location_name, location_country, location_state,
       subjects, instagram_handle, cover_image, images,
-      category, status, created_at, quarter_featured,
+      category, status, created_at, quarter_featured, moods,
       profiles:photographer_id (id, full_name, username, avatar_url, instagram)
     `)
     .eq('submission_type', 'app')
@@ -29,7 +29,7 @@ export default async function ExplorePage() {
     .select(`
       id, title, location_name, location_country, location_state,
       subjects, instagram_handle, cover_image, images,
-      category, status, created_at, quarter_featured,
+      category, status, created_at, quarter_featured, moods,
       profiles:photographer_id (id, full_name, username, avatar_url, instagram)
     `)
     .eq('submission_type', 'app')

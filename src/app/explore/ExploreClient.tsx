@@ -63,6 +63,7 @@ export default function ExploreClient({
   const [activeCategory, setActiveCategory] = useState('all')
   const [visibleCount, setVisibleCount] = useState(350)
   const [activeState, setActiveState] = useState('all')
+  const [activeMood, setActiveMood] = useState('all')
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [userId, setUserId] = useState<string | null>(null)
 
@@ -101,6 +102,7 @@ export default function ExploreClient({
   const filtered = submissions
     .filter(s => activeCategory === 'all' || s.category === activeCategory)
     .filter(s => activeState === 'all' || (s.location_state ?? '') === activeState)
+    .filter(s => activeMood === 'all' || ((s as any).moods ?? []).includes(activeMood))
 
   const profileHref = (sub: Submission) =>
     sub.profiles?.id ? `/photographer/${sub.profiles.id}` : '#'
@@ -161,6 +163,18 @@ export default function ExploreClient({
 
       {/* FILTER BAR */}
       <div className="sticky top-0 z-20 bg-[#F5F2EE] border-b border-[#E8E4DE] px-4 md:px-8 py-3">
+        {submissions.some(s => ((s as any).moods ?? []).length > 0) && (
+          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+            {['all', 'quiet', 'golden', 'tender', 'wild', 'ordinary', 'together', 'colorful', 'documentary', 'editorial', 'brand'].map(m => (
+              <button key={m} onClick={() => setActiveMood(m)}
+                className={`flex-shrink-0 px-4 py-1.5 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full transition-colors border ${
+                  activeMood === m ? 'bg-mthr-black text-white border-mthr-black' : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'
+                }`}>
+                {m === 'all' ? 'all moods' : m}
+              </button>
+            ))}
+          </div>
+        )}
         <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
           {CATEGORIES.map(cat => (
             <button
