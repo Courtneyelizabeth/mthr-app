@@ -13,8 +13,7 @@ const NAV_LINKS = [
   { href: '/magazine',       label: 'Magazine' },
   { href: '/community',      label: 'Community' },
   { href: '/mood', label: 'Mood' },
-  { href: '/mood', label: 'Mood' },
-  { href: '/location-guide', label: 'Location Guide' },
+  { href: '/location-guide', label: 'Where We’re From' },
 ]
 
 export default function TopNav() {

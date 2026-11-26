@@ -235,7 +235,7 @@ export default function AdminPage() {
                     <span>{new Date(sub.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                   </div>
                   <div className="flex flex-wrap gap-1.5 mb-4">
-                    {['quiet', 'golden', 'tender', 'wild', 'ordinary', 'together', 'colorful', 'documentary', 'editorial', 'brand'].map(m => (
+                    {['quiet', 'golden', 'tender', 'wild', 'everyday', 'together', 'colorful', 'documentary', 'editorial', 'brand'].map(m => (
                       <button key={m}
                         onClick={async () => {
                           const cur: string[] = (sub as any).moods ?? []

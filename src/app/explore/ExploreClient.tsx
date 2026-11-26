@@ -178,7 +178,7 @@ export default function ExploreClient({
             </button>
           ))}
           <div className="w-px h-5 bg-[#E8E4DE] self-center flex-shrink-0 mx-1" />
-          {['all', 'quiet', 'golden', 'tender', 'wild', 'ordinary', 'together', 'colorful', 'documentary', 'editorial', 'brand'].map(m => (
+          {['all', 'quiet', 'golden', 'tender', 'wild', 'everyday', 'together', 'colorful', 'documentary', 'editorial', 'brand'].map(m => (
             <button key={m} onClick={() => setActiveMood(m)}
               className={`flex-shrink-0 px-4 py-1.5 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full transition-colors border ${
                 activeMood === m ? 'bg-mthr-black text-white border-mthr-black' : 'bg-transparent text-mthr-mid border-mthr-b2 hover:border-mthr-mid hover:text-mthr-black'

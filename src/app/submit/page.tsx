@@ -616,7 +616,7 @@ export default function SubmitPage() {
 
                 <Field label="mood — choose up to 2">
                   <div className="flex flex-wrap gap-2">
-                    {['quiet', 'golden', 'tender', 'wild', 'ordinary', 'together', 'colorful', 'documentary', 'editorial', 'brand'].map(m => (
+                    {['quiet', 'golden', 'tender', 'wild', 'everyday', 'together', 'colorful', 'documentary', 'editorial', 'brand'].map(m => (
                       <button type="button" key={m}
                         onClick={() => setMoods(prev => prev.includes(m) ? prev.filter(x => x !== m) : prev.length >= 2 ? prev : [...prev, m])}
                         className={`px-4 py-1.5 text-[9px] tracking-[0.14em] uppercase font-medium rounded-full border transition-colors ${moods.includes(m) ? 'bg-mthr-black text-white border-mthr-black' : 'border-[#D0CCC6] text-mthr-mid hover:border-mthr-black hover:text-mthr-black'}`}>

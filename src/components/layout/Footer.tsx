@@ -15,7 +15,6 @@ export default function Footer() {
             { label: 'Explore', href: '/explore' },
             { label: 'Magazine', href: '/magazine' },
             { label: 'Community', href: '/community' },
-            { label: 'Shoot Guides', href: '/location-guide' },
             { label: 'Submit', href: '/submit' },
           ].map(({ label, href }) => (
             <Link
