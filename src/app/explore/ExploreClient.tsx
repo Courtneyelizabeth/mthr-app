@@ -146,19 +146,16 @@ export default function ExploreClient({
 
           {/* Right — Golden Season cover */}
           <div className="w-full md:w-auto flex-shrink-0">
-            <a href="/read"
-              className="block relative w-2/3 max-w-[260px] mx-auto md:mx-0 md:w-[280px] lg:w-[320px] overflow-hidden group">
-              <Image
-                src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/goldenseason-cover.jpg"
-                alt="MTHR Magazine — The Golden Season, Edition Three"
-                width={600}
-                height={776}
-                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
-                priority
-              />
+            <a href="/read/vol1" className="block relative w-full max-w-[520px] mx-auto md:mx-0 md:w-[560px] lg:w-[680px] group shadow-md">
+              <div className="flex">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/reader/vol1/004.jpg" alt="MTHR — the golden season, pages 4 and 5" className="w-1/2 h-auto block" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/reader/vol1/005.jpg" alt="" className="w-1/2 h-auto block" />
+              </div>
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-3">
-                <p className="text-[8px] tracking-[0.16em] uppercase text-white/70">read free · 2 volumes →</p>
+                <p className="text-[8px] tracking-[0.16em] uppercase text-white/80">read free →</p>
               </div>
             </a>
           </div>
