@@ -1,6 +1,7 @@
 'use client'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
+import BuyButton from '../BuyButton'
 
 const MAGCLOUD = 'https://www.magcloud.com/browse/issue/3445022?__r=8718597'
 
@@ -77,6 +78,7 @@ export default function ReaderClient({ vol, count, title, freePages }: { vol: st
             <p className="font-cormorant font-light text-[34px] leading-tight">thank you for <em>reading.</em></p>
             <p className="text-[12px] text-mthr-mid mt-3 max-w-[320px]">hold the printed magazine in your hands.</p>
             <a href={MAGCLOUD} target="_blank" rel="noopener noreferrer" className="mt-6 px-6 py-3 bg-mthr-black text-white text-[10px] tracking-[0.14em] uppercase rounded-full">order a print →</a>
+            {process.env.NEXT_PUBLIC_DOWNLOADS_ENABLED === 'true' && <div className="mt-3"><BuyButton item={vol} label="download pdf · $9.99" /></div>}
           </div>
         </div>
         {idx > 0 && <button onClick={() => go(-1)} aria-label="previous" className="hidden md:block absolute left-3 top-1/2 -translate-y-1/2 text-[28px] text-mthr-mid hover:text-mthr-black px-3">‹</button>}

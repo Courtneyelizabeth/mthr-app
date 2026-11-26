@@ -1,4 +1,7 @@
 import Link from 'next/link'
+import BuyButton from './BuyButton'
+
+const DL = process.env.NEXT_PUBLIC_DOWNLOADS_ENABLED === 'true'
 
 const ISSUES = [
   { vol: 'vol1', label: 'volume 1' },
@@ -19,6 +22,13 @@ export default function ReadIndex() {
           </Link>
         ))}
       </div>
+      {DL && (
+        <div className="mt-10 flex flex-wrap gap-3 items-center">
+          <BuyButton item="vol1" label="download vol 1 · $9.99" />
+          <BuyButton item="vol2" label="download vol 2 · $9.99" />
+          <BuyButton item="bundle" label="both volumes · $15" />
+        </div>
+      )}
     </div>
   )
 }
