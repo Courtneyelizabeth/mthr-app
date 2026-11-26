@@ -22,6 +22,8 @@ const CATEGORIES: { value: string; label: string }[] = [
   { value: "editorial",          label: "Maternity" },
   { value: "kids",               label: "Kids" },
   { value: "family_documentary", label: "Family" },
+  { value: "newborn",            label: "Newborn" },
+  { value: "film",               label: "Film" },
   { value: "other",              label: "Other" },
 ]
 

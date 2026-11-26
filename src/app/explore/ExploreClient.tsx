@@ -47,6 +47,8 @@ const CATEGORIES = [
   { value: 'family_documentary', label: 'Family' },
   { value: 'editorial', label: 'Maternity' },
   { value: 'kids', label: 'Kids' },
+  { value: 'newborn', label: 'Newborn' },
+  { value: 'film', label: 'Film' },
   { value: 'other', label: 'Other' },
 ]
 
