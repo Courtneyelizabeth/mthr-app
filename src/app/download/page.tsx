@@ -1,4 +1,5 @@
 import { stripe, ITEMS } from '@/lib/stripe'
+import DownloadButton from './DownloadButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,11 +17,7 @@ export default async function DownloadPage({ searchParams }: { searchParams: { s
           <h1 className="font-cormorant font-light text-[40px] leading-none text-mthr-black">thank <em>you.</em></h1>
           <p className="text-[12px] text-mthr-mid mt-3">your download{files.length > 1 ? 's are' : ' is'} ready. download now and save them somewhere safe — each file can be downloaded up to 3 times. we’ve also emailed you this link.</p>
           <div className="mt-8 flex flex-col gap-3 items-center">
-            {files.map(f => (
-              <a key={f} href={`/api/download?session_id=${id}&file=${f}`} className="px-6 py-3 bg-mthr-black text-white text-[10px] tracking-[0.14em] uppercase rounded-full">
-                download volume {f.replace('vol', '')} (pdf) ↓
-              </a>
-            ))}
+            {files.map(f => <DownloadButton key={f} sessionId={id} file={f} />)}
           </div>
         </>
       ) : (
