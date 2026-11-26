@@ -38,14 +38,14 @@ export default function MagazinePage() {
 
           <div className="border-y border-[#E8E4DE] mt-10">
             <div className="bg-[#F5F2EE] px-8 md:px-16 py-14 flex flex-col items-center text-center">
-              <div className="w-full max-w-[340px] aspect-[3/4] overflow-hidden bg-[#1A1814] mb-7 shadow-sm">
+              <a href="/read" className="block w-full max-w-[340px]"><div className="w-full max-w-[340px] aspect-[3/4] overflow-hidden bg-[#1A1814] mb-7 shadow-sm">
                 <img src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/goldenseason-cover.jpg" alt="The Golden Season — Edition Three" className="w-full h-full object-cover" />
-              </div>
+              </div></a>
               <p className="text-[9px] tracking-[0.2em] uppercase text-mthr-dim mb-3">Two Volumes</p>
-              <a href="https://www.magcloud.com/browse/issue/3445022?__r=8718597" target="_blank" rel="noopener noreferrer"
-                className="inline-block text-[10px] tracking-[0.16em] uppercase font-medium px-7 py-3 bg-mthr-black text-white hover:opacity-80 transition-opacity rounded-sm">
-                Get the magazine →
-              </a>
+              <div className="flex flex-wrap gap-3 justify-center">
+                <a href="/read" className="inline-block text-[10px] tracking-[0.16em] uppercase font-medium px-7 py-3 bg-mthr-black text-white hover:opacity-80 transition-opacity rounded-sm">Read free →</a>
+                <a href="https://www.magcloud.com/browse/issue/3445022?__r=8718597" target="_blank" rel="noopener noreferrer" className="inline-block text-[10px] tracking-[0.16em] uppercase font-medium px-7 py-3 border border-mthr-black text-mthr-black hover:bg-mthr-black hover:text-white transition-colors rounded-sm">Order a print →</a>
+              </div>
             </div>
           </div>
 

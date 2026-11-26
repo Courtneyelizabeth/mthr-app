@@ -130,8 +130,11 @@ export default function ExploreClient({
             <p className="text-[9px] tracking-[0.18em] uppercase text-mthr-dim mb-1">the golden season · edition three</p>
             <p className="font-cormorant italic text-[15px] text-mthr-black mb-2">{new Date() >= new Date('2026-11-24T00:00:00-07:00') ? 'now available' : 'available tuesday 11/24'} — 2 volumes.</p>
             <div className="flex gap-4 mb-6">
+              <a href="/read" className="inline-block text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
+                read free →
+              </a>
               <a href="https://www.magcloud.com/browse/issue/3445022?__r=8718597" target="_blank" rel="noopener noreferrer" className="inline-block text-[9px] tracking-[0.14em] uppercase text-mthr-mid border-b border-[#D0CCC6] hover:text-mthr-black hover:border-mthr-black transition-colors pb-px">
-                get the magazine →
+                order a print →
               </a>
             </div>
 
@@ -143,7 +146,7 @@ export default function ExploreClient({
 
           {/* Right — Golden Season cover */}
           <div className="w-full md:w-auto flex-shrink-0">
-            <a href="https://www.magcloud.com/browse/issue/3445022?__r=8718597" target="_blank" rel="noopener noreferrer"
+            <a href="/read"
               className="block relative w-2/3 max-w-[260px] mx-auto md:mx-0 md:w-[280px] lg:w-[320px] overflow-hidden group">
               <Image
                 src="https://zhqzwfgqpgnhghkvwcwt.supabase.co/storage/v1/object/public/magazine/goldenseason-cover.jpg"
@@ -155,7 +158,7 @@ export default function ExploreClient({
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-3">
-                <p className="text-[8px] tracking-[0.16em] uppercase text-white/70">2 volumes →</p>
+                <p className="text-[8px] tracking-[0.16em] uppercase text-white/70">read free · 2 volumes →</p>
               </div>
             </a>
           </div>
