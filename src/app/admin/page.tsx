@@ -51,7 +51,7 @@ export default function AdminPage() {
     setLoading(true)
     const { data } = await supabase
       .from('submissions')
-      .select(`id, title, location_name, location_country, category, status, submission_type, subjects, instagram_handle, description, cover_image, images, gallery_link, created_at, photographer_id, photographer_email, quarter_featured, profiles:photographer_id (full_name, username)`)
+      .select(`id, title, location_name, location_country, category, status, submission_type, subjects, instagram_handle, description, cover_image, images, gallery_link, created_at, photographer_id, photographer_email, quarter_featured, moods, profiles:photographer_id (full_name, username)`)
       .eq('status', filter)
       .eq('submission_type', viewType)
       .order('created_at', { ascending: false })
@@ -233,6 +233,21 @@ export default function AdminPage() {
                       : <span className="italic opacity-50">no email</span>}
                     <span>{sub.images?.length ?? 0} images</span>
                     <span>{new Date(sub.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {['quiet', 'golden', 'tender', 'wild', 'ordinary', 'together', 'colorful', 'documentary', 'editorial', 'brand'].map(m => (
+                      <button key={m}
+                        onClick={async () => {
+                          const cur: string[] = (sub as any).moods ?? []
+                          const next = cur.includes(m) ? cur.filter(x => x !== m) : [...cur, m]
+                          await (supabase.from('submissions') as any).update({ moods: next }).eq('id', sub.id)
+                          setSubmissions(prev => prev.map(s => s.id === sub.id ? { ...s, moods: next } as any : s))
+                          fetch('/api/revalidate', { method: 'POST' }).catch(() => {})
+                        }}
+                        className={`px-3 py-1 text-[8px] tracking-[0.12em] uppercase font-medium rounded-full border transition-colors ${((sub as any).moods ?? []).includes(m) ? 'bg-mthr-black text-white border-mthr-black' : 'border-[#D0CCC6] text-mthr-mid hover:border-mthr-black hover:text-mthr-black'}`}>
+                        {m}
+                      </button>
+                    ))}
                   </div>
                   {sub.description && (
                     <div className="mb-4">
