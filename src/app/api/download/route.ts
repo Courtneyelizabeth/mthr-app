@@ -4,7 +4,7 @@ import { stripe, ITEMS } from '@/lib/stripe'
 
 export const dynamic = 'force-dynamic'
 
-const LIMIT = 5
+const LIMIT = 3
 
 export async function GET(req: Request) {
   const url = new URL(req.url)

@@ -26,7 +26,7 @@ export async function POST(req: Request) {
           from: "MTHR Magazine <hello@mthrmag.com>",
           to,
           subject: 'your MTHR download',
-          html: `<p>thank you for supporting MTHR.</p><p>your ${item.name} is ready:</p><p><a href="${link}">download your files →</a></p><p>download now and save the files somewhere safe. each file can be downloaded up to 5 times.</p><p>The MTHR Team</p>`,
+          html: `<p>thank you for supporting MTHR.</p><p>your ${item.name} is ready:</p><p><a href="${link}">download your files →</a></p><p>download now and save the files somewhere safe. each file can be downloaded up to 3 times.</p><p>The MTHR Team</p>`,
         }),
       })
     }
