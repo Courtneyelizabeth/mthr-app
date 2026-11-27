@@ -1,4 +1,5 @@
 'use client'
+import { track } from '@vercel/analytics'
 import { useState } from 'react'
 
 export default function BuyButton({ item, label }: { item: string; label: string }) {
@@ -9,6 +10,7 @@ export default function BuyButton({ item, label }: { item: string; label: string
       onClick={async () => {
         setBusy(true)
         try {
+          track('checkout_started', { item })
           const r = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ item }) })
           const { url } = await r.json()
           if (url) window.location.href = url

@@ -1,3 +1,5 @@
+import { Analytics } from '@vercel/analytics/react'
+import AnalyticsEvents from '../components/AnalyticsEvents'
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, DM_Sans, Bebas_Neue } from 'next/font/google'
 import './globals.css'
@@ -38,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${cormorant.variable} ${dm.variable}`}>
       <body className={`bg-[#F5F2EE] font-dm text-mthr-black antialiased ${bebasNeue.variable}`}>
         {children}
-      </body>
+      <Analytics /><AnalyticsEvents /></body>
     </html>
   )
 }
